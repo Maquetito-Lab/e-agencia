@@ -61,39 +61,40 @@
       float n2 = snoise(p * 1.3 - vec2(t * 0.7, t * 0.5) + n1 * 0.5);
       vec2 q = p + 0.24 * vec2(n1, n2);
 
-      // paleta de marca (los mismos de DESIGN.md)
-      vec3 pink   = vec3(0.949, 0.659, 0.847);   // rosa chicle #F2A8D8
-      vec3 lime   = vec3(0.784, 0.902, 0.235);   // lima #C8E63C
-      vec3 olive  = vec3(0.247, 0.353, 0.165);   // oliva #3F5A2A
-      vec3 fucsia = vec3(0.898, 0.208, 0.788);   // fucsia #E535C9
-      vec3 rojo   = vec3(0.890, 0.024, 0.075);   // rojo #E30613
-      vec3 mauve  = vec3(0.760, 0.470, 0.660);   // base: entre el rosa y el fucsia
+      // paleta de marca en versión suave: rosa chicle, lima, crema y un coral que viene del rojo del logo.
+      // Sin el oliva oscuro ni el fucsia, para que el texto oscuro se lea en todos lados.
+      vec3 rosa   = vec3(0.949, 0.659, 0.847);   // rosa chicle #F2A8D8
+      vec3 rosaCl = vec3(0.975, 0.820, 0.905);   // rosa claro, base
+      vec3 lima   = vec3(0.855, 0.905, 0.470);   // lima aclarada
+      vec3 crema  = vec3(1.000, 0.960, 0.890);   // crema #FFF6E6
+      vec3 coral  = vec3(0.960, 0.590, 0.560);   // rojo de marca aclarado
+      vec3 duraz  = vec3(0.990, 0.800, 0.720);   // durazno: entre coral y crema
 
-      // composición como en Canva: rosa/malva a la izquierda → oliva a la derecha
-      vec3 col = mix(mauve, olive, smoothstep(0.30, 1.05, q.x / aspect));
+      // composición: rosa a la izquierda → crema a la derecha
+      vec3 col = mix(rosaCl, crema, smoothstep(0.25, 1.05, q.x / aspect));
 
       // rosa chicle arriba a la izquierda
       vec2 dp = (q - vec2(0.12 * aspect, 0.85)) * vec2(1.0, 1.3);
-      col = mix(col, pink, clamp(exp(-dot(dp, dp) * 3.2), 0.0, 1.0) * 0.95);
+      col = mix(col, rosa, clamp(exp(-dot(dp, dp) * 3.2), 0.0, 1.0) * 0.9);
 
       // banda lima al centro-izquierda, ondulando
       float bx = (q.x - (0.42 * aspect + 0.10 * n2)) * 3.0;
       float lm = exp(-bx * bx) * smoothstep(-0.25, 0.55, q.y + 0.25 * n1);
-      col = mix(col, lime, lm * 0.66);
+      col = mix(col, lima, lm * 0.7);
 
-      // fucsia abajo a la izquierda
+      // coral abajo a la izquierda
       vec2 df = (q - vec2(0.28 * aspect, -0.02)) * vec2(1.1, 1.7);
-      col = mix(col, fucsia, clamp(exp(-dot(df, df) * 2.8), 0.0, 1.0) * 0.9);
+      col = mix(col, coral, clamp(exp(-dot(df, df) * 2.8), 0.0, 1.0) * 0.75);
 
-      // rojo de marca abajo al centro, como el coral de la barra de Canva
-      vec2 dr = (q - vec2(0.62 * aspect, -0.10)) * vec2(0.9, 1.6);
-      col = mix(col, rojo, clamp(exp(-dot(dr, dr) * 2.6), 0.0, 1.0) * 0.55);
+      // durazno abajo a la derecha, para que el crema no quede plano
+      vec2 dr = (q - vec2(0.85 * aspect, -0.05)) * vec2(0.9, 1.5);
+      col = mix(col, duraz, clamp(exp(-dot(dr, dr) * 2.4), 0.0, 1.0) * 0.8);
 
-      // la mancha del mouse: rojo del logo, con los bordes deformados por el mismo líquido
+      // la mancha del mouse: coral más vivo, con los bordes deformados por el mismo líquido
       vec2 ds = q - m;
       float sp = exp(-dot(ds, ds) * ${SPOT_SIZE.toFixed(1)});
-      vec3 mancha = vec3(0.92, 0.18, 0.28);
-      col = mix(col, mancha, sp * 0.85 * u_mstr);
+      vec3 mancha = vec3(0.94, 0.45, 0.48);
+      col = mix(col, mancha, sp * 0.8 * u_mstr);
 
       gl_FragColor = vec4(col, 1.0);
     }`;

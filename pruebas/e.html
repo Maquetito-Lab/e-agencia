@@ -8,37 +8,33 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --rojo: #e30613; --lima: #c9e63a; --rosa: #f4a9d9; --crema: #fff6e6; --fucsia: #e23ac8; --oliva: #3e5a2b;
-    --tinta: oklch(14% 0.02 340); --hueso: oklch(97% 0.01 80); --linea: rgb(255 255 255 / .22);
+    /* --rojo es un rojo más suave que el del logo (#e30613) para botones y acentos: sobre el fondo pastel el de marca pegaba muy fuerte */
+    --rojo: #de4f57; --rojo-logo: #e30613; --lima: #c9e63a; --rosa: #f4a9d9; --crema: #fff6e6;
+    --tinta: oklch(22% 0.03 340); --hueso: oklch(97% 0.01 80); --linea: rgb(0 0 0 / .16);
     --ease: cubic-bezier(.22,1,.36,1); --g: clamp(20px, 5vw, 80px);
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: auto; }
-  body { margin: 0; font-family: "Archivo", Arial, sans-serif; background: var(--oliva); color: var(--hueso); line-height: 1.4; overflow-x: hidden; }
+  body { margin: 0; font-family: "Archivo", Arial, sans-serif; background: var(--rosa); color: var(--tinta); line-height: 1.4; overflow-x: hidden; }
   body.intro-on, body.pres-on { overflow: hidden; }
   @media (pointer: fine) { body, a, button { cursor: none; } }
   h1,h2,h3,p,ul,figure,blockquote { margin: 0; } ul { padding: 0; list-style: none; } a { color: inherit; text-decoration: none; }
   button { font: inherit; color: inherit; }
   img { display: block; max-width: 100%; }
-  .k { font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--hueso); }
-  .cta .k, .pres .k { color: var(--rojo); }
+  .k { font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--rojo); }
 
   /* ---------- fondo líquido + grano ---------- */
-  .hero { position: fixed; inset: 0; z-index: -1; background: linear-gradient(100deg, #c98cb4 0%, #a9b83c 45%, #4a6a2c 75%, #3e5a2b 100%); }
+  .hero { position: fixed; inset: 0; z-index: -1; background: linear-gradient(100deg, #f2a8d8 0%, #dde87a 45%, #fff0dc 100%); }
   .hero__gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
   .hero__layer { display: none; }
-  .grain { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .16; mix-blend-mode: overlay; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); background-size: 220px; }
+  .grain { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .12; mix-blend-mode: multiply; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); background-size: 220px; }
   main > *, footer { position: relative; z-index: 1; }
 
   /* ---------- cursor ---------- */
   .cur { position: fixed; left: 0; top: 0; z-index: 99; pointer-events: none; display: none; }
   @media (pointer: fine) { .cur { display: block; } }
-  .cur__dot { position: absolute; width: 10px; height: 10px; margin: -5px; border-radius: 50%; background: var(--rojo); transition: width .3s var(--ease), height .3s var(--ease), margin .3s var(--ease); }
+  .cur__dot { position: absolute; width: 10px; height: 10px; margin: -5px; border-radius: 50%; background: var(--rojo-logo); transition: width .3s var(--ease), height .3s var(--ease), margin .3s var(--ease); }
   .cur.is-link .cur__dot { width: 18px; height: 18px; margin: -9px; }
-  .cur__ring { position: absolute; width: 0; height: 0; margin: 0; border-radius: 50%; opacity: 0; display: grid; place-items: center; font-size: .6rem; font-weight: 800; letter-spacing: .12em; transition: width .4s var(--ease), height .4s var(--ease), margin .4s var(--ease), opacity .3s; }
-  .cur.is-ver .cur__ring { width: 84px; height: 84px; margin: -42px; opacity: 1; background: var(--rojo); color: var(--hueso); }
-  .cur.is-ver .cur__dot { opacity: 0; }
-  .cur.is-ver .cur__ring::after { content: "VER"; }
 
   /* ---------- intro: el logo se escribe y vuela a la nav ---------- */
   .intro { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; background: var(--rosa); transition: background .9s var(--ease); }
@@ -52,12 +48,12 @@
   /* ---------- nav ---------- */
   .nav { position: fixed; inset: 0 0 auto 0; z-index: 70; display: flex; justify-content: space-between; align-items: center; padding: 18px var(--g); transition: transform .5s var(--ease), opacity .5s; }
   .nav.hide { transform: translateY(-110%); }
-  .nav__logo { width: 64px; aspect-ratio: 939/602; background: var(--hueso); -webkit-mask: url("../assets/logo.png") no-repeat center/contain; mask: url("../assets/logo.png") no-repeat center/contain; opacity: 0; }
+  .nav__logo { width: 64px; aspect-ratio: 939/602; background: var(--tinta); -webkit-mask: url("../assets/logo.png") no-repeat center/contain; mask: url("../assets/logo.png") no-repeat center/contain; opacity: 0; }
   .nav.ready .nav__logo { opacity: 1; }
   .nav ul { display: flex; align-items: center; gap: 26px; font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
   .nav ul a { opacity: .85; } .nav ul a:hover { opacity: 1; }
-  .nav .pill { padding: 10px 18px; border: 1.5px solid rgb(255 255 255 / .6); border-radius: 999px; opacity: 1; transition: background .3s, color .3s; }
-  .nav .pill:hover { background: var(--hueso); color: var(--rojo); }
+  .nav .pill { padding: 10px 18px; border: 1.5px solid rgb(0 0 0 / .45); border-radius: 999px; opacity: 1; transition: background .3s, color .3s, border-color .3s; }
+  .nav .pill:hover { background: var(--tinta); color: var(--hueso); border-color: var(--tinta); }
   .nav__burger { display: none; }
 
   /* ---------- hero ---------- */
@@ -69,10 +65,10 @@
   .top__h p { margin-top: 28px; max-width: 42ch; font-size: clamp(1rem, 1.4vw, 1.25rem); }
   .top__h p b { font-weight: 700; display: block; }
   .top__cta { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
-  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 999px; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; border: 1.5px solid rgb(255 255 255 / .6); background: transparent; transition: background .3s, color .3s, border-color .3s; }
-  .btn:hover { background: var(--hueso); color: var(--rojo); border-color: var(--hueso); }
-  .btn--solid { background: var(--rojo); border-color: var(--rojo); color: var(--hueso); } .btn--solid:hover { background: var(--hueso); border-color: var(--hueso); color: var(--rojo); }
-  .top__foot { display: flex; justify-content: space-between; align-items: end; font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; opacity: .8; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 999px; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; border: 1.5px solid rgb(0 0 0 / .45); background: transparent; transition: background .3s, color .3s, border-color .3s; }
+  .btn:hover { background: var(--tinta); color: var(--hueso); border-color: var(--tinta); }
+  .btn--solid { background: var(--rojo); border-color: var(--rojo); color: var(--hueso); } .btn--solid:hover { background: var(--tinta); border-color: var(--tinta); color: var(--hueso); }
+  .top__foot { display: flex; justify-content: space-between; align-items: end; font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; opacity: .75; }
   .top__foot .scroll { display: inline-flex; align-items: center; gap: 10px; }
   .top__foot .scroll i { width: 1px; height: 36px; background: currentColor; display: block; animation: line 1.8s var(--ease) infinite; transform-origin: top; }
   @keyframes line { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(0); transform-origin: bottom; } }
@@ -87,16 +83,14 @@
   /* ---------- servicios: título grande + botones rojos ---------- */
   .servicios { padding: clamp(80px, 12vw, 160px) var(--g); border-top: 1px solid var(--linea); }
   .servicios h2 { font-size: clamp(3.4rem, 13vw, 13rem); font-weight: 800; line-height: .86; letter-spacing: -.055em; }
-  .servicios__p { margin: 18px 0 clamp(28px, 4vw, 48px); max-width: 40ch; font-size: .95rem; opacity: .85; }
-  .chips { display: flex; flex-wrap: wrap; gap: 10px 12px; max-width: 1100px; }
-  .chip { display: inline-flex; align-items: center; gap: 12px; padding: 13px 22px; border: 1.5px solid rgb(255 255 255 / .55); border-radius: 999px; background: var(--rojo); color: var(--hueso); font-size: .8rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; transition: background .3s, color .3s, transform .5s var(--ease); }
-  .chip::after { content: "↗"; font-size: .9em; opacity: .8; }
-  .chip:hover { background: var(--hueso); color: var(--rojo); border-color: var(--hueso); transform: translateY(-2px); }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px 12px; max-width: 1100px; margin-top: clamp(28px, 4vw, 48px); }
+  .chip { display: inline-flex; align-items: center; padding: 14px 24px; border: 0; border-radius: 999px; background: var(--rojo); color: var(--hueso); font-size: .8rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; transition: background .3s, transform .5s var(--ease); }
+  .chip:hover { background: var(--tinta); transform: translateY(-2px); }
 
   /* ---------- presentación de cada servicio: sube desde abajo, sobre crema ---------- */
-  .pres { position: fixed; inset: 0; z-index: 75; background: var(--crema); color: var(--tinta); overflow-y: auto; overscroll-behavior: contain; transform: translateY(100%); visibility: hidden; transition: transform .8s var(--ease), visibility 0s .8s; }
+  .pres { position: fixed; inset: 0; z-index: 75; background: #fffaf1; color: var(--tinta); overflow-y: auto; overscroll-behavior: contain; transform: translateY(100%); visibility: hidden; transition: transform .8s var(--ease), visibility 0s .8s; }
   .pres.on { transform: none; visibility: visible; transition: transform .8s var(--ease), visibility 0s; }
-  .pres__bar { position: sticky; top: 0; z-index: 2; display: flex; justify-content: space-between; align-items: center; padding: 18px var(--g); background: linear-gradient(var(--crema) 70%, transparent); }
+  .pres__bar { position: sticky; top: 0; z-index: 2; display: flex; justify-content: space-between; align-items: center; padding: 18px var(--g); background: linear-gradient(#fffaf1 70%, transparent); }
   .pres__close { padding: 10px 18px; border: 1.5px solid rgb(0 0 0 / .35); border-radius: 999px; background: transparent; font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; transition: background .3s, color .3s, border-color .3s; }
   .pres__close:hover { background: var(--rojo); color: var(--hueso); border-color: var(--rojo); }
   .pres__item { padding: 20px var(--g) 40px; }
@@ -118,35 +112,38 @@
   .proc { padding: clamp(80px, 12vw, 160px) var(--g); border-top: 1px solid var(--linea); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: clamp(24px, 4vw, 64px); }
   .proc__h { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: end; margin-bottom: 20px; gap: 24px; }
   .proc__h h2 { font-size: clamp(2rem, 5vw, 5rem); font-weight: 800; line-height: .9; letter-spacing: -.045em; }
-  .step .n { font-size: clamp(3rem, 6vw, 6rem); font-weight: 200; line-height: 1; letter-spacing: -.05em; }
+  .step .n { font-size: clamp(3rem, 6vw, 6rem); font-weight: 200; line-height: 1; letter-spacing: -.05em; color: var(--rojo); }
   .step h3 { margin-top: 12px; font-size: clamp(1.2rem, 1.8vw, 1.6rem); font-weight: 800; letter-spacing: -.02em; }
   .step p { margin-top: 10px; font-size: .95rem; opacity: .85; max-width: 34ch; }
 
-  /* ---------- contacto (crema) ---------- */
-  .cta { background: var(--crema); color: var(--tinta); padding: clamp(80px, 12vw, 160px) var(--g) clamp(48px, 6vw, 80px); }
+  /* ---------- contacto ---------- */
+  .cta { border-top: 1px solid var(--linea); padding: clamp(80px, 12vw, 160px) var(--g) clamp(48px, 6vw, 80px); }
   .cta__top { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 40px; }
   .cta h2 { font-size: clamp(2.8rem, 9.5vw, 10rem); font-weight: 900; line-height: .86; letter-spacing: -.055em; text-transform: uppercase; }
-  .cta h2 .dot { display: inline-block; width: .38em; height: .42em; margin-left: .05em; vertical-align: baseline; background: var(--rojo); -webkit-mask: url("../assets/logo-dot.png") no-repeat center/contain; mask: url("../assets/logo-dot.png") no-repeat center/contain; animation: beat 2.4s ease-in-out infinite; transform-origin: 50% 60%; }
-  @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.14); } }
   .cta__go { display: flex; align-items: center; gap: 14px 28px; flex-wrap: wrap; margin-top: 32px; }
-  .cta .btn { border-color: var(--rojo); }
   .cta .btn--solid { padding: 18px 28px; font-size: .84rem; }
-  .cta .btn--solid:hover { background: var(--tinta); border-color: var(--tinta); color: var(--hueso); }
   .cta__mail { display: inline-block; font-size: clamp(1.1rem, 2.4vw, 2rem); font-weight: 500; letter-spacing: -.02em; border-bottom: 2px solid var(--rojo); }
   .cta__links { display: grid; gap: 10px; text-align: right; font-size: .82rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
   .cta__links a { display: inline-flex; align-items: center; gap: 10px; justify-content: flex-end; }
   .cta__links a::after { content: "↗"; }
-  .foot { margin-top: clamp(48px, 8vw, 100px); padding-top: 20px; border-top: 1px solid rgb(0 0 0 / .15); display: flex; justify-content: space-between; gap: 16px; font-size: .75rem; opacity: .65; flex-wrap: wrap; }
+  .foot { margin-top: clamp(48px, 8vw, 100px); padding-top: 20px; border-top: 1px solid var(--linea); display: flex; justify-content: space-between; gap: 16px; font-size: .75rem; opacity: .65; flex-wrap: wrap; }
 
   /* ---------- reveals ---------- */
   .rv { opacity: 0; transform: translateY(26px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
   .rv.in { opacity: 1; transform: none; }
 
+  /* ---------- títulos que se escriben: cada letra aparece como un trazo, y el punto final es el punto del logo ---------- */
+  .esc .wd { display: inline-block; white-space: nowrap; }
+  .esc .ch { display: inline-block; opacity: 0; transform: translateY(.18em) rotate(3deg); clip-path: inset(-.25em 100% -.25em -.1em); transition: opacity .05s linear, transform .55s var(--ease), clip-path .5s var(--ease); transition-delay: calc(var(--i) * 36ms); }
+  .esc.in .ch { opacity: 1; transform: none; clip-path: inset(-.25em -.35em -.25em -.1em); }
+  .esc .ch--dot { width: .3em; height: .34em; margin-left: .06em; vertical-align: baseline; background: var(--rojo-logo); -webkit-mask: url("../assets/logo-dot.png") no-repeat center/contain; mask: url("../assets/logo-dot.png") no-repeat center/contain; clip-path: none; transform: scale(0); transform-origin: 50% 60%; transition: transform .7s cubic-bezier(.34, 1.56, .64, 1); transition-delay: calc(var(--i) * 36ms + 120ms); }
+  .esc.in .ch--dot { transform: scale(1); }
+
   /* ---------- responsive ---------- */
   @media (max-width: 900px) {
     .nav ul { display: none; }
-    .nav__burger { display: grid; place-items: center; width: 44px; height: 44px; border: 1.5px solid rgb(255 255 255 / .6); border-radius: 50%; background: transparent; color: inherit; font-size: .7rem; font-weight: 800; letter-spacing: .1em; }
-    .nav.open ul { display: flex; position: fixed; inset: 0; z-index: -1; background: var(--oliva); flex-direction: column; justify-content: center; align-items: flex-start; padding: 0 var(--g); gap: 22px; font-size: 1.6rem; letter-spacing: -.01em; text-transform: none; }
+    .nav__burger { display: grid; place-items: center; width: 44px; height: 44px; border: 1.5px solid rgb(0 0 0 / .45); border-radius: 50%; background: transparent; color: inherit; font-size: .7rem; font-weight: 800; letter-spacing: .1em; }
+    .nav.open ul { display: flex; position: fixed; inset: 0; z-index: -1; background: var(--crema); flex-direction: column; justify-content: center; align-items: flex-start; padding: 0 var(--g); gap: 22px; font-size: 1.6rem; letter-spacing: -.01em; text-transform: none; }
     .nav.open .pill { font-size: 1rem; }
     .top { padding-top: 110px; }
     .top__foot { flex-direction: column; align-items: flex-start; gap: 12px; }
@@ -159,13 +156,13 @@
     .proc__h { flex-direction: column; align-items: flex-start; gap: 12px; }
     .cta__top { grid-template-columns: 1fr; } .cta__links { text-align: left; } .cta__links a { justify-content: flex-start; }
   }
-  @media (prefers-reduced-motion: reduce) { .cta .dot, .top__foot .scroll i { animation: none !important; } .rv { opacity: 1; transform: none; transition: none; } .pres { transition: none; } }
+  @media (prefers-reduced-motion: reduce) { .top__foot .scroll i { animation: none !important; } .rv { opacity: 1; transform: none; transition: none; } .esc .ch { opacity: 1; transform: none; clip-path: none; transition: none; } .pres { transition: none; } }
 </style>
 </head>
 <body class="intro-on">
 <div class="hero" aria-hidden="true"><canvas class="hero__gl"></canvas><div class="hero__layer"></div></div>
 <div class="grain" aria-hidden="true"></div>
-<div class="cur" aria-hidden="true"><span class="cur__ring"></span><span class="cur__dot"></span></div>
+<div class="cur" aria-hidden="true"><span class="cur__dot"></span></div>
 
 <!-- intro: el logo se escribe, salpica y vuela a la esquina -->
 <div class="intro" aria-hidden="true">
@@ -174,7 +171,7 @@
       <defs>
         <mask id="trazo" maskUnits="userSpaceOnUse"><path id="centro" d="M 118 415 C 180 330, 280 205, 350 135 C 405 80, 365 12, 250 20 C 130 35, 40 140, 28 260 C 18 380, 40 500, 120 565 C 210 600, 330 520, 430 420 C 470 380, 495 345, 502 328" fill="none" stroke="#fff" stroke-width="135" stroke-linecap="round"/></mask>
         <mask id="arco" maskUnits="userSpaceOnUse"><circle id="arcoc" cx="706" cy="491" r="0" fill="#fff"/></mask>
-        <filter id="blanco"><feColorMatrix type="matrix" values="0 0 0 0 .97  0 0 0 0 .96  0 0 0 0 .93  0 0 0 1 0"/></filter>
+        <filter id="tinta"><feColorMatrix type="matrix" values="0 0 0 0 .13  0 0 0 0 .10  0 0 0 0 .125  0 0 0 1 0"/></filter>
       </defs>
       <g class="intro__g">
         <image href="../assets/logo-e.png" x="0" y="0" width="524" height="602" mask="url(#trazo)"/>
@@ -201,7 +198,7 @@
 <!-- ===== INICIO ===== -->
 <section class="top" id="inicio">
   <div class="top__h">
-    <h1 class="rv" style="--d:.1s">Ideas con <b>dirección.</b><br>Marcas con <em>identidad.</em></h1>
+    <h1 class="esc">Ideas con <b>dirección.</b><br>Marcas con <em>identidad.</em></h1>
     <p class="rv" style="--d:.3s"><b>Comunicación, imagen y creatividad.</b> Todo lo que una marca necesita para construir su identidad y comunicarla.</p>
     <div class="top__cta rv" style="--d:.45s"><a class="btn btn--solid" href="#contacto" data-cur="link">Elevemos tu marca</a></div>
   </div>
@@ -218,24 +215,23 @@
      Cada botón abre la presentación del servicio (más abajo, en <div class="pres">).
      El data-pres del botón tiene que coincidir con el id del <article> de la presentación. -->
 <section class="servicios" id="servicios">
-  <h2 class="rv">Servicios</h2>
-  <p class="servicios__p rv">Tocá cada uno para ver qué hacemos y cómo se ve.</p>
+  <h2 class="esc">Servicios.</h2>
   <ul class="chips rv">
-    <li><button class="chip" type="button" data-pres="p-contenido" data-cur="ver">Creación de contenido</button></li>
-    <li><button class="chip" type="button" data-pres="p-fotografia" data-cur="ver">Fotografía</button></li>
-    <li><button class="chip" type="button" data-pres="p-branding" data-cur="ver">Branding</button></li>
-    <li><button class="chip" type="button" data-pres="p-ugc" data-cur="ver">UGC</button></li>
-    <li><button class="chip" type="button" data-pres="p-community" data-cur="ver">Community management</button></li>
-    <li><button class="chip" type="button" data-pres="p-produccion" data-cur="ver">Producción</button></li>
-    <li><button class="chip" type="button" data-pres="p-eventos" data-cur="ver">Cobertura de eventos</button></li>
-    <li><button class="chip" type="button" data-pres="p-ia" data-cur="ver">Contenido IA</button></li>
-    <li><button class="chip" type="button" data-pres="p-merch" data-cur="ver">Merchandising</button></li>
+    <li><button class="chip" type="button" data-pres="p-contenido" data-cur="link">Creación de contenido</button></li>
+    <li><button class="chip" type="button" data-pres="p-fotografia" data-cur="link">Fotografía</button></li>
+    <li><button class="chip" type="button" data-pres="p-branding" data-cur="link">Branding</button></li>
+    <li><button class="chip" type="button" data-pres="p-ugc" data-cur="link">UGC</button></li>
+    <li><button class="chip" type="button" data-pres="p-community" data-cur="link">Community management</button></li>
+    <li><button class="chip" type="button" data-pres="p-produccion" data-cur="link">Producción</button></li>
+    <li><button class="chip" type="button" data-pres="p-eventos" data-cur="link">Cobertura de eventos</button></li>
+    <li><button class="chip" type="button" data-pres="p-ia" data-cur="link">Contenido IA</button></li>
+    <li><button class="chip" type="button" data-pres="p-merch" data-cur="link">Merchandising</button></li>
   </ul>
 </section>
 
 <!-- ===== CÓMO TRABAJAMOS ===== -->
 <section class="proc" id="proc">
-  <div class="proc__h rv"><h2>Cómo<br>trabajamos</h2><span class="k">Tres pasos, una misma dirección</span></div>
+  <div class="proc__h"><h2 class="esc">Cómo<br>trabajamos.</h2><span class="k">Tres pasos, una misma dirección</span></div>
   <div class="step rv"><span class="n">01</span><h3>Entendemos la marca</h3><p>Conocemos su identidad, sus objetivos, su público y qué necesita comunicar. Ese es nuestro punto de partida.</p></div>
   <div class="step rv"><span class="n">02</span><h3>Definimos la estrategia</h3><p>Trazamos una dirección clara que conecta identidad, comunicación y contenido, y define cómo llevar la marca hacia adelante.</p></div>
   <div class="step rv"><span class="n">03</span><h3>Lo hacemos realidad</h3><p>Creamos y desarrollamos todo lo que la marca necesita: diseño, contenido, redes, campañas, foto, video y experiencias digitales.</p></div>
@@ -245,7 +241,7 @@
 <section class="cta" id="contacto">
   <div class="cta__top">
     <div>
-      <h2 class="rv">Elevemos<br>tu marca<span class="dot" aria-hidden="true"></span></h2>
+      <h2 class="esc">Elevemos<br>tu marca.</h2>
       <div class="cta__go rv">
         <a class="btn btn--solid" href="https://wa.me/5491151254075" target="_blank" rel="noopener" data-cur="link">Escribinos por WhatsApp</a>
         <a class="cta__mail" href="mailto:eleagenciaa@gmail.com" data-cur="link">eleagenciaa@gmail.com</a>
@@ -390,10 +386,10 @@
     const k = target.width / from.width;
     logo.style.transition = 'transform 1s cubic-bezier(.22,1,.36,1)';
     logo.style.transform = `translate(${target.left - from.left}px, ${target.top - from.top}px) scale(${k})`;
-    intro.classList.add('fly'); $('.intro__g').setAttribute('filter', 'url(#blanco)'); // al volar se vuelve blanco como el logo de la nav
-    setTimeout(() => { nav.classList.add('ready'); intro.remove(); document.body.classList.remove('intro-on'); $$('.top .rv').forEach(el => el.classList.add('in')); }, 950);
+    intro.classList.add('fly'); $('.intro__g').setAttribute('filter', 'url(#tinta)'); // al volar toma el color del logo de la nav
+    setTimeout(() => { nav.classList.add('ready'); intro.remove(); document.body.classList.remove('intro-on'); $$('.top .rv, .top .esc').forEach(el => el.classList.add('in')); }, 950);
   };
-  const skip = () => { intro.remove(); document.body.classList.remove('intro-on'); nav.classList.add('ready'); $$('.top .rv').forEach(el => el.classList.add('in')); };
+  const skip = () => { intro.remove(); document.body.classList.remove('intro-on'); nav.classList.add('ready'); $$('.top .rv, .top .esc').forEach(el => el.classList.add('in')); };
   const write = () => {
     const t0 = performance.now(), D = 1600; let splashed = false;
     const tick = (now) => { const t = Math.min(1, (now - t0) / D), p = pen(t); centro.style.strokeDashoffset = L * (1 - p);
@@ -413,11 +409,9 @@
   /* ---------- cursor ---------- */
   const cur = $('.cur');
   if (fine) {
-    let mx = -100, my = -100, rx = -100, ry = -100, raf = null;
-    const dot = $('.cur__dot'), ring = $('.cur__ring');
-    const loop = () => { rx += (mx - rx) * .18; ry += (my - ry) * .18; dot.style.transform = `translate(${mx}px, ${my}px)`; ring.style.transform = `translate(${rx}px, ${ry}px)`; raf = (Math.abs(mx - rx) > .2 || Math.abs(my - ry) > .2) ? requestAnimationFrame(loop) : null; };
-    addEventListener('pointermove', e => { mx = e.clientX; my = e.clientY; if (!raf) raf = requestAnimationFrame(loop); }, { passive: true });
-    addEventListener('pointerover', e => { const t = e.target.closest('[data-cur]'); cur.classList.toggle('is-ver', t?.dataset.cur === 'ver'); cur.classList.toggle('is-link', t?.dataset.cur === 'link'); });
+    const dot = $('.cur__dot');
+    addEventListener('pointermove', e => { dot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`; }, { passive: true });
+    addEventListener('pointerover', e => { const t = e.target.closest('[data-cur]'); cur.classList.toggle('is-link', !!t); });
   }
 
   /* ---------- nav: se esconde al bajar, vuelve al subir ---------- */
@@ -426,9 +420,30 @@
   $('.nav__burger').addEventListener('click', () => nav.classList.toggle('open'));
   $$('.nav ul a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
 
+  /* ---------- títulos que se escriben ---------- */
+  const escribir = (el) => { // cada palabra en un <span class="wd">, cada letra en un <span class="ch">; el "." final pasa a ser el punto del logo
+    el.setAttribute('aria-label', el.textContent.replace(/\s+/g, ' ').trim());
+    const walk = (node) => {
+      if (node.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        for (const tok of node.textContent.split(/(\s+)/)) {
+          if (!tok) continue;
+          if (!tok.trim()) { frag.append(tok); continue; }
+          const wd = document.createElement('span'); wd.className = 'wd'; wd.setAttribute('aria-hidden', 'true');
+          for (const ch of tok) { const s = document.createElement('span'); s.className = ch === '.' ? 'ch ch--dot' : 'ch'; if (ch !== '.') s.textContent = ch; wd.append(s); }
+          frag.append(wd);
+        }
+        node.replaceWith(frag);
+      } else if (node.nodeType === 1 && node.tagName !== 'BR') [...node.childNodes].forEach(walk);
+    };
+    [...el.childNodes].forEach(walk);
+    $$('.ch', el).forEach((s, i) => s.style.setProperty('--i', i));
+  };
+  $$('.esc').forEach(escribir);
+
   /* ---------- reveals ---------- */
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
-  $$('.rv:not(.top .rv)').forEach(el => io.observe(el));
+  $$('.rv:not(.top .rv), .esc:not(.top .esc)').forEach(el => io.observe(el));
 
   /* ---------- quiénes somos: palabra por palabra ---------- */
   const mp = $('#manip');
