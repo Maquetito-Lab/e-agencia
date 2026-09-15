@@ -31,8 +31,15 @@ Si querés tocarlo a mano: los textos están en `index.html` entre etiquetas
 
 Abrí `index.html` con doble click. Las fuentes y las fotos de muestra necesitan internet.
 
+## Contenido de los servicios (prueba E)
+
+Las fotos y videos de cada servicio están en `assets/servicios/<servicio>/`, bajados de la
+carpeta de Drive "Agencia E - web" y achicados para web (imágenes ≤ 1400 px, videos 720p
+sin audio y de hasta 20 s). Para sumar uno: copiarlo ahí y agregar un `<figure>` en `pruebas/e.html`.
+
 ## Pendientes
 
-- [ ] Fotos reales (hoy hay fotos de muestra de Unsplash marcadas con `PLACEHOLDER` en `index.html`)
+- [ ] Fotos de merchandising (no había en Drive; quedan fotos de muestra marcadas con `PLACEHOLDER`)
+- [ ] Fotos reales en `index.html` (hoy hay fotos de muestra de Unsplash marcadas con `PLACEHOLDER`)
 - [ ] Links reales de Instagram, WhatsApp y correo (buscá `href="#"` en `index.html`)
 - [ ] Dominio propio en Vercel

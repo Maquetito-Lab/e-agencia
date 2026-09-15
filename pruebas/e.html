@@ -99,11 +99,21 @@
   .pres__t h3 { font-size: clamp(2.6rem, 7vw, 7rem); font-weight: 800; line-height: .9; letter-spacing: -.05em; }
   .pres__t h3 .n { display: block; font-size: .78rem; font-weight: 700; letter-spacing: .14em; color: var(--rojo); margin-bottom: 18px; }
   .pres__t p { font-size: clamp(1rem, 1.4vw, 1.2rem); max-width: 44ch; opacity: .85; }
-  .pres__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(10px, 1.5vw, 20px); }
-  .pres__grid figure { position: relative; overflow: hidden; border-radius: 6px; background: #eadfcf; aspect-ratio: 4/5; }
-  .pres__grid figure:first-child { grid-column: span 2; aspect-ratio: auto; }
-  .pres__grid img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .pres__grid { display: grid; gap: clamp(10px, 1.5vw, 20px); }
+  .pres__grid + .pres__grid { margin-top: clamp(10px, 1.5vw, 20px); }
+  .pres__grid figure { position: relative; overflow: hidden; border-radius: 6px; background: #eadfcf; }
+  .pres__grid img, .pres__grid video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .pres__grid figcaption { position: absolute; left: 14px; bottom: 12px; padding: 6px 10px; border-radius: 999px; background: rgb(255 246 230 / .9); font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  .pres__grid--fotos { grid-template-columns: repeat(3, 1fr); }
+  .pres__grid--fotos figure { aspect-ratio: 4/5; }
+  .pres__grid--fotos figure:first-child { grid-column: span 2; aspect-ratio: auto; }
+  .pres__grid--reels { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
+  .pres__grid--reels.pres__grid--big { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+  .pres__grid--reels figure { aspect-ratio: 9/16; }
+  .pres__grid--boards, .pres__grid--phones { align-items: start; }
+  .pres__grid--boards { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+  .pres__grid--phones { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
+  .pres__grid--boards img, .pres__grid--phones img { position: static; height: auto; }
   .pres__nav { display: flex; justify-content: space-between; gap: 12px; padding: 0 var(--g) clamp(40px, 6vw, 80px); }
   .pres__nav button { padding: 14px 22px; border: 1.5px solid rgb(0 0 0 / .3); border-radius: 999px; background: transparent; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; transition: background .3s, color .3s, border-color .3s; }
   .pres__nav button:hover { background: var(--tinta); color: var(--hueso); border-color: var(--tinta); }
@@ -150,8 +160,10 @@
     .mani { grid-template-columns: 1fr; gap: 18px; }
     .chip { padding: 12px 18px; font-size: .74rem; }
     .pres__t { grid-template-columns: 1fr; }
-    .pres__grid { grid-template-columns: 1fr 1fr; }
-    .pres__grid figure:first-child { aspect-ratio: 4/3; }
+    .pres__grid--fotos { grid-template-columns: 1fr 1fr; }
+    .pres__grid--fotos figure:first-child { aspect-ratio: 4/3; }
+    .pres__grid--reels, .pres__grid--reels.pres__grid--big { grid-template-columns: 1fr 1fr; }
+    .pres__grid--boards, .pres__grid--phones { grid-template-columns: 1fr 1fr; }
     .proc { grid-template-columns: 1fr; }
     .proc__h { flex-direction: column; align-items: flex-start; gap: 12px; }
     .cta__top { grid-template-columns: 1fr; } .cta__links { text-align: left; } .cta__links a { justify-content: flex-start; }
@@ -254,101 +266,111 @@
 </main>
 
 <!-- ===== PRESENTACIONES DE SERVICIOS (se abren desde los botones de Servicios) =====
-     Fotos de muestra de Unsplash (PLACEHOLDER): reemplazar por fotos reales en assets/. -->
+     Las fotos y videos están en assets/servicios/<servicio>/ (vienen de la carpeta de Drive "Agencia E - web").
+     Para agregar uno: copiar el archivo a esa carpeta y sumar un <figure> igual a los de al lado.
+     Tipos de grilla: --reels (videos verticales), --fotos (fotos recortadas, la primera grande),
+     --boards (tableros altos enteros), --phones (capturas de celular enteras). -->
 <div class="pres" role="dialog" aria-modal="true" aria-label="Servicio">
   <div class="pres__bar"><span class="k">Servicios</span><button class="pres__close" type="button" data-cur="link">Cerrar ×</button></div>
 
   <article class="pres__item" id="p-contenido" hidden>
     <div class="pres__t"><h3><span class="n">01 / 09</span>Creación de contenido</h3><p>Concepto, guion, producción y edición para redes. Contenido que la gente quiere ver, no que la marca quiere decir.</p></div>
-    <div class="pres__grid">
-      <figure><img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy"><figcaption>Placeholder</figcaption></figure>
-      <figure><img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+    <div class="pres__grid pres__grid--reels">
+      <figure><video src="../assets/servicios/contenido/unboxing.mp4" poster="../assets/servicios/contenido/unboxing.jpg" muted loop playsinline preload="none"></video></figure>
+      <figure><video src="../assets/servicios/contenido/video-1.mp4" poster="../assets/servicios/contenido/video-1.jpg" muted loop playsinline preload="none"></video></figure>
+      <figure><video src="../assets/servicios/contenido/nov-5.mp4" poster="../assets/servicios/contenido/nov-5.jpg" muted loop playsinline preload="none"></video></figure>
+      <figure><video src="../assets/servicios/contenido/captions.mp4" poster="../assets/servicios/contenido/captions.jpg" muted loop playsinline preload="none"></video></figure>
+      <figure><video src="../assets/servicios/contenido/video-copy.mp4" poster="../assets/servicios/contenido/video-copy.jpg" muted loop playsinline preload="none"></video></figure>
+      <figure><video src="../assets/servicios/contenido/video-2.mp4" poster="../assets/servicios/contenido/video-2.jpg" muted loop playsinline preload="none"></video></figure>
+      <figure><video src="../assets/servicios/contenido/video-4.mp4" poster="../assets/servicios/contenido/video-4.jpg" muted loop playsinline preload="none"></video></figure>
     </div>
   </article>
 
   <article class="pres__item" id="p-fotografia" hidden>
     <div class="pres__t"><h3><span class="n">02 / 09</span>Fotografía</h3><p>Estudio y locación. Producto, catálogo, e-commerce, campaña y retrato. La imagen que sostiene todo lo demás.</p></div>
-    <div class="pres__grid">
-      <figure><img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy"><figcaption>Placeholder</figcaption></figure>
-      <figure><img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1601506521937-0121a7fc2a6b?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+    <div class="pres__grid pres__grid--fotos">
+      <figure><img src="../assets/servicios/fotografia/gpt-2.jpg" alt="" loading="lazy"></figure>
+      <figure><img src="../assets/servicios/fotografia/dsc07842.jpg" alt="" loading="lazy"></figure>
+      <figure><img src="../assets/servicios/fotografia/tezza-vintage.jpg" alt="" loading="lazy"></figure>
+      <figure><img src="../assets/servicios/fotografia/gpt-1.jpg" alt="" loading="lazy"></figure>
+      <figure><img src="../assets/servicios/fotografia/gpt-3.jpg" alt="" loading="lazy"></figure>
+      <figure><img src="../assets/servicios/fotografia/gpt-4.jpg" alt="" loading="lazy"></figure>
     </div>
   </article>
 
   <article class="pres__item" id="p-branding" hidden>
     <div class="pres__t"><h3><span class="n">03 / 09</span>Branding</h3><p>Identidad visual, sistema gráfico, tono de voz. La base de todo lo demás: una marca que se reconoce en cualquier lugar donde aparece.</p></div>
-    <div class="pres__grid">
-      <figure><img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy"><figcaption>Placeholder</figcaption></figure>
-      <figure><img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1493612276216-ee3925520721?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+    <div class="pres__grid pres__grid--boards">
+      <figure><img src="../assets/servicios/branding/cabra-01.jpg" alt="" loading="lazy"><figcaption>Cabra Café</figcaption></figure>
+      <figure><img src="../assets/servicios/branding/pricobowls.jpg" alt="" loading="lazy"><figcaption>Prico Bowls</figcaption></figure>
+      <figure><img src="../assets/servicios/branding/presentacion-logo.jpg" alt="" loading="lazy"><figcaption>Stampit</figcaption></figure>
+    </div>
+    <div class="pres__grid pres__grid--reels">
+      <figure><video src="../assets/servicios/branding/video-1.mp4" poster="../assets/servicios/branding/video-1.jpg" muted loop playsinline preload="none"></video><figcaption>Stampit</figcaption></figure>
     </div>
   </article>
 
   <article class="pres__item" id="p-ugc" hidden>
     <div class="pres__t"><h3><span class="n">04 / 09</span>UGC</h3><p>Contenido generado por usuarios y creadores: real, cercano y hecho para el feed. Guionamos, coordinamos y editamos para que se vea natural y venda.</p></div>
-    <div class="pres__grid">
-      <figure><img src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy"><figcaption>Placeholder</figcaption></figure>
-      <figure><img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+    <div class="pres__grid pres__grid--reels">
+      <figure><video src="../assets/servicios/ugc/tezza-9126.mp4" poster="../assets/servicios/ugc/tezza-9126.jpg" muted loop playsinline preload="none"></video></figure>
+      <figure><video src="../assets/servicios/ugc/video-3.mp4" poster="../assets/servicios/ugc/video-3.jpg" muted loop playsinline preload="none"></video></figure>
+      <figure><video src="../assets/servicios/ugc/video-5.mp4" poster="../assets/servicios/ugc/video-5.jpg" muted loop playsinline preload="none"></video></figure>
+      <figure><video src="../assets/servicios/ugc/video-copy.mp4" poster="../assets/servicios/ugc/video-copy.jpg" muted loop playsinline preload="none"></video></figure>
+      <figure><video src="../assets/servicios/ugc/video-4e85.mp4" poster="../assets/servicios/ugc/video-4e85.jpg" muted loop playsinline preload="none"></video></figure>
     </div>
   </article>
 
   <article class="pres__item" id="p-community" hidden>
     <div class="pres__t"><h3><span class="n">05 / 09</span>Community management</h3><p>Planificación, publicación y conversación. Con criterio, no con calendario: una cuenta que comunica, no que solo publica.</p></div>
-    <div class="pres__grid">
-      <figure><img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy"><figcaption>Placeholder</figcaption></figure>
-      <figure><img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1611926653458-09294b3142bf?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+    <div class="pres__grid pres__grid--phones">
+      <figure><img src="../assets/servicios/community/mba-antes.jpg" alt="" loading="lazy"><figcaption>Antes</figcaption></figure>
+      <figure><img src="../assets/servicios/community/mba-despues.jpg" alt="" loading="lazy"><figcaption>Después</figcaption></figure>
+      <figure><img src="../assets/servicios/community/img-4817.jpg" alt="" loading="lazy"><figcaption>Prico Bowls</figcaption></figure>
+      <figure><img src="../assets/servicios/community/img-4818.jpg" alt="" loading="lazy"><figcaption>Ortuzar</figcaption></figure>
+      <figure><img src="../assets/servicios/community/img-4819.jpg" alt="" loading="lazy"><figcaption>Flash Box</figcaption></figure>
     </div>
   </article>
 
   <article class="pres__item" id="p-produccion" hidden>
     <div class="pres__t"><h3><span class="n">06 / 09</span>Producción</h3><p>Shootings, video, dirección de arte. Pre producción, rodaje y edición con equipo propio y aliados.</p></div>
-    <div class="pres__grid">
-      <figure><img src="https://images.unsplash.com/photo-1574267432553-4b4628081c31?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy"><figcaption>Placeholder</figcaption></figure>
-      <figure><img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+    <div class="pres__grid pres__grid--phones">
+      <figure><img src="../assets/servicios/produccion/wa-1.jpg" alt="" loading="lazy"></figure>
+      <figure><img src="../assets/servicios/produccion/wa-3.jpg" alt="" loading="lazy"></figure>
+      <figure><img src="../assets/servicios/produccion/wa-4.jpg" alt="" loading="lazy"></figure>
+      <figure><img src="../assets/servicios/produccion/wa-2.jpg" alt="" loading="lazy"></figure>
     </div>
   </article>
 
   <article class="pres__item" id="p-eventos" hidden>
     <div class="pres__t"><h3><span class="n">07 / 09</span>Cobertura de eventos</h3><p>Foto y video en el momento, contenido listo para publicar el mismo día. Lanzamientos, inauguraciones, activaciones y shows.</p></div>
-    <div class="pres__grid">
-      <figure><img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy"><figcaption>Placeholder</figcaption></figure>
-      <figure><img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+    <div class="pres__grid pres__grid--reels pres__grid--big">
+      <figure><video src="../assets/servicios/eventos/recap-evento-2.mp4" poster="../assets/servicios/eventos/recap-evento-2.jpg" muted loop playsinline preload="none"></video><figcaption>Recap</figcaption></figure>
+      <figure><video src="../assets/servicios/eventos/backstage-1.mp4" poster="../assets/servicios/eventos/backstage-1.jpg" muted loop playsinline preload="none"></video><figcaption>Backstage</figcaption></figure>
     </div>
   </article>
 
   <article class="pres__item" id="p-ia" hidden>
     <div class="pres__t"><h3><span class="n">08 / 09</span>Contenido IA</h3><p>Imágenes, video y piezas generadas con inteligencia artificial, con dirección de arte y criterio de marca. Más ideas, más rápido, sin perder la identidad.</p></div>
-    <div class="pres__grid">
-      <figure><img src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy"><figcaption>Placeholder</figcaption></figure>
-      <figure><img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1675271591211-126ad94e495d?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1655720828018-edd2daec9349?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+    <div class="pres__grid pres__grid--fotos">
+      <figure><img src="../assets/servicios/ia/gpt-1.jpg" alt="" loading="lazy"></figure>
+      <figure><img src="../assets/servicios/ia/gpt-3.jpg" alt="" loading="lazy"></figure>
+      <figure><img src="../assets/servicios/ia/wa-1.jpg" alt="" loading="lazy"></figure>
+      <figure><img src="../assets/servicios/ia/cuadro1.jpg" alt="" loading="lazy"></figure>
+      <figure><img src="../assets/servicios/ia/wa-2.jpg" alt="" loading="lazy"></figure>
+      <figure><img src="../assets/servicios/ia/gpt-2.jpg" alt="" loading="lazy"></figure>
+      <figure><img src="../assets/servicios/ia/gemini.jpg" alt="" loading="lazy"></figure>
+    </div>
+    <div class="pres__grid pres__grid--reels">
+      <figure><video src="../assets/servicios/ia/wa-video-1.mp4" poster="../assets/servicios/ia/wa-video-1.jpg" muted loop playsinline preload="none"></video></figure>
+      <figure><video src="../assets/servicios/ia/wa-video-2.mp4" poster="../assets/servicios/ia/wa-video-2.jpg" muted loop playsinline preload="none"></video></figure>
     </div>
   </article>
 
   <article class="pres__item" id="p-merch" hidden>
     <div class="pres__t"><h3><span class="n">09 / 09</span>Merchandising</h3><p>Diseño y producción de objetos con la marca: remeras, gorras, bolsas, packaging y regalos corporativos que dan ganas de usar.</p></div>
-    <div class="pres__grid">
+    <div class="pres__grid pres__grid--fotos">
+      <!-- PLACEHOLDER: todavía no hay fotos de merchandising en la carpeta de Drive. Reemplazar por fotos reales. -->
       <figure><img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy"><figcaption>Placeholder</figcaption></figure>
       <figure><img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
       <figure><img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
@@ -461,9 +483,11 @@
   /* ---------- servicios: cada botón abre su presentación ---------- */
   const pres = $('.pres'), items = $$('.pres__item'), chips = $$('.chip');
   let cur_i = -1, opener = null;
+  const vio = new IntersectionObserver(es => es.forEach(e => { const v = e.target; if (e.isIntersecting) v.play().catch(() => {}); else v.pause(); }), { root: pres, threshold: .2 });
+  $$('.pres video').forEach(v => vio.observe(v));
   const show = (i) => { cur_i = (i + items.length) % items.length; items.forEach((it, j) => it.hidden = j !== cur_i); pres.scrollTop = 0; };
   const open = (id, from) => { const i = items.findIndex(it => it.id === id); if (i < 0) return; opener = from; show(i); pres.classList.add('on'); document.body.classList.add('pres-on'); setTimeout(() => $('.pres__close').focus(), 400); };
-  const close = () => { pres.classList.remove('on'); document.body.classList.remove('pres-on'); opener?.focus(); };
+  const close = () => { pres.classList.remove('on'); document.body.classList.remove('pres-on'); $$('.pres video').forEach(v => v.pause()); opener?.focus(); };
   chips.forEach(c => c.addEventListener('click', () => open(c.dataset.pres, c)));
   $('.pres__close').addEventListener('click', close);
   $('.pres__prev').addEventListener('click', () => show(cur_i - 1));
