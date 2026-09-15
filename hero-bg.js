@@ -2,12 +2,14 @@
 // Corre en WebGL. Si el navegador no puede, queda el degradé CSS de respaldo.
 //
 // Para ajustar:  SPEED = velocidad del movimiento en reposo
-//                MOUSE_SIZE / MOUSE_GLOW = tamaño e intensidad del brillo que sigue al mouse
+//                DRAG = cuánto se desliza todo el fondo hacia el mouse
+//                STIR_SIZE / STIR = tamaño y fuerza del "remolino" alrededor del cursor
 
 (() => {
-  const SPEED = 0.028;        // más alto = fluye más rápido
-  const MOUSE_SIZE = 26.0;   // más alto = brillo más chico
-  const MOUSE_GLOW = 0.32;   // 0 = nada, 1 = muy marcado
+  const SPEED = 0.04;        // más alto = fluye más rápido
+  const DRAG = 0.22;         // 0 = el mouse no arrastra nada
+  const STIR_SIZE = 9.0;     // más alto = remolino más chico
+  const STIR = 0.10;         // 0 = sin remolino
   const PIXEL_SCALE = 0.5;   // resolución interna (0.5 = mitad, sobra para algo tan difuso)
 
   const hero = document.querySelector('.hero');
@@ -47,6 +49,14 @@
       vec2 p = vec2(uv.x * aspect, uv.y);
       float t = u_time;
 
+      // mouse: (1) todo el fondo se desliza hacia el cursor…
+      vec2 m = vec2(u_mouse.x * aspect, u_mouse.y);
+      vec2 c = vec2(0.5 * aspect, 0.5);
+      p -= (m - c) * ${DRAG.toFixed(2)} * u_mstr;
+      // …y (2) alrededor del cursor el líquido se aparta, como un dedo en el agua
+      vec2 dm = p - m;
+      p += dm * exp(-dot(dm, dm) * ${STIR_SIZE.toFixed(1)}) * ${STIR.toFixed(2)} * u_mstr;
+
       // deformación líquida: dos capas de ruido que se arrastran una a la otra
       float n1 = snoise(p * 0.85 + vec2(t * 0.9, -t * 0.6));
       float n2 = snoise(p * 1.3 - vec2(t * 0.7, t * 0.5) + n1 * 0.5);
@@ -74,12 +84,6 @@
       // fucsia abajo a la izquierda
       vec2 df = (q - vec2(0.28 * aspect, -0.02)) * vec2(1.1, 1.7);
       col = mix(col, fucsia, clamp(exp(-dot(df, df) * 2.8), 0.0, 1.0) * 0.85);
-
-      // brillo chico que sigue al mouse
-      vec2 m = vec2(u_mouse.x * aspect, u_mouse.y);
-      vec2 dm = p - m;
-      float bump = exp(-dot(dm, dm) * ${MOUSE_SIZE.toFixed(1)}) * u_mstr;
-      col = mix(col, lime, bump * ${MOUSE_GLOW.toFixed(2)});
 
       gl_FragColor = vec4(col, 1.0);
     }`;
@@ -127,7 +131,7 @@
   const frame = (now) => {
     raf = null;
     if (!visible || document.hidden) return;
-    mx += (tx - mx) * 0.22; my += (ty - my) * 0.22; mstr += (tstr - mstr) * 0.08;
+    mx += (tx - mx) * 0.10; my += (ty - my) * 0.10; mstr += (tstr - mstr) * 0.05; // sigue con peso, como líquido
     gl.uniform2f(uRes, canvas.width, canvas.height);
     gl.uniform1f(uTime, reduced ? 0 : (now - start) / 1000 * SPEED);
     gl.uniform2f(uMouse, mx, my); gl.uniform1f(uMstr, mstr);
