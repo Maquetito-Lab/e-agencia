@@ -46,9 +46,10 @@
 
 <!-- ===================== HERO ===================== -->
 <section class="hero" id="inicio">
+  <canvas class="hero__gl" aria-hidden="true"></canvas>
+  <!-- respaldo si el navegador no tiene WebGL -->
   <div class="hero__layer hero__layer--base" aria-hidden="true"></div>
   <div class="hero__layer hero__layer--front" aria-hidden="true"></div>
-  <div class="hero__lime" aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
 
   <div class="hero__inner">
@@ -182,5 +183,6 @@
 </footer>
 
 <script src="script.js"></script>
+<script src="hero-bg.js"></script>
 </body>
 </html>

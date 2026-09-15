@@ -123,58 +123,30 @@ em { font-style: italic; }
   color: var(--hueso);
   isolation: isolate;
 }
-/* ---------- degradé "Canva" vivo ----------
-   · Standby: todo respira constante (::before de cada capa + pulso del lima).
-   · Con mouse: el lima (.hero__lime) va hasta el cursor y se mueve con él,
-     y las otras capas se desplazan (empujadas) en la misma dirección.
-   --ox/--oy/--dx/--dy los pone script.js. */
-.hero__layer {
-  position: absolute; inset: -18%; z-index: -3;
-  transform: translate3d(var(--ox, 0px), var(--oy, 0px), 0);
-  transition: transform .35s cubic-bezier(.2,.7,.3,1);
-  will-change: transform;
-}
-.hero__layer::before {
-  content: ""; position: absolute; inset: 0;
-  animation: breathe 11s ease-in-out infinite alternate;
-  will-change: transform;
-}
-/* fondo: oliva a la derecha + base */
+/* ---------- fondo del hero ----------
+   El degradé líquido lo dibuja hero-bg.js en el canvas (.hero__gl).
+   Las capas .hero__layer son el respaldo CSS si no hay WebGL. */
+.hero__gl { position: absolute; inset: 0; z-index: -3; width: 100%; height: 100%; display: block; }
+.hero:not(.has-gl) .hero__gl { display: none; }
+.hero.has-gl .hero__layer { display: none; }
+
+.hero__layer { position: absolute; inset: -18%; z-index: -3; }
+.hero__layer::before { content: ""; position: absolute; inset: 0; animation: breathe 11s ease-in-out infinite alternate; }
 .hero__layer--base::before {
   background:
     radial-gradient(60% 80% at 100% 20%, #6d6558 0%, rgb(109 101 88 / 0) 70%),
     linear-gradient(100deg, #b98aa8 0%, #89a03c 45%, #4a6a2c 75%, #5e6a4a 100%);
 }
-/* adelante: rosa arriba-izq + fucsia abajo (el lima va aparte) */
 .hero__layer--front::before {
   background:
     radial-gradient(55% 75% at 12% 18%, #eba4cd 0%, rgb(235 164 205 / 0) 70%),
+    radial-gradient(38% 70% at 42% 28%, #d3e44c 0%, #bccc48 45%, rgb(188 204 72 / 0) 78%),
     radial-gradient(45% 55% at 30% 100%, #c566a9 0%, rgb(197 102 169 / 0) 70%);
   animation-duration: 14s; animation-delay: -5s;
 }
 @keyframes breathe {
   from { transform: translate(0, 0) scale(1); }
   to   { transform: translate(-6%, 5%) scale(1.14); }
-}
-
-/* el lima: vive en su lugar (42% / 28%) respirando; con mouse se corre --dx/--dy */
-.hero__lime {
-  position: absolute; z-index: -2; pointer-events: none;
-  left: 42%; top: 28%;
-  width: 50vmax; height: 64vmax; margin: -32vmax 0 0 -25vmax;
-  transform: translate3d(var(--dx, 0px), var(--dy, 0px), 0);
-  transition: transform 1.2s var(--ease);
-  will-change: transform;
-}
-.hero.is-tracking .hero__lime { transition-duration: .08s; transition-timing-function: linear; }
-.hero__lime::before {
-  content: ""; position: absolute; inset: 0; border-radius: 50%;
-  background: radial-gradient(closest-side, #d6e84c 0%, rgb(205 222 72 / .75) 22%, rgb(190 206 72 / .35) 50%, rgb(188 204 72 / 0) 78%);
-  animation: pulse 6s ease-in-out infinite alternate;
-}
-@keyframes pulse {
-  from { transform: scale(1) translate(0, 0); }
-  to   { transform: scale(1.18) translate(3%, -4%); }
 }
 
 .grain {
@@ -448,8 +420,7 @@ em { font-style: italic; }
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .hero__layer::before, .hero__lime::before, .splash, .hero__scroll span { animation: none; }
-  .hero__layer, .hero__lime { transition: none; }
+  .hero__layer::before, .splash, .hero__scroll span { animation: none; }
   .hero__logo .logo, .hero__tag, .hero__scroll { animation: none; opacity: 1; transform: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .chips.in li { animation: none; }
