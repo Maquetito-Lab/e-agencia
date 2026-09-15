@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Opción A · Editorial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rojo: #e30613; --lima: #c9e63a; --rosa: #f4a9d9; --crema: #fff6e6;
+    --tinta: oklch(20% 0.02 340); --hueso: oklch(99% 0.01 80);
+    --ease: cubic-bezier(.22,1,.36,1); --g: clamp(20px, 5vw, 80px);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: auto; }
+  body { margin: 0; font-family: "Archivo", Arial, sans-serif; background: var(--crema); color: var(--tinta); line-height: 1.4; overflow-x: hidden; }
+  h1,h2,h3,p,ul,figure { margin: 0; } ul { padding: 0; list-style: none; } a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+  .logo { display: inline-block; aspect-ratio: 939/602; background: var(--rojo);
+    -webkit-mask: url("../assets/logo.png") no-repeat center/contain; mask: url("../assets/logo.png") no-repeat center/contain; }
+  .mark { display: inline-block; aspect-ratio: 524/602; background: var(--rojo);
+    -webkit-mask: url("../assets/logo-e.png") no-repeat center/contain; mask: url("../assets/logo-e.png") no-repeat center/contain; }
+
+  /* nav: mínima, texto */
+  .nav { position: fixed; inset: 0 0 auto 0; z-index: 20; display: flex; justify-content: space-between; align-items: center; padding: 22px var(--g); }
+  .nav .logo { width: 58px; }
+  .nav ul { display: flex; gap: 28px; font-size: .8rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+  .nav a { position: relative; }
+  .nav a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -4px; height: 1.5px; background: currentColor; transition: right .4s var(--ease); }
+  .nav a:hover::after { right: 0; }
+
+  /* hero: tipografía monumental */
+  .hero { min-height: 100svh; display: grid; grid-template-rows: 1fr auto; padding: 120px var(--g) 40px; }
+  .hero__title { align-self: center; font-size: clamp(3.4rem, 13.5vw, 15rem); font-weight: 900; line-height: .86; letter-spacing: -.05em; text-transform: uppercase; font-stretch: 112%; }
+  .hero__title .mark { width: .78em; height: .9em; vertical-align: -.06em; margin-right: -.06em; }
+  .hero__title .l2 { display: block; padding-left: .9em; font-stretch: 100%; font-weight: 300; letter-spacing: -.03em; }
+  .hero__title .l2 em { font-style: italic; font-weight: 500; }
+  .hero__foot { display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 24px; font-size: .85rem; font-weight: 500; }
+  .hero__foot .r { text-align: right; }
+  .hero__foot .c { width: 44px; height: 44px; border: 1.5px solid currentColor; border-radius: 50%; display: grid; place-items: center; font-size: 1.1rem; }
+
+  /* cinta */
+  .tape { overflow: hidden; border-top: 1.5px solid var(--tinta); border-bottom: 1.5px solid var(--tinta); background: var(--lima); }
+  .tape__in { display: flex; gap: 0; width: max-content; animation: run 28s linear infinite; }
+  .tape span { padding: 14px 32px; font-size: 1.05rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
+  .tape span::after { content: "✦"; margin-left: 32px; color: var(--rojo); }
+  @keyframes run { to { transform: translateX(-50%); } }
+
+  /* manifiesto */
+  .mani { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; padding: clamp(80px, 12vw, 160px) var(--g); }
+  .mani__k { font-size: .8rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--rojo); }
+  .mani__t { font-size: clamp(1.6rem, 3.6vw, 3.4rem); font-weight: 400; line-height: 1.12; letter-spacing: -.025em; max-width: 26ch; }
+  .mani__t em { font-style: italic; }
+  .mani__t strong { font-weight: 800; }
+
+  /* casos: lista editorial, la foto sigue al mouse */
+  .casos { padding: 0 var(--g) clamp(80px, 10vw, 140px); }
+  .casos__h { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 18px; border-bottom: 1.5px solid var(--tinta); font-size: .8rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  .caso { display: grid; grid-template-columns: 3rem 1fr auto; align-items: center; gap: 24px; padding: 26px 0; border-bottom: 1px solid color-mix(in oklch, var(--tinta) 25%, transparent); cursor: pointer; transition: padding .5s var(--ease); }
+  .caso:hover { padding-left: 14px; }
+  .caso__n { font-size: .8rem; font-weight: 600; color: var(--rojo); }
+  .caso__t { font-size: clamp(1.6rem, 4.2vw, 3.8rem); font-weight: 700; line-height: 1; letter-spacing: -.035em; text-transform: uppercase; }
+  .caso__c { font-size: .8rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; opacity: .6; }
+  .caso__c::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--lima); margin-right: 10px; border: 1px solid var(--tinta); }
+  .peek { position: fixed; left: 0; top: 0; z-index: 10; width: min(34vw, 420px); aspect-ratio: 4/5; pointer-events: none; overflow: hidden; border-radius: 4px;
+    opacity: 0; transition: opacity .35s var(--ease); will-change: transform; }
+  .peek.on { opacity: 1; }
+  .peek__in { width: 100%; height: 100%; transform: scale(.9) rotate(-3deg); transition: transform .5s var(--ease); }
+  .peek.on .peek__in { transform: none; }
+  .peek img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .3s; }
+  .peek img.on { opacity: 1; }
+
+  /* contacto */
+  .cta { background: var(--tinta); color: var(--hueso); padding: clamp(80px, 12vw, 160px) var(--g); display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 40px; }
+  .cta h2 { font-size: clamp(3rem, 10vw, 11rem); font-weight: 900; line-height: .9; letter-spacing: -.05em; text-transform: uppercase; }
+  .cta h2 span { color: var(--lima); }
+  .cta ul { display: grid; gap: 10px; font-size: 1.05rem; font-weight: 500; text-align: right; }
+  .cta a { border-bottom: 1.5px solid var(--lima); padding-bottom: 2px; }
+  .foot { background: var(--tinta); color: var(--hueso); padding: 20px var(--g) 28px; font-size: .75rem; opacity: .7; display: flex; justify-content: space-between; }
+
+  .rv { opacity: 0; transform: translateY(24px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+  .rv.in { opacity: 1; transform: none; }
+
+  @media (max-width: 800px) {
+    .nav ul { gap: 16px; font-size: .7rem; }
+    .hero { padding-top: 100px; }
+    .hero__foot { grid-template-columns: 1fr auto; } .hero__foot .r { display: none; }
+    .mani { grid-template-columns: 1fr; gap: 16px; }
+    .caso { grid-template-columns: 2.4rem 1fr; } .caso__c { grid-column: 2; }
+    .peek { display: none; }
+    .cta { grid-template-columns: 1fr; } .cta ul { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <a href="#"><span class="logo"></span></a>
+  <ul><li><a href="#casos">Casos</a></li><li><a href="#mani">Agencia</a></li><li><a href="#cta">Contacto</a></li></ul>
+</header>
+
+<section class="hero">
+  <h1 class="hero__title">
+    <span class="mark" aria-hidden="true"></span>levamos<span class="l2">tu <em>marca.</em></span>
+    <span class="sr-only" style="position:absolute;left:-9999px">Elevamos tu marca</span>
+  </h1>
+  <div class="hero__foot">
+    <div>Agencia de comunicación<br>visual y RR.SS</div>
+    <a class="c" href="#mani" aria-label="Bajar">↓</a>
+    <div class="r">Buenos Aires<br>2026</div>
+  </div>
+</section>
+
+<div class="tape" aria-hidden="true">
+  <div class="tape__in">
+    <span>Creación de contenido</span><span>Foto producto</span><span>Community management</span><span>Branding</span><span>Producción</span><span>Cobertura de eventos</span>
+    <span>Creación de contenido</span><span>Foto producto</span><span>Community management</span><span>Branding</span><span>Producción</span><span>Cobertura de eventos</span>
+  </div>
+</div>
+
+<section class="mani" id="mani">
+  <p class="mani__k rv">Ideas con dirección.<br>Marcas con identidad.</p>
+  <p class="mani__t rv">Creamos universos visuales que le dan <em>coherencia</em> y personalidad a las marcas con <strong>pensamiento estratégico.</strong> Combinamos estrategia, creatividad y una mirada integral para transformar ideas en marcas que conectan, se diferencian y construyen valor en el tiempo.</p>
+</section>
+
+<section class="casos" id="casos">
+  <div class="casos__h rv"><span>Casos seleccionados</span><span>2024 — 2026</span></div>
+  <a class="caso rv" data-i="0"><span class="caso__n">01</span><span class="caso__t">Óptica Mirá</span><span class="caso__c">Foto producto</span></a>
+  <a class="caso rv" data-i="1"><span class="caso__n">02</span><span class="caso__t">Rojo Campaña</span><span class="caso__c">Contenido</span></a>
+  <a class="caso rv" data-i="2"><span class="caso__n">03</span><span class="caso__t">Paso Sneakers</span><span class="caso__c">Branding</span></a>
+  <a class="caso rv" data-i="3"><span class="caso__n">04</span><span class="caso__t">Instantánea</span><span class="caso__c">Producción</span></a>
+  <div class="peek" aria-hidden="true"><div class="peek__in">
+    <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=900&q=80" alt="">
+    <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80" alt="">
+    <img src="https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?auto=format&fit=crop&w=900&q=80" alt="">
+    <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=900&q=80" alt="">
+  </div></div>
+</section>
+
+<section class="cta" id="cta">
+  <h2 class="rv">Hable<span>mos.</span></h2>
+  <ul class="rv"><li><a href="#">Instagram</a></li><li><a href="#">WhatsApp</a></li><li><a href="#">hola@eagencia.com</a></li></ul>
+</section>
+<footer class="foot"><span>© 2026 e. agencia</span><span>Comunicación visual y RR.SS</span></footer>
+
+<script>
+  const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && e.target.classList.add('in')), { threshold: .1 });
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+  const peek = document.querySelector('.peek'), imgs = peek.querySelectorAll('img');
+  let px = 0, py = 0, tx = 0, ty = 0, raf = null;
+  const loop = () => {
+    px += (tx - px) * .12; py += (ty - py) * .12;
+    peek.style.transform = `translate(${px - peek.offsetWidth / 2}px, ${py - peek.offsetHeight / 2}px)`;
+    raf = (Math.abs(tx - px) > .3 || Math.abs(ty - py) > .3) ? requestAnimationFrame(loop) : null; // se apaga cuando llega
+  };
+  const kick = () => { if (!raf) raf = requestAnimationFrame(loop); };
+  document.querySelectorAll('.caso').forEach(c => {
+    c.addEventListener('pointerenter', e => { imgs.forEach((im, i) => im.classList.toggle('on', i == c.dataset.i)); peek.classList.add('on'); tx = e.clientX + 40; ty = e.clientY; if (!peek.classList.contains('was')) { px = tx; py = ty; peek.classList.add('was'); } kick(); });
+    c.addEventListener('pointermove', e => { tx = e.clientX + 40; ty = e.clientY; kick(); });
+    c.addEventListener('pointerleave', () => peek.classList.remove('on'));
+  });
+</script>
+</body>
+</html>

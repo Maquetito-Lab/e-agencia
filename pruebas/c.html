@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Opción C · Inmersiva</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rojo: #e30613; --lima: #c9e63a; --rosa: #f4a9d9; --crema: #fff6e6; --fucsia: #e23ac8;
+    --tinta: oklch(14% 0.02 340); --hueso: oklch(97% 0.01 80);
+    --ease: cubic-bezier(.22,1,.36,1); --g: clamp(20px, 5vw, 80px);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-snap-type: y proximity; }
+  body { margin: 0; font-family: "Archivo", Arial, sans-serif; background: var(--tinta); color: var(--hueso); line-height: 1.4; overflow-x: hidden; }
+  h1,h2,h3,p,ul,figure { margin: 0; } ul { padding: 0; list-style: none; } a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+  .logo { display: inline-block; aspect-ratio: 939/602; background: var(--hueso);
+    -webkit-mask: url("../assets/logo.png") no-repeat center/contain; mask: url("../assets/logo.png") no-repeat center/contain; }
+
+  /* fondo líquido fijo, detrás de todo (lo dibuja c-bg.js) */
+  .hero { position: fixed; inset: 0; z-index: -1; }
+  .hero__gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .hero__layer { display: none; }
+  .grain { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .18; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); background-size: 220px; }
+
+  /* nav */
+  .nav { position: fixed; inset: 0 0 auto 0; z-index: 20; display: flex; justify-content: space-between; align-items: center; padding: 22px var(--g); }
+  .nav .logo { width: 56px; }
+  .nav ul { display: flex; gap: 26px; font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; opacity: .85; }
+  .dots { position: fixed; right: 22px; top: 50%; transform: translateY(-50%); z-index: 20; display: grid; gap: 10px; }
+  .dots a { width: 6px; height: 6px; border-radius: 50%; background: var(--hueso); opacity: .35; transition: opacity .3s, transform .3s; }
+  .dots a.on { opacity: 1; transform: scale(1.6); }
+
+  .slide { position: relative; z-index: 1; min-height: 100svh; scroll-snap-align: start; display: grid; align-content: center; padding: 120px var(--g) 80px; }
+
+  /* hero */
+  .h1 { font-size: clamp(2.6rem, 8.5vw, 9.5rem); font-weight: 200; line-height: .98; letter-spacing: -.04em; max-width: 12ch; }
+  .h1 b { font-weight: 800; }
+  .h1 em { font-style: italic; font-weight: 300; color: var(--lima); }
+  .sub { margin-top: 28px; display: flex; gap: 28px; align-items: center; font-size: .8rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; opacity: .8; }
+  .sub::before { content: ""; width: 60px; height: 1px; background: currentColor; }
+
+  /* manifiesto */
+  .mani p { font-size: clamp(1.5rem, 3.4vw, 3.2rem); font-weight: 300; line-height: 1.15; letter-spacing: -.02em; max-width: 30ch; }
+  .mani p em { font-style: italic; color: var(--rosa); }
+  .mani p b { font-weight: 700; }
+
+  /* casos: cada uno a pantalla completa */
+  .caso { grid-template-columns: 1.1fr 1fr; gap: clamp(24px, 5vw, 80px); align-items: center; }
+  .caso figure { position: relative; aspect-ratio: 4/5; max-height: 74vh; overflow: hidden; border-radius: 4px; }
+  .caso img { position: absolute; inset: -8% 0; width: 100%; height: 116%; object-fit: cover; will-change: transform; }
+  .caso .k { font-size: .75rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--lima); }
+  .caso h2 { margin-top: 14px; font-size: clamp(2.4rem, 6vw, 6.4rem); font-weight: 700; line-height: .95; letter-spacing: -.04em; }
+  .caso p { margin-top: 20px; max-width: 34ch; font-size: clamp(.95rem, 1.3vw, 1.15rem); opacity: .8; }
+  .caso .more { display: inline-flex; align-items: center; gap: 12px; margin-top: 30px; font-size: .8rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+  .caso .more span { width: 40px; height: 40px; border: 1px solid currentColor; border-radius: 50%; display: grid; place-items: center; transition: background .3s, color .3s; }
+  .caso:hover .more span { background: var(--hueso); color: var(--tinta); }
+  .caso:nth-of-type(even) figure { order: 2; }
+
+  /* servicios + contacto */
+  .serv ul { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); border-top: 1px solid rgb(255 255 255 / .25); }
+  .serv li { padding: 26px 0; border-bottom: 1px solid rgb(255 255 255 / .25); font-size: clamp(1.1rem, 2vw, 1.7rem); font-weight: 400; letter-spacing: -.01em; display: flex; gap: 18px; align-items: baseline; }
+  .serv li::before { content: counter(s, decimal-leading-zero); counter-increment: s; font-size: .75rem; font-weight: 700; color: var(--lima); }
+  .serv ul { counter-reset: s; }
+  .cta h2 { font-size: clamp(3rem, 11vw, 12rem); font-weight: 200; line-height: .9; letter-spacing: -.05em; }
+  .cta h2 b { font-weight: 800; color: var(--rosa); }
+  .cta ul { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 40px; }
+  .cta a { padding: 14px 24px; border: 1px solid rgb(255 255 255 / .5); border-radius: 999px; font-size: .85rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; transition: background .3s, color .3s; }
+  .cta a:hover { background: var(--hueso); color: var(--tinta); }
+
+  .rv { opacity: 0; transform: translateY(30px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+  .rv.in { opacity: 1; transform: none; }
+  @media (max-width: 800px) {
+    .caso { grid-template-columns: 1fr; } .caso figure { max-height: 52vh; order: 0 !important; }
+    .nav ul { gap: 14px; font-size: .65rem; } .dots { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="hero" aria-hidden="true"><canvas class="hero__gl"></canvas><div class="hero__layer"></div></div>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="nav">
+  <a href="#"><span class="logo" role="img" aria-label="e. agencia"></span></a>
+  <ul><li><a href="#c1">Casos</a></li><li><a href="#serv">Servicios</a></li><li><a href="#cta">Contacto</a></li></ul>
+</header>
+<nav class="dots" aria-label="Secciones"><a href="#s0" class="on"></a><a href="#s1"></a><a href="#c1"></a><a href="#c2"></a><a href="#c3"></a><a href="#serv"></a><a href="#cta"></a></nav>
+
+<section class="slide" id="s0">
+  <h1 class="h1 rv">Ideas con <b>dirección.</b><br>Marcas con <em>identidad.</em></h1>
+  <p class="sub rv">Agencia de comunicación visual y RR.SS</p>
+</section>
+
+<section class="slide mani" id="s1">
+  <p class="rv">Creamos universos visuales que le dan <em>coherencia</em> y personalidad a las marcas con <b>pensamiento estratégico.</b> Marcas que conectan con las personas, se diferencian y construyen valor en el tiempo.</p>
+</section>
+
+<section class="slide caso" id="c1">
+  <figure class="rv"><img data-px src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1200&q=80" alt=""></figure>
+  <div class="rv"><p class="k">01 · Foto producto</p><h2>Óptica Mirá</h2><p>Catálogo de temporada: dirección de arte, producción y retoque para e-commerce y redes.</p><a class="more" href="#">Ver caso <span>→</span></a></div>
+</section>
+<section class="slide caso" id="c2">
+  <figure class="rv"><img data-px src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=80" alt=""></figure>
+  <div class="rv"><p class="k">02 · Contenido</p><h2>Rojo Campaña</h2><p>Sistema de contenido mensual para Instagram y TikTok: concepto, producción y community.</p><a class="more" href="#">Ver caso <span>→</span></a></div>
+</section>
+<section class="slide caso" id="c3">
+  <figure class="rv"><img data-px src="https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?auto=format&fit=crop&w=1200&q=80" alt=""></figure>
+  <div class="rv"><p class="k">03 · Branding</p><h2>Paso Sneakers</h2><p>Identidad visual completa: naming, sistema gráfico y lanzamiento en redes.</p><a class="more" href="#">Ver caso <span>→</span></a></div>
+</section>
+
+<section class="slide serv" id="serv">
+  <ul class="rv"><li>Creación de contenido</li><li>Foto producto</li><li>Community management</li><li>Branding</li><li>Producción</li><li>Cobertura de eventos</li></ul>
+</section>
+
+<section class="slide cta" id="cta">
+  <h2 class="rv">Hable<b>mos.</b></h2>
+  <ul class="rv"><li><a href="#">Instagram</a></li><li><a href="#">WhatsApp</a></li><li><a href="#">Correo</a></li></ul>
+</section>
+
+<script src="c-bg.js"></script>
+<script>
+  const rv = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && e.target.classList.add('in')), { threshold: .15 });
+  document.querySelectorAll('.rv').forEach(el => rv.observe(el));
+  // puntos laterales
+  const dots = [...document.querySelectorAll('.dots a')], slides = [...document.querySelectorAll('.slide')];
+  const so = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) dots.forEach(d => d.classList.toggle('on', d.getAttribute('href') === '#' + e.target.id)); }), { rootMargin: '-45% 0px -45% 0px' });
+  slides.forEach(s => so.observe(s));
+  // parallax suave en las fotos
+  const px = [...document.querySelectorAll('[data-px]')];
+  addEventListener('scroll', () => { const h = innerHeight; px.forEach(im => { const r = im.parentElement.getBoundingClientRect(); const k = (r.top + r.height / 2 - h / 2) / h; im.style.transform = `translateY(${k * -6}%)`; }); }, { passive: true });
+</script>
+</body>
+</html>
