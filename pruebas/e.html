@@ -31,14 +31,16 @@
   /* ---------- cursor ---------- */
   .cur { position: fixed; left: 0; top: 0; z-index: 99; pointer-events: none; display: none; }
   @media (pointer: fine) { .cur { display: block; } }
-  .cur__dot { position: absolute; width: 8px; height: 8px; margin: -4px; border-radius: 50%; background: var(--rojo); }
-  .cur__ring { position: absolute; width: 36px; height: 36px; margin: -18px; border-radius: 50%; border: 1.5px solid rgb(255 255 255 / .7); display: grid; place-items: center; font-size: .6rem; font-weight: 800; letter-spacing: .12em; transition: width .4s var(--ease), height .4s var(--ease), margin .4s var(--ease), background .4s, border-color .4s; }
-  .cur.is-ver .cur__ring { width: 84px; height: 84px; margin: -42px; background: var(--lima); border-color: var(--lima); color: var(--tinta); }
+  .cur__dot { position: absolute; width: 10px; height: 10px; margin: -5px; border-radius: 50%; background: var(--rojo); transition: width .3s var(--ease), height .3s var(--ease), margin .3s var(--ease); }
+  .cur.is-link .cur__dot { width: 18px; height: 18px; margin: -9px; }
+  .cur__ring { position: absolute; width: 0; height: 0; margin: 0; border-radius: 50%; opacity: 0; display: grid; place-items: center; font-size: .6rem; font-weight: 800; letter-spacing: .12em; transition: width .4s var(--ease), height .4s var(--ease), margin .4s var(--ease), opacity .3s; }
+  .cur.is-ver .cur__ring { width: 84px; height: 84px; margin: -42px; opacity: 1; background: var(--lima); color: var(--tinta); }
+  .cur.is-ver .cur__dot { opacity: 0; }
   .cur.is-ver .cur__ring::after { content: "VER"; }
-  .cur.is-link .cur__ring { width: 48px; height: 48px; margin: -24px; background: rgb(255 255 255 / .15); }
+  
 
   /* ---------- intro: el logo se escribe y vuela a la nav ---------- */
-  .intro { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; background: var(--tinta); transition: background .8s var(--ease); }
+  .intro { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; background: var(--rosa); transition: background .9s var(--ease); }
   .intro.fly { background: transparent; pointer-events: none; }
   .intro__logo { position: relative; width: min(70vw, 720px); transform-origin: 0 0; will-change: transform; }
   .intro__logo svg { width: 100%; height: auto; display: block; overflow: visible; }
@@ -196,7 +198,7 @@
         <mask id="arco" maskUnits="userSpaceOnUse"><circle id="arcoc" cx="706" cy="491" r="0" fill="#fff"/></mask>
         <filter id="blanco"><feColorMatrix type="matrix" values="0 0 0 0 .97  0 0 0 0 .96  0 0 0 0 .93  0 0 0 1 0"/></filter>
       </defs>
-      <g filter="url(#blanco)">
+      <g class="intro__g">
         <image href="../assets/logo-e.png" x="0" y="0" width="524" height="602" mask="url(#trazo)"/>
         <image class="intro__dot" href="../assets/logo-dot.png" x="643" y="422" width="126" height="139"/>
         <image class="intro__ag" href="../assets/logo-agencia.png" x="564" y="221" width="375" height="275" mask="url(#arco)"/>
@@ -322,7 +324,7 @@
   const toCanvas = (x, y) => { const s = svg.getBoundingClientRect(), c = splash.getBoundingClientRect(), k = s.width / 939; return [((s.left - c.left) + x * k) * devicePixelRatio, ((s.top - c.top) + y * k) * devicePixelRatio]; };
   const spawn = () => { fitSplash(); const [x0, y0] = toCanvas(502, 328), [dx, dy] = toCanvas(706, 491), k = svg.getBoundingClientRect().width / 939 * devicePixelRatio;
     for (let i = 0; i < 18; i++) { const a = Math.atan2(dy - y0, dx - x0) + (Math.random() - .5) * 1.5, v = (6 + Math.random() * 10) * k; drops.push({ x: x0, y: y0, vx: Math.cos(a) * v, vy: Math.sin(a) * v, r: (3 + Math.random() * 7) * k, life: 1, decay: .014 + Math.random() * .02 }); } };
-  const drawDrops = () => { sctx.clearRect(0, 0, splash.width, splash.height); sctx.fillStyle = '#f7f4ee'; drops = drops.filter(d => d.life > 0);
+  const drawDrops = () => { sctx.clearRect(0, 0, splash.width, splash.height); sctx.fillStyle = '#e30613'; drops = drops.filter(d => d.life > 0);
     for (const d of drops) { d.x += d.vx; d.y += d.vy; d.vy += .12 * devicePixelRatio; d.vx *= .97; d.vy *= .97; d.life -= d.decay; sctx.globalAlpha = Math.max(0, d.life); sctx.beginPath(); sctx.arc(d.x, d.y, d.r * (.4 + d.life * .6), 0, 7); sctx.fill(); }
     sctx.globalAlpha = 1; if (drops.length) requestAnimationFrame(drawDrops); };
   const pen = (t) => t < .55 ? (1 - Math.pow(1 - t / .55, 2.2)) * .62 : .62 + Math.pow((t - .55) / .45, .8) * .38;
@@ -332,7 +334,7 @@
     const k = target.width / from.width;
     logo.style.transition = 'transform 1s cubic-bezier(.22,1,.36,1)';
     logo.style.transform = `translate(${target.left - from.left}px, ${target.top - from.top}px) scale(${k})`;
-    intro.classList.add('fly');
+    intro.classList.add('fly'); $('.intro__g').setAttribute('filter', 'url(#blanco)'); // al volar se vuelve blanco como el logo de la nav
     setTimeout(() => { nav.classList.add('ready'); intro.remove(); document.body.classList.remove('intro-on'); $$('.top .rv').forEach(el => el.classList.add('in')); }, 950);
   };
   const skip = () => { intro.remove(); document.body.classList.remove('intro-on'); nav.classList.add('ready'); $$('.top .rv').forEach(el => el.classList.add('in')); };

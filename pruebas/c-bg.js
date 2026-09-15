@@ -6,7 +6,7 @@
 //                SPOT_PUSH = cuánto aparta la mancha a los colores de alrededor
 
 (() => {
-  const SPEED = 0.03;        // más alto = fluye más rápido
+  const SPEED = 0.048;        // más alto = fluye más rápido
   const SPOT_SIZE = 16.0;    // más alto = mancha más chica
   const SPOT_PUSH = 0.20;    // 0 = no aparta nada
   const PIXEL_SCALE = 0.5;   // resolución interna (0.5 = mitad, sobra para algo tan difuso)
