@@ -24,22 +24,31 @@
     reveals.forEach((el) => el.classList.add('in'));
   }
 
-  // Hero: con mouse, las dos capas del degradé se desplazan hacia el cursor
-  // (la de adelante más que la de fondo). Sin mouse (celu) solo respiran.
+  // Hero con mouse: el lima va hasta el cursor y lo sigue sin retardo;
+  // las otras capas se desplazan (empujadas) en la misma dirección.
+  // Sin mouse (celu) queda solo la respiración.
   const hero = $('.hero');
+  const lime = $('.hero__lime');
   const layers = $$('.hero__layer');
-  if (hero && layers.length && matchMedia('(pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const strength = [0.08, 0.18]; // fracción del ancho/alto del hero que se corre cada capa
+  if (hero && lime && matchMedia('(pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const push = [0.07, 0.14]; // cuánto se corre cada capa (fracción del hero)
     hero.addEventListener('pointermove', (e) => {
       const r = hero.getBoundingClientRect();
-      const nx = (e.clientX - r.left) / r.width - 0.5;   // -0.5 … 0.5
-      const ny = (e.clientY - r.top) / r.height - 0.5;
+      const mx = e.clientX - r.left, my = e.clientY - r.top;
+      hero.classList.add('is-tracking');
+      // lima: distancia desde su lugar de reposo (42% / 28%) hasta el mouse
+      lime.style.setProperty('--dx', (mx - r.width * 0.42).toFixed(1) + 'px');
+      lime.style.setProperty('--dy', (my - r.height * 0.28).toFixed(1) + 'px');
+      // capas: desplazamiento proporcional a dónde está el mouse respecto del centro
+      const nx = mx / r.width - 0.5, ny = my / r.height - 0.5;
       layers.forEach((l, i) => {
-        l.style.setProperty('--ox', (nx * r.width * strength[i]).toFixed(1) + 'px');
-        l.style.setProperty('--oy', (ny * r.height * strength[i]).toFixed(1) + 'px');
+        l.style.setProperty('--ox', (nx * r.width * push[i]).toFixed(1) + 'px');
+        l.style.setProperty('--oy', (ny * r.height * push[i]).toFixed(1) + 'px');
       });
     });
     hero.addEventListener('pointerleave', () => {
+      hero.classList.remove('is-tracking');
+      lime.style.setProperty('--dx', '0px'); lime.style.setProperty('--dy', '0px');
       layers.forEach((l) => { l.style.setProperty('--ox', '0px'); l.style.setProperty('--oy', '0px'); });
     });
   }
