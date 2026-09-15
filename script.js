@@ -24,26 +24,24 @@
     reveals.forEach((el) => el.classList.add('in'));
   }
 
-  // Hero: la mancha lima persigue al mouse (solo si hay puntero fino, o sea no en celu)
+  // Hero: con mouse, las dos capas del degradé se desplazan hacia el cursor
+  // (la de adelante más que la de fondo). Sin mouse (celu) solo respiran.
   const hero = $('.hero');
-  const spot = $('.hero__spot');
-  if (hero && spot && matchMedia('(pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    let tx = hero.clientWidth * 0.42, ty = hero.clientHeight * 0.3; // objetivo
-    let x = tx, y = ty;                                              // posición actual
-    let raf = null;
-    const tick = () => {
-      x += (tx - x) * 0.06; y += (ty - y) * 0.06;                     // persigue con retardo
-      spot.style.setProperty('--mx', x + 'px');
-      spot.style.setProperty('--my', y + 'px');
-      raf = (Math.abs(tx - x) > 0.5 || Math.abs(ty - y) > 0.5) ? requestAnimationFrame(tick) : null;
-    };
+  const layers = $$('.hero__layer');
+  if (hero && layers.length && matchMedia('(pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const strength = [0.08, 0.18]; // fracción del ancho/alto del hero que se corre cada capa
     hero.addEventListener('pointermove', (e) => {
       const r = hero.getBoundingClientRect();
-      tx = e.clientX - r.left; ty = e.clientY - r.top;
-      hero.classList.add('has-pointer');
-      if (!raf) raf = requestAnimationFrame(tick);
+      const nx = (e.clientX - r.left) / r.width - 0.5;   // -0.5 … 0.5
+      const ny = (e.clientY - r.top) / r.height - 0.5;
+      layers.forEach((l, i) => {
+        l.style.setProperty('--ox', (nx * r.width * strength[i]).toFixed(1) + 'px');
+        l.style.setProperty('--oy', (ny * r.height * strength[i]).toFixed(1) + 'px');
+      });
     });
-    hero.addEventListener('pointerleave', () => hero.classList.remove('has-pointer'));
+    hero.addEventListener('pointerleave', () => {
+      layers.forEach((l) => { l.style.setProperty('--ox', '0px'); l.style.setProperty('--oy', '0px'); });
+    });
   }
 
   // Menú hamburguesa (celular)
