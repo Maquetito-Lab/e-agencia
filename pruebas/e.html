@@ -9,23 +9,25 @@
 <style>
   :root {
     --rojo: #e30613; --lima: #c9e63a; --rosa: #f4a9d9; --crema: #fff6e6; --fucsia: #e23ac8; --oliva: #3e5a2b;
-    --tinta: oklch(14% 0.02 340); --hueso: oklch(97% 0.01 80); --linea: rgb(255 255 255 / .18);
+    --tinta: oklch(14% 0.02 340); --hueso: oklch(97% 0.01 80); --linea: rgb(255 255 255 / .22);
     --ease: cubic-bezier(.22,1,.36,1); --g: clamp(20px, 5vw, 80px);
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: auto; }
-  body { margin: 0; font-family: "Archivo", Arial, sans-serif; background: var(--tinta); color: var(--hueso); line-height: 1.4; overflow-x: hidden; }
-  body.intro-on { overflow: hidden; }
+  body { margin: 0; font-family: "Archivo", Arial, sans-serif; background: var(--oliva); color: var(--hueso); line-height: 1.4; overflow-x: hidden; }
+  body.intro-on, body.pres-on { overflow: hidden; }
   @media (pointer: fine) { body, a, button { cursor: none; } }
   h1,h2,h3,p,ul,figure,blockquote { margin: 0; } ul { padding: 0; list-style: none; } a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; }
   img { display: block; max-width: 100%; }
-  .k { font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--lima); }
+  .k { font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--hueso); }
+  .cta .k, .pres .k { color: var(--rojo); }
 
   /* ---------- fondo líquido + grano ---------- */
-  .hero { position: fixed; inset: 0; z-index: -1; }
+  .hero { position: fixed; inset: 0; z-index: -1; background: linear-gradient(100deg, #c98cb4 0%, #a9b83c 45%, #4a6a2c 75%, #3e5a2b 100%); }
   .hero__gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
   .hero__layer { display: none; }
-  .grain { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .14; mix-blend-mode: overlay; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); background-size: 220px; }
+  .grain { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .16; mix-blend-mode: overlay; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); background-size: 220px; }
   main > *, footer { position: relative; z-index: 1; }
 
   /* ---------- cursor ---------- */
@@ -34,10 +36,9 @@
   .cur__dot { position: absolute; width: 10px; height: 10px; margin: -5px; border-radius: 50%; background: var(--rojo); transition: width .3s var(--ease), height .3s var(--ease), margin .3s var(--ease); }
   .cur.is-link .cur__dot { width: 18px; height: 18px; margin: -9px; }
   .cur__ring { position: absolute; width: 0; height: 0; margin: 0; border-radius: 50%; opacity: 0; display: grid; place-items: center; font-size: .6rem; font-weight: 800; letter-spacing: .12em; transition: width .4s var(--ease), height .4s var(--ease), margin .4s var(--ease), opacity .3s; }
-  .cur.is-ver .cur__ring { width: 84px; height: 84px; margin: -42px; opacity: 1; background: var(--lima); color: var(--tinta); }
+  .cur.is-ver .cur__ring { width: 84px; height: 84px; margin: -42px; opacity: 1; background: var(--rojo); color: var(--hueso); }
   .cur.is-ver .cur__dot { opacity: 0; }
   .cur.is-ver .cur__ring::after { content: "VER"; }
-  
 
   /* ---------- intro: el logo se escribe y vuela a la nav ---------- */
   .intro { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; background: var(--rosa); transition: background .9s var(--ease); }
@@ -56,7 +57,7 @@
   .nav ul { display: flex; align-items: center; gap: 26px; font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
   .nav ul a { opacity: .85; } .nav ul a:hover { opacity: 1; }
   .nav .pill { padding: 10px 18px; border: 1.5px solid rgb(255 255 255 / .6); border-radius: 999px; opacity: 1; transition: background .3s, color .3s; }
-  .nav .pill:hover { background: var(--hueso); color: var(--tinta); }
+  .nav .pill:hover { background: var(--hueso); color: var(--rojo); }
   .nav__burger { display: none; }
 
   /* ---------- hero ---------- */
@@ -64,94 +65,74 @@
   .top__h { align-self: center; }
   .top__h h1 { font-size: clamp(2.6rem, 8vw, 8.6rem); font-weight: 200; line-height: .96; letter-spacing: -.045em; max-width: 12ch; }
   .top__h h1 b { font-weight: 800; }
-  .top__h h1 em { font-style: italic; font-weight: 300; color: var(--lima); }
-  .top__h p { margin-top: 28px; max-width: 42ch; font-size: clamp(1rem, 1.4vw, 1.25rem); opacity: .85; }
+  .top__h h1 em { font-style: italic; font-weight: 300; color: var(--rojo); }
+  .top__h p { margin-top: 28px; max-width: 42ch; font-size: clamp(1rem, 1.4vw, 1.25rem); }
+  .top__h p b { font-weight: 700; display: block; }
   .top__cta { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
-  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 999px; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; border: 1.5px solid rgb(255 255 255 / .6); transition: background .3s, color .3s, border-color .3s; }
-  .btn:hover { background: var(--hueso); color: var(--tinta); border-color: var(--hueso); }
-  .btn--solid { background: var(--lima); border-color: var(--lima); color: var(--tinta); } .btn--solid:hover { background: var(--hueso); border-color: var(--hueso); }
-  .top__foot { display: flex; justify-content: space-between; align-items: end; font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; opacity: .75; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 999px; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; border: 1.5px solid rgb(255 255 255 / .6); background: transparent; transition: background .3s, color .3s, border-color .3s; }
+  .btn:hover { background: var(--hueso); color: var(--rojo); border-color: var(--hueso); }
+  .btn--solid { background: var(--rojo); border-color: var(--rojo); color: var(--hueso); } .btn--solid:hover { background: var(--hueso); border-color: var(--hueso); color: var(--rojo); }
+  .top__foot { display: flex; justify-content: space-between; align-items: end; font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; opacity: .8; }
   .top__foot .scroll { display: inline-flex; align-items: center; gap: 10px; }
   .top__foot .scroll i { width: 1px; height: 36px; background: currentColor; display: block; animation: line 1.8s var(--ease) infinite; transform-origin: top; }
   @keyframes line { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(0); transform-origin: bottom; } }
   .top .rv { transition-delay: var(--d, 0s); }
 
-  /* ---------- clientes: cinta doble ---------- */
-  .clientes { padding: 20px 0 clamp(60px, 8vw, 120px); border-top: 1px solid var(--linea); }
-  .clientes .k { padding: 0 var(--g) 18px; display: block; }
-  .tape { overflow: hidden; -webkit-mask: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
-  .tape__in { display: flex; width: max-content; animation: run 40s linear infinite; }
-  .tape--rev .tape__in { animation-direction: reverse; animation-duration: 48s; }
-  .tape span { padding: 12px 40px; font-size: clamp(1.4rem, 3vw, 2.4rem); letter-spacing: -.03em; white-space: nowrap; opacity: .8; }
-  .tape span:nth-child(3n+1) { font-weight: 900; } .tape span:nth-child(3n+2) { font-weight: 300; font-style: italic; } .tape span:nth-child(3n) { font-weight: 600; font-stretch: 75%; text-transform: uppercase; letter-spacing: .06em; }
-  @keyframes run { to { transform: translateX(-50%); } }
-
-  /* ---------- manifiesto: se enciende al scrollear ---------- */
-  .mani { padding: clamp(80px, 12vw, 180px) var(--g); display: grid; grid-template-columns: 1fr 2fr; gap: 40px; }
+  /* ---------- quiénes somos: el manifiesto se enciende al scrollear ---------- */
+  .mani { padding: clamp(80px, 12vw, 180px) var(--g); display: grid; grid-template-columns: 1fr 2fr; gap: 40px; border-top: 1px solid var(--linea); }
   .mani p { font-size: clamp(1.6rem, 3.6vw, 3.6rem); font-weight: 300; line-height: 1.12; letter-spacing: -.03em; max-width: 28ch; }
-  .mani .w { opacity: .18; transition: opacity .5s; } .mani .w.on { opacity: 1; }
-  .mani .w.em { font-style: italic; color: var(--rosa); }
+  .mani .w { opacity: .22; transition: opacity .5s; } .mani .w.on { opacity: 1; }
+  .mani .w.em { font-style: italic; font-weight: 500; }
 
-  /* ---------- casos: galería horizontal atada al scroll ---------- */
-  .casos { position: relative; }
-  .casos__pin { position: sticky; top: 0; height: 100svh; overflow: hidden; display: flex; flex-direction: column; justify-content: center; padding-top: 80px; }
-  .casos__h { flex: none; padding: 0 var(--g) 22px; display: flex; justify-content: space-between; align-items: baseline; }
-  .casos__h h2 { font-size: clamp(2rem, 5vw, 5rem); font-weight: 800; line-height: .9; letter-spacing: -.045em; }
-  .casos__h .n { font-size: .78rem; font-weight: 700; letter-spacing: .12em; }
-  .track { flex: none; display: flex; align-items: stretch; gap: clamp(16px, 2.5vw, 40px); padding: 0 var(--g); will-change: transform; }
-  .caso { position: relative; flex: 0 0 min(62vw, 720px); aspect-ratio: 4/5; max-height: calc(100svh - 300px); overflow: hidden; border-radius: 6px; background: #1e1519; }
-  .caso img { position: absolute; inset: -10% 0; width: 100%; height: 120%; object-fit: cover; transition: transform 1.2s var(--ease); }
-  .caso:hover img { transform: scale(1.05); }
-  .caso__t { position: absolute; left: 0; right: 0; bottom: 0; padding: 24px; background: linear-gradient(transparent, rgb(0 0 0 / .55)); display: flex; justify-content: space-between; align-items: end; gap: 12px; }
-  .caso__t h3 { font-size: clamp(1.4rem, 2.6vw, 2.4rem); font-weight: 800; line-height: 1; letter-spacing: -.03em; }
-  .caso__t p { font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; opacity: .85; margin-top: 6px; }
-  .caso__t span { font-size: .72rem; font-weight: 700; letter-spacing: .12em; white-space: nowrap; }
-  .caso__n { position: absolute; left: 20px; top: 16px; font-size: clamp(2.6rem, 6vw, 5.5rem); font-weight: 900; line-height: 1; letter-spacing: -.05em; color: var(--hueso); mix-blend-mode: difference; }
-  .caso--fin { background: transparent; display: grid; place-items: center; text-align: center; }
-  .caso--fin b { display: block; font-size: clamp(1.6rem, 3vw, 2.6rem); font-weight: 800; letter-spacing: -.03em; margin-bottom: 18px; }
+  /* ---------- servicios: título grande + botones rojos ---------- */
+  .servicios { padding: clamp(80px, 12vw, 160px) var(--g); border-top: 1px solid var(--linea); }
+  .servicios h2 { font-size: clamp(3.4rem, 13vw, 13rem); font-weight: 800; line-height: .86; letter-spacing: -.055em; }
+  .servicios__p { margin: 18px 0 clamp(28px, 4vw, 48px); max-width: 40ch; font-size: .95rem; opacity: .85; }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px 12px; max-width: 1100px; }
+  .chip { display: inline-flex; align-items: center; gap: 12px; padding: 13px 22px; border: 1.5px solid rgb(255 255 255 / .55); border-radius: 999px; background: var(--rojo); color: var(--hueso); font-size: .8rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; transition: background .3s, color .3s, transform .5s var(--ease); }
+  .chip::after { content: "↗"; font-size: .9em; opacity: .8; }
+  .chip:hover { background: var(--hueso); color: var(--rojo); border-color: var(--hueso); transform: translateY(-2px); }
 
-  /* ---------- servicios: lista + gota que sigue al mouse ---------- */
-  .serv { padding: clamp(80px, 12vw, 160px) var(--g); }
-  .serv__h { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 30px; }
-  .serv__h h2 { font-size: clamp(2rem, 5vw, 5rem); font-weight: 800; line-height: .9; letter-spacing: -.045em; }
-  .serv__h p { max-width: 36ch; font-size: .95rem; opacity: .8; }
-  .srow { display: grid; grid-template-columns: 3rem 1fr auto; align-items: center; gap: 20px; padding: 24px 0; border-top: 1px solid var(--linea); transition: padding .5s var(--ease); }
-  .srow:last-child { border-bottom: 1px solid var(--linea); }
-  .srow:hover { padding-left: 12px; }
-  .srow .n { font-size: .75rem; font-weight: 700; color: var(--lima); }
-  .srow h3 { font-size: clamp(1.4rem, 3.4vw, 3.2rem); font-weight: 400; line-height: 1; letter-spacing: -.03em; }
-  .srow small { display: block; margin-top: 8px; font-size: .9rem; opacity: .7; max-width: 52ch; font-weight: 400; }
-  .srow .arrow { width: 44px; height: 44px; border: 1px solid var(--linea); border-radius: 50%; display: grid; place-items: center; transition: background .3s, color .3s, transform .5s var(--ease); }
-  .srow:hover .arrow { background: var(--hueso); color: var(--tinta); transform: rotate(-45deg); }
-  .gota { position: fixed; left: 0; top: 0; z-index: 60; width: min(26vw, 300px); aspect-ratio: 1; pointer-events: none; opacity: 0; transition: opacity .35s var(--ease); will-change: transform; }
-  .gota.on { opacity: 1; }
-  .gota__in { width: 100%; height: 100%; overflow: hidden; border-radius: 58% 42% 55% 45% / 52% 60% 40% 48%; animation: morph 7s ease-in-out infinite alternate; transform: scale(.85) rotate(-4deg); transition: transform .6s var(--ease); }
-  .gota.on .gota__in { transform: none; }
-  .gota img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .3s; }
-  .gota img.on { opacity: 1; }
-  @keyframes morph { from { border-radius: 58% 42% 55% 45% / 52% 60% 40% 48%; } to { border-radius: 45% 55% 40% 60% / 60% 45% 55% 40%; } }
+  /* ---------- presentación de cada servicio: sube desde abajo, sobre crema ---------- */
+  .pres { position: fixed; inset: 0; z-index: 75; background: var(--crema); color: var(--tinta); overflow-y: auto; overscroll-behavior: contain; transform: translateY(100%); visibility: hidden; transition: transform .8s var(--ease), visibility 0s .8s; }
+  .pres.on { transform: none; visibility: visible; transition: transform .8s var(--ease), visibility 0s; }
+  .pres__bar { position: sticky; top: 0; z-index: 2; display: flex; justify-content: space-between; align-items: center; padding: 18px var(--g); background: linear-gradient(var(--crema) 70%, transparent); }
+  .pres__close { padding: 10px 18px; border: 1.5px solid rgb(0 0 0 / .35); border-radius: 999px; background: transparent; font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; transition: background .3s, color .3s, border-color .3s; }
+  .pres__close:hover { background: var(--rojo); color: var(--hueso); border-color: var(--rojo); }
+  .pres__item { padding: 20px var(--g) 40px; }
+  .pres__item[hidden] { display: none; }
+  .pres__t { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 48px; align-items: end; margin-bottom: clamp(28px, 4vw, 48px); }
+  .pres__t h3 { font-size: clamp(2.6rem, 7vw, 7rem); font-weight: 800; line-height: .9; letter-spacing: -.05em; }
+  .pres__t h3 .n { display: block; font-size: .78rem; font-weight: 700; letter-spacing: .14em; color: var(--rojo); margin-bottom: 18px; }
+  .pres__t p { font-size: clamp(1rem, 1.4vw, 1.2rem); max-width: 44ch; opacity: .85; }
+  .pres__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(10px, 1.5vw, 20px); }
+  .pres__grid figure { position: relative; overflow: hidden; border-radius: 6px; background: #eadfcf; aspect-ratio: 4/5; }
+  .pres__grid figure:first-child { grid-column: span 2; aspect-ratio: auto; }
+  .pres__grid img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .pres__grid figcaption { position: absolute; left: 14px; bottom: 12px; padding: 6px 10px; border-radius: 999px; background: rgb(255 246 230 / .9); font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  .pres__nav { display: flex; justify-content: space-between; gap: 12px; padding: 0 var(--g) clamp(40px, 6vw, 80px); }
+  .pres__nav button { padding: 14px 22px; border: 1.5px solid rgb(0 0 0 / .3); border-radius: 999px; background: transparent; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; transition: background .3s, color .3s, border-color .3s; }
+  .pres__nav button:hover { background: var(--tinta); color: var(--hueso); border-color: var(--tinta); }
 
   /* ---------- proceso ---------- */
   .proc { padding: clamp(80px, 12vw, 160px) var(--g); border-top: 1px solid var(--linea); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: clamp(24px, 4vw, 64px); }
-  .proc__h { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: end; margin-bottom: 20px; }
+  .proc__h { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: end; margin-bottom: 20px; gap: 24px; }
   .proc__h h2 { font-size: clamp(2rem, 5vw, 5rem); font-weight: 800; line-height: .9; letter-spacing: -.045em; }
-  .step .n { font-size: clamp(3rem, 6vw, 6rem); font-weight: 200; line-height: 1; letter-spacing: -.05em; color: var(--rosa); }
+  .step .n { font-size: clamp(3rem, 6vw, 6rem); font-weight: 200; line-height: 1; letter-spacing: -.05em; }
   .step h3 { margin-top: 12px; font-size: clamp(1.2rem, 1.8vw, 1.6rem); font-weight: 800; letter-spacing: -.02em; }
-  .step p { margin-top: 10px; font-size: .95rem; opacity: .8; max-width: 34ch; }
-
-  /* ---------- testimonio ---------- */
-  .quote { padding: clamp(60px, 10vw, 140px) var(--g); display: grid; grid-template-columns: 1fr 3fr; gap: 40px; border-top: 1px solid var(--linea); }
-  .quote blockquote { font-size: clamp(1.4rem, 2.8vw, 2.8rem); font-weight: 300; line-height: 1.15; letter-spacing: -.025em; max-width: 30ch; }
-  .quote blockquote em { font-style: italic; color: var(--lima); }
-  .quote cite { display: block; margin-top: 24px; font-style: normal; font-size: .8rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; opacity: .7; }
+  .step p { margin-top: 10px; font-size: .95rem; opacity: .85; max-width: 34ch; }
 
   /* ---------- contacto (crema) ---------- */
   .cta { background: var(--crema); color: var(--tinta); padding: clamp(80px, 12vw, 160px) var(--g) clamp(48px, 6vw, 80px); }
   .cta__top { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 40px; }
-  .cta h2 { font-size: clamp(3.2rem, 12vw, 13rem); font-weight: 900; line-height: .86; letter-spacing: -.055em; text-transform: uppercase; display: flex; align-items: flex-end; gap: .05em; }
-  .cta h2 .dot { width: .38em; height: .42em; margin-bottom: .04em; background: var(--rojo); -webkit-mask: url("../assets/logo-dot.png") no-repeat center/contain; mask: url("../assets/logo-dot.png") no-repeat center/contain; animation: beat 2.4s ease-in-out infinite; transform-origin: 50% 60%; }
+  .cta h2 { font-size: clamp(2.8rem, 9.5vw, 10rem); font-weight: 900; line-height: .86; letter-spacing: -.055em; text-transform: uppercase; }
+  .cta h2 .dot { display: inline-block; width: .38em; height: .42em; margin-left: .05em; vertical-align: baseline; background: var(--rojo); -webkit-mask: url("../assets/logo-dot.png") no-repeat center/contain; mask: url("../assets/logo-dot.png") no-repeat center/contain; animation: beat 2.4s ease-in-out infinite; transform-origin: 50% 60%; }
   @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.14); } }
-  .cta__mail { display: inline-block; margin-top: 28px; font-size: clamp(1.2rem, 3vw, 2.6rem); font-weight: 500; letter-spacing: -.02em; border-bottom: 2px solid var(--rojo); }
+  .cta__go { display: flex; align-items: center; gap: 14px 28px; flex-wrap: wrap; margin-top: 32px; }
+  .cta .btn { border-color: var(--rojo); }
+  .cta .btn--solid { padding: 18px 28px; font-size: .84rem; }
+  .cta .btn--solid:hover { background: var(--tinta); border-color: var(--tinta); color: var(--hueso); }
+  .cta__mail { display: inline-block; font-size: clamp(1.1rem, 2.4vw, 2rem); font-weight: 500; letter-spacing: -.02em; border-bottom: 2px solid var(--rojo); }
   .cta__links { display: grid; gap: 10px; text-align: right; font-size: .82rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
   .cta__links a { display: inline-flex; align-items: center; gap: 10px; justify-content: flex-end; }
   .cta__links a::after { content: "↗"; }
@@ -165,23 +146,20 @@
   @media (max-width: 900px) {
     .nav ul { display: none; }
     .nav__burger { display: grid; place-items: center; width: 44px; height: 44px; border: 1.5px solid rgb(255 255 255 / .6); border-radius: 50%; background: transparent; color: inherit; font-size: .7rem; font-weight: 800; letter-spacing: .1em; }
-    .nav.open ul { display: flex; position: fixed; inset: 0; z-index: -1; background: var(--tinta); flex-direction: column; justify-content: center; align-items: flex-start; padding: 0 var(--g); gap: 22px; font-size: 1.6rem; letter-spacing: -.01em; text-transform: none; }
+    .nav.open ul { display: flex; position: fixed; inset: 0; z-index: -1; background: var(--oliva); flex-direction: column; justify-content: center; align-items: flex-start; padding: 0 var(--g); gap: 22px; font-size: 1.6rem; letter-spacing: -.01em; text-transform: none; }
     .nav.open .pill { font-size: 1rem; }
     .top { padding-top: 110px; }
     .top__foot { flex-direction: column; align-items: flex-start; gap: 12px; }
     .mani { grid-template-columns: 1fr; gap: 18px; }
-    .casos__pin { position: static; height: auto; overflow: visible; padding-top: 0; display: block; }
-    .track { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 8px; transform: none !important; }
-    .track::-webkit-scrollbar { display: none; }
-    .caso { flex-basis: 78vw; max-height: none; scroll-snap-align: start; }
-    .caso--fin { flex-basis: 60vw; }
-    .srow { grid-template-columns: 2.4rem 1fr; } .srow .arrow { display: none; }
-    .gota { display: none; }
+    .chip { padding: 12px 18px; font-size: .74rem; }
+    .pres__t { grid-template-columns: 1fr; }
+    .pres__grid { grid-template-columns: 1fr 1fr; }
+    .pres__grid figure:first-child { aspect-ratio: 4/3; }
     .proc { grid-template-columns: 1fr; }
-    .quote { grid-template-columns: 1fr; gap: 18px; }
+    .proc__h { flex-direction: column; align-items: flex-start; gap: 12px; }
     .cta__top { grid-template-columns: 1fr; } .cta__links { text-align: left; } .cta__links a { justify-content: flex-start; }
   }
-  @media (prefers-reduced-motion: reduce) { .tape__in, .gota__in, .cta .dot, .top__foot .scroll i { animation: none !important; } .rv { opacity: 1; transform: none; transition: none; } }
+  @media (prefers-reduced-motion: reduce) { .cta .dot, .top__foot .scroll i { animation: none !important; } .rv { opacity: 1; transform: none; transition: none; } .pres { transition: none; } }
 </style>
 </head>
 <body class="intro-on">
@@ -209,107 +187,184 @@
 </div>
 
 <header class="nav">
-  <a class="nav__logo" href="#top" aria-label="e. agencia"></a>
+  <a class="nav__logo" href="#inicio" aria-label="e. agencia"></a>
   <button class="nav__burger" type="button" aria-label="Menú">MENÚ</button>
   <ul>
-    <li><a href="#casos" data-cur="link">Casos</a></li>
-    <li><a href="#serv" data-cur="link">Servicios</a></li>
-    <li><a href="#proc" data-cur="link">Agencia</a></li>
-    <li><a class="pill" href="#cta" data-cur="link">Hablemos</a></li>
+    <li><a href="#inicio" data-cur="link">Inicio</a></li>
+    <li><a href="#servicios" data-cur="link">Servicios</a></li>
+    <li><a href="#quienes-somos" data-cur="link">Quiénes somos</a></li>
+    <li><a class="pill" href="#contacto" data-cur="link">Contacto</a></li>
   </ul>
 </header>
 
 <main>
-<!-- ===== HERO ===== -->
-<section class="top" id="top">
+<!-- ===== INICIO ===== -->
+<section class="top" id="inicio">
   <div class="top__h">
     <h1 class="rv" style="--d:.1s">Ideas con <b>dirección.</b><br>Marcas con <em>identidad.</em></h1>
-    <p class="rv" style="--d:.3s">Agencia de comunicación visual y redes sociales. Estrategia, creatividad y una mirada integral para marcas que quieren decir algo.</p>
-    <div class="top__cta rv" style="--d:.45s"><a class="btn btn--solid" href="#casos" data-cur="link">Ver casos</a><a class="btn" href="#cta" data-cur="link">Hablemos</a></div>
+    <p class="rv" style="--d:.3s"><b>Comunicación, imagen y creatividad.</b> Todo lo que una marca necesita para construir su identidad y comunicarla.</p>
+    <div class="top__cta rv" style="--d:.45s"><a class="btn btn--solid" href="#contacto" data-cur="link">Elevemos tu marca</a></div>
   </div>
   <div class="top__foot rv" style="--d:.7s"><span class="scroll"><i></i>Scrolleá</span><span>Comunicación visual · RR.SS · Buenos Aires</span></div>
 </section>
 
-<!-- ===== CLIENTES (nombres de muestra: reemplazar por logos reales) ===== -->
-<section class="clientes" aria-label="Marcas con las que trabajamos">
-  <span class="k">Marcas que confiaron</span>
-  <div class="tape" aria-hidden="true"><div class="tape__in">
-    <span>Óptica Mirá</span><span>Rojo</span><span>Paso Sneakers</span><span>Instantánea</span><span>Bruma Café</span><span>Casa Verde</span><span>Nodo</span><span>Lumen</span>
-    <span>Óptica Mirá</span><span>Rojo</span><span>Paso Sneakers</span><span>Instantánea</span><span>Bruma Café</span><span>Casa Verde</span><span>Nodo</span><span>Lumen</span>
-  </div></div>
-  <div class="tape tape--rev" aria-hidden="true"><div class="tape__in">
-    <span>Almacén Sur</span><span>Ferro</span><span>La Cañada</span><span>Mora Estudio</span><span>Kiosco 24</span><span>Vera</span><span>Punto Fijo</span><span>Ola</span>
-    <span>Almacén Sur</span><span>Ferro</span><span>La Cañada</span><span>Mora Estudio</span><span>Kiosco 24</span><span>Vera</span><span>Punto Fijo</span><span>Ola</span>
-  </div></div>
-</section>
-
-<!-- ===== MANIFIESTO ===== -->
-<section class="mani" id="mani">
-  <span class="k">Manifiesto</span>
+<!-- ===== QUIÉNES SOMOS (manifiesto) ===== -->
+<section class="mani" id="quienes-somos">
+  <span class="k">Quiénes somos</span>
   <p id="manip">Creamos universos visuales que le dan <i>coherencia</i> y personalidad a las marcas con <i>pensamiento estratégico.</i> Marcas que conectan con las personas, se diferencian y construyen valor en el tiempo.</p>
 </section>
 
-<!-- ===== CASOS ===== -->
-<section class="casos" id="casos">
-  <div class="casos__pin">
-    <div class="casos__h"><h2>Casos</h2><span class="n"><span id="cn">01</span> / 04</span></div>
-    <div class="track">
-      <a class="caso" data-cur="ver" href="#"><img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1200&q=80" alt=""><span class="caso__n">01</span><div class="caso__t"><div><h3>Óptica Mirá</h3><p>Foto producto · Contenido</p></div><span>2026</span></div></a>
-      <a class="caso" data-cur="ver" href="#"><img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=80" alt=""><span class="caso__n">02</span><div class="caso__t"><div><h3>Rojo Campaña</h3><p>Contenido · Community</p></div><span>2025</span></div></a>
-      <a class="caso" data-cur="ver" href="#"><img src="https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?auto=format&fit=crop&w=1200&q=80" alt=""><span class="caso__n">03</span><div class="caso__t"><div><h3>Paso Sneakers</h3><p>Branding · Lanzamiento</p></div><span>2025</span></div></a>
-      <a class="caso" data-cur="ver" href="#"><img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=1200&q=80" alt=""><span class="caso__n">04</span><div class="caso__t"><div><h3>Instantánea</h3><p>Producción · Eventos</p></div><span>2024</span></div></a>
-      <div class="caso caso--fin"><div><b>¿Tu marca es la próxima?</b><a class="btn btn--solid" href="#cta" data-cur="link">Hablemos</a></div></div>
-    </div>
-  </div>
+<!-- ===== SERVICIOS =====
+     Cada botón abre la presentación del servicio (más abajo, en <div class="pres">).
+     El data-pres del botón tiene que coincidir con el id del <article> de la presentación. -->
+<section class="servicios" id="servicios">
+  <h2 class="rv">Servicios</h2>
+  <p class="servicios__p rv">Tocá cada uno para ver qué hacemos y cómo se ve.</p>
+  <ul class="chips rv">
+    <li><button class="chip" type="button" data-pres="p-contenido" data-cur="ver">Creación de contenido</button></li>
+    <li><button class="chip" type="button" data-pres="p-fotografia" data-cur="ver">Fotografía</button></li>
+    <li><button class="chip" type="button" data-pres="p-branding" data-cur="ver">Branding</button></li>
+    <li><button class="chip" type="button" data-pres="p-ugc" data-cur="ver">UGC</button></li>
+    <li><button class="chip" type="button" data-pres="p-community" data-cur="ver">Community management</button></li>
+    <li><button class="chip" type="button" data-pres="p-produccion" data-cur="ver">Producción</button></li>
+    <li><button class="chip" type="button" data-pres="p-eventos" data-cur="ver">Cobertura de eventos</button></li>
+    <li><button class="chip" type="button" data-pres="p-ia" data-cur="ver">Contenido IA</button></li>
+    <li><button class="chip" type="button" data-pres="p-merch" data-cur="ver">Merchandising</button></li>
+  </ul>
 </section>
 
-<!-- ===== SERVICIOS ===== -->
-<section class="serv" id="serv">
-  <div class="serv__h rv"><h2>Servicios</h2><p>Todo lo que una marca necesita para verse y sonar como lo que es, de la idea a la publicación.</p></div>
-  <div class="srows">
-    <a class="srow rv" data-i="0" href="#"><span class="n">01</span><div><h3>Creación de contenido</h3><small>Concepto, guion, producción y edición para redes. Contenido que la gente quiere ver, no que la marca quiere decir.</small></div><span class="arrow">→</span></a>
-    <a class="srow rv" data-i="1" href="#"><span class="n">02</span><div><h3>Foto producto</h3><small>Estudio y locación. Catálogo, e-commerce, campaña.</small></div><span class="arrow">→</span></a>
-    <a class="srow rv" data-i="2" href="#"><span class="n">03</span><div><h3>Community management</h3><small>Planificación, publicación y conversación. Con criterio, no con calendario.</small></div><span class="arrow">→</span></a>
-    <a class="srow rv" data-i="3" href="#"><span class="n">04</span><div><h3>Branding</h3><small>Identidad visual, sistema gráfico, tono de voz. La base de todo lo demás.</small></div><span class="arrow">→</span></a>
-    <a class="srow rv" data-i="1" href="#"><span class="n">05</span><div><h3>Producción</h3><small>Shootings, video, dirección de arte. Equipo propio y aliados.</small></div><span class="arrow">→</span></a>
-    <a class="srow rv" data-i="3" href="#"><span class="n">06</span><div><h3>Cobertura de eventos</h3><small>Foto y video en el momento, contenido listo para publicar el mismo día.</small></div><span class="arrow">→</span></a>
-  </div>
-  <div class="gota" aria-hidden="true"><div class="gota__in">
-    <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=700&q=80" alt="">
-    <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=700&q=80" alt="">
-    <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=700&q=80" alt="">
-    <img src="https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?auto=format&fit=crop&w=700&q=80" alt="">
-  </div></div>
-</section>
-
-<!-- ===== PROCESO ===== -->
+<!-- ===== CÓMO TRABAJAMOS ===== -->
 <section class="proc" id="proc">
-  <div class="proc__h rv"><h2>Cómo<br>trabajamos</h2><span class="k">Tres pasos, sin vueltas</span></div>
-  <div class="step rv"><span class="n">01</span><h3>Escuchamos la marca</h3><p>Antes de diseñar, entendemos: qué vende, a quién, y qué la hace distinta. Sin eso, todo lo demás es decoración.</p></div>
-  <div class="step rv"><span class="n">02</span><h3>Definimos la dirección</h3><p>Estrategia y concepto: una idea clara que ordena identidad, contenido y redes en una sola voz.</p></div>
-  <div class="step rv"><span class="n">03</span><h3>Creamos el universo</h3><p>Producimos, publicamos y medimos. Universos visuales coherentes, relevantes y reconocibles.</p></div>
-</section>
-
-<!-- ===== TESTIMONIO (de muestra) ===== -->
-<section class="quote">
-  <span class="k rv">Dicen de nosotras</span>
-  <div class="rv"><blockquote>“Entendieron la marca antes que nosotros. En tres meses la cuenta pasó de <em>publicar</em> a <em>comunicar</em>.”</blockquote><cite>Nombre Apellido · Fundadora, Óptica Mirá</cite></div>
+  <div class="proc__h rv"><h2>Cómo<br>trabajamos</h2><span class="k">Tres pasos, una misma dirección</span></div>
+  <div class="step rv"><span class="n">01</span><h3>Entendemos la marca</h3><p>Conocemos su identidad, sus objetivos, su público y qué necesita comunicar. Ese es nuestro punto de partida.</p></div>
+  <div class="step rv"><span class="n">02</span><h3>Definimos la estrategia</h3><p>Trazamos una dirección clara que conecta identidad, comunicación y contenido, y define cómo llevar la marca hacia adelante.</p></div>
+  <div class="step rv"><span class="n">03</span><h3>Lo hacemos realidad</h3><p>Creamos y desarrollamos todo lo que la marca necesita: diseño, contenido, redes, campañas, foto, video y experiencias digitales.</p></div>
 </section>
 
 <!-- ===== CONTACTO ===== -->
-<section class="cta" id="cta">
+<section class="cta" id="contacto">
   <div class="cta__top">
     <div>
-      <h2 class="rv">Hablemos<span class="dot" aria-hidden="true"></span></h2>
-      <a class="cta__mail rv" href="mailto:hola@eagencia.com" data-cur="link">hola@eagencia.com</a>
+      <h2 class="rv">Elevemos<br>tu marca<span class="dot" aria-hidden="true"></span></h2>
+      <div class="cta__go rv">
+        <a class="btn btn--solid" href="https://wa.me/5491151254075" target="_blank" rel="noopener" data-cur="link">Escribinos por WhatsApp</a>
+        <a class="cta__mail" href="mailto:eleagenciaa@gmail.com" data-cur="link">eleagenciaa@gmail.com</a>
+      </div>
     </div>
-    <ul class="cta__links rv"><li><a href="#" data-cur="link">Instagram</a></li><li><a href="#" data-cur="link">WhatsApp</a></li><li><a href="#" data-cur="link">LinkedIn</a></li></ul>
+    <ul class="cta__links rv"><li><a href="#" data-cur="link">Instagram</a></li><li><a href="https://wa.me/5491151254075" target="_blank" rel="noopener" data-cur="link">WhatsApp</a></li><li><a href="#" data-cur="link">LinkedIn</a></li></ul>
   </div>
   <footer class="foot"><span>© 2026 e. agencia</span><span>Comunicación visual y RR.SS · Buenos Aires</span></footer>
 </section>
 </main>
 
-<script src="c-bg.js"></script>
+<!-- ===== PRESENTACIONES DE SERVICIOS (se abren desde los botones de Servicios) =====
+     Fotos de muestra de Unsplash (PLACEHOLDER): reemplazar por fotos reales en assets/. -->
+<div class="pres" role="dialog" aria-modal="true" aria-label="Servicio">
+  <div class="pres__bar"><span class="k">Servicios</span><button class="pres__close" type="button" data-cur="link">Cerrar ×</button></div>
+
+  <article class="pres__item" id="p-contenido" hidden>
+    <div class="pres__t"><h3><span class="n">01 / 09</span>Creación de contenido</h3><p>Concepto, guion, producción y edición para redes. Contenido que la gente quiere ver, no que la marca quiere decir.</p></div>
+    <div class="pres__grid">
+      <figure><img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy"><figcaption>Placeholder</figcaption></figure>
+      <figure><img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+    </div>
+  </article>
+
+  <article class="pres__item" id="p-fotografia" hidden>
+    <div class="pres__t"><h3><span class="n">02 / 09</span>Fotografía</h3><p>Estudio y locación. Producto, catálogo, e-commerce, campaña y retrato. La imagen que sostiene todo lo demás.</p></div>
+    <div class="pres__grid">
+      <figure><img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy"><figcaption>Placeholder</figcaption></figure>
+      <figure><img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1601506521937-0121a7fc2a6b?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+    </div>
+  </article>
+
+  <article class="pres__item" id="p-branding" hidden>
+    <div class="pres__t"><h3><span class="n">03 / 09</span>Branding</h3><p>Identidad visual, sistema gráfico, tono de voz. La base de todo lo demás: una marca que se reconoce en cualquier lugar donde aparece.</p></div>
+    <div class="pres__grid">
+      <figure><img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy"><figcaption>Placeholder</figcaption></figure>
+      <figure><img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1493612276216-ee3925520721?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+    </div>
+  </article>
+
+  <article class="pres__item" id="p-ugc" hidden>
+    <div class="pres__t"><h3><span class="n">04 / 09</span>UGC</h3><p>Contenido generado por usuarios y creadores: real, cercano y hecho para el feed. Guionamos, coordinamos y editamos para que se vea natural y venda.</p></div>
+    <div class="pres__grid">
+      <figure><img src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy"><figcaption>Placeholder</figcaption></figure>
+      <figure><img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+    </div>
+  </article>
+
+  <article class="pres__item" id="p-community" hidden>
+    <div class="pres__t"><h3><span class="n">05 / 09</span>Community management</h3><p>Planificación, publicación y conversación. Con criterio, no con calendario: una cuenta que comunica, no que solo publica.</p></div>
+    <div class="pres__grid">
+      <figure><img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy"><figcaption>Placeholder</figcaption></figure>
+      <figure><img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1611926653458-09294b3142bf?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+    </div>
+  </article>
+
+  <article class="pres__item" id="p-produccion" hidden>
+    <div class="pres__t"><h3><span class="n">06 / 09</span>Producción</h3><p>Shootings, video, dirección de arte. Pre producción, rodaje y edición con equipo propio y aliados.</p></div>
+    <div class="pres__grid">
+      <figure><img src="https://images.unsplash.com/photo-1574267432553-4b4628081c31?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy"><figcaption>Placeholder</figcaption></figure>
+      <figure><img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+    </div>
+  </article>
+
+  <article class="pres__item" id="p-eventos" hidden>
+    <div class="pres__t"><h3><span class="n">07 / 09</span>Cobertura de eventos</h3><p>Foto y video en el momento, contenido listo para publicar el mismo día. Lanzamientos, inauguraciones, activaciones y shows.</p></div>
+    <div class="pres__grid">
+      <figure><img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy"><figcaption>Placeholder</figcaption></figure>
+      <figure><img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+    </div>
+  </article>
+
+  <article class="pres__item" id="p-ia" hidden>
+    <div class="pres__t"><h3><span class="n">08 / 09</span>Contenido IA</h3><p>Imágenes, video y piezas generadas con inteligencia artificial, con dirección de arte y criterio de marca. Más ideas, más rápido, sin perder la identidad.</p></div>
+    <div class="pres__grid">
+      <figure><img src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy"><figcaption>Placeholder</figcaption></figure>
+      <figure><img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1675271591211-126ad94e495d?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1655720828018-edd2daec9349?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+    </div>
+  </article>
+
+  <article class="pres__item" id="p-merch" hidden>
+    <div class="pres__t"><h3><span class="n">09 / 09</span>Merchandising</h3><p>Diseño y producción de objetos con la marca: remeras, gorras, bolsas, packaging y regalos corporativos que dan ganas de usar.</p></div>
+    <div class="pres__grid">
+      <figure><img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy"><figcaption>Placeholder</figcaption></figure>
+      <figure><img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1607083206968-13611e3d76db?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+    </div>
+  </article>
+
+  <div class="pres__nav"><button class="pres__prev" type="button" data-cur="link">← Anterior</button><button class="pres__next" type="button" data-cur="link">Siguiente →</button></div>
+</div>
+
+<script src="e-bg.js"></script>
 <script>
 (() => {
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -330,6 +385,7 @@
   const pen = (t) => t < .55 ? (1 - Math.pow(1 - t / .55, 2.2)) * .62 : .62 + Math.pow((t - .55) / .45, .8) * .38;
 
   const finish = () => { // el logo vuela a la esquina y se convierte en la nav
+    if (!document.body.contains(intro)) return; // ya la sacó el skip de seguridad
     const target = $('.nav__logo').getBoundingClientRect(), from = svg.getBoundingClientRect();
     const k = target.width / from.width;
     logo.style.transition = 'transform 1s cubic-bezier(.22,1,.36,1)';
@@ -374,7 +430,7 @@
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
   $$('.rv:not(.top .rv)').forEach(el => io.observe(el));
 
-  /* ---------- manifiesto palabra por palabra ---------- */
+  /* ---------- quiénes somos: palabra por palabra ---------- */
   const mp = $('#manip');
   { // cada palabra en un <span>, las que estaban en <i> quedan con clase em
     let em = false, out = [];
@@ -387,26 +443,17 @@
   const maniScroll = () => { const r = mp.getBoundingClientRect(), h = innerHeight; const p = Math.min(1, Math.max(0, (h * .8 - r.top) / (r.height + h * .2))); words.forEach((w, i) => w.classList.toggle('on', i / words.length < p)); };
   addEventListener('scroll', maniScroll, { passive: true }); maniScroll();
 
-  /* ---------- casos: horizontal atado al scroll (desktop) ---------- */
-  const casos = $('.casos'), track = $('.track'), cn = $('#cn');
-  const isDesk = () => matchMedia('(min-width: 901px)').matches;
-  const sizeCasos = () => { if (!isDesk()) { casos.style.height = ''; return; } const dist = track.scrollWidth - innerWidth; casos.style.height = (innerHeight + dist) + 'px'; };
-  const casosScroll = () => { if (!isDesk()) return; const r = casos.getBoundingClientRect(); const dist = track.scrollWidth - innerWidth; const p = Math.min(1, Math.max(0, -r.top / (r.height - innerHeight))); track.style.transform = `translate3d(${-p * dist}px, 0, 0)`; cn.textContent = String(Math.min(4, 1 + Math.floor(p * 4.2))).padStart(2, '0'); };
-  addEventListener('resize', () => { sizeCasos(); casosScroll(); }); addEventListener('scroll', casosScroll, { passive: true });
-  addEventListener('load', sizeCasos); sizeCasos(); casosScroll();
-
-  /* ---------- servicios: gota con foto que sigue al mouse ---------- */
-  const gota = $('.gota'), gimgs = $$('.gota img');
-  if (fine) {
-    let gx = 0, gy = 0, tx = 0, ty = 0, graf = null;
-    const gloop = () => { gx += (tx - gx) * .14; gy += (ty - gy) * .14; gota.style.transform = `translate(${gx - gota.offsetWidth / 2}px, ${gy - gota.offsetHeight / 2}px)`; graf = (Math.abs(tx - gx) > .3 || Math.abs(ty - gy) > .3) ? requestAnimationFrame(gloop) : null; };
-    const gkick = () => { if (!graf) graf = requestAnimationFrame(gloop); };
-    $$('.srow').forEach(r => {
-      r.addEventListener('pointerenter', e => { gimgs.forEach((im, i) => im.classList.toggle('on', i == r.dataset.i)); if (!gota.classList.contains('on')) { gx = e.clientX + 60; gy = e.clientY; } gota.classList.add('on'); tx = e.clientX + 60; ty = e.clientY; gkick(); });
-      r.addEventListener('pointermove', e => { tx = e.clientX + 60; ty = e.clientY; gkick(); });
-      r.addEventListener('pointerleave', () => gota.classList.remove('on'));
-    });
-  }
+  /* ---------- servicios: cada botón abre su presentación ---------- */
+  const pres = $('.pres'), items = $$('.pres__item'), chips = $$('.chip');
+  let cur_i = -1, opener = null;
+  const show = (i) => { cur_i = (i + items.length) % items.length; items.forEach((it, j) => it.hidden = j !== cur_i); pres.scrollTop = 0; };
+  const open = (id, from) => { const i = items.findIndex(it => it.id === id); if (i < 0) return; opener = from; show(i); pres.classList.add('on'); document.body.classList.add('pres-on'); setTimeout(() => $('.pres__close').focus(), 400); };
+  const close = () => { pres.classList.remove('on'); document.body.classList.remove('pres-on'); opener?.focus(); };
+  chips.forEach(c => c.addEventListener('click', () => open(c.dataset.pres, c)));
+  $('.pres__close').addEventListener('click', close);
+  $('.pres__prev').addEventListener('click', () => show(cur_i - 1));
+  $('.pres__next').addEventListener('click', () => show(cur_i + 1));
+  addEventListener('keydown', e => { if (!pres.classList.contains('on')) return; if (e.key === 'Escape') close(); if (e.key === 'ArrowRight') show(cur_i + 1); if (e.key === 'ArrowLeft') show(cur_i - 1); });
 })();
 </script>
 </body>
