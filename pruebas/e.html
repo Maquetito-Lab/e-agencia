@@ -12,7 +12,7 @@
   :root {
     /* paleta de "colores marca.jpeg". --rojo es un rojo un poco más suave que el del logo, para botones */
     --rojo-logo: #e30613; --rojo: #de4f57; --rosa: #e8bfc5; --rosa-txt: #e2808f; --oliva: #5a5b2f; --lima: #c1e700; --nude: #fffaf1;
-    --tinta: oklch(22% 0.03 340); --hueso: oklch(97% 0.01 80); --linea: rgb(0 0 0 / .16);
+    --vino: #8a0a1c; --tinta: #4a4b25; /* oliva oscuro de la marca: es el color de todo el texto (nada de negro) */ --hueso: oklch(97% 0.01 80); --linea: rgb(74 75 37 / .22);
     --ease: cubic-bezier(.22,1,.36,1); --g: clamp(20px, 5vw, 80px);
   }
   * { box-sizing: border-box; }
@@ -45,7 +45,7 @@
   .nav__logo { width: 64px; aspect-ratio: 939/602; background: var(--tinta); -webkit-mask: url("../assets/logo.svg") no-repeat center/contain; mask: url("../assets/logo.svg") no-repeat center/contain; }
   .nav ul { display: flex; align-items: center; gap: 26px; font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
   .nav ul a { opacity: .85; } .nav ul a:hover { opacity: 1; }
-  .nav .pill { padding: 10px 18px; border: 1.5px solid rgb(0 0 0 / .45); border-radius: 999px; opacity: 1; transition: background .3s, color .3s, border-color .3s; }
+  .nav .pill { padding: 10px 18px; border: 1.5px solid rgb(74 75 37 / .5); border-radius: 999px; opacity: 1; transition: background .3s, color .3s, border-color .3s; }
   .nav .pill:hover { background: var(--tinta); color: var(--hueso); border-color: var(--tinta); }
   .nav__burger { display: none; }
 
@@ -70,7 +70,7 @@
   .ideas h1 em { font-style: italic; font-weight: 300; color: var(--rojo-logo); }
   .ideas__p { margin: 26px auto 0; max-width: 46ch; padding: 0 var(--g); font-size: clamp(1rem, 1.4vw, 1.2rem); }
   .ideas__p b { font-weight: 700; display: block; }
-  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 999px; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; border: 1.5px solid rgb(0 0 0 / .45); background: transparent; transition: background .3s, color .3s, border-color .3s; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 999px; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; border: 1.5px solid rgb(74 75 37 / .5); background: transparent; transition: background .3s, color .3s, border-color .3s; }
   .btn:hover { background: var(--tinta); color: var(--hueso); border-color: var(--tinta); }
   .btn--solid { background: var(--rojo); border-color: var(--rojo); color: var(--hueso); } .btn--solid:hover { background: var(--tinta); border-color: var(--tinta); color: var(--hueso); }
   .ideas .btn { margin-top: 28px; }
@@ -105,7 +105,7 @@
   .pres.on { transform: none; visibility: visible; transition: transform .8s var(--ease), visibility 0s; }
   .pres__panel { background: var(--nude); color: var(--tinta); border-radius: 18px; min-height: 100%; }
   .pres__bar { position: sticky; top: 0; z-index: 2; display: flex; justify-content: space-between; align-items: center; padding: 18px var(--g); background: linear-gradient(var(--nude) 70%, transparent); border-radius: 18px 18px 0 0; }
-  .pres__close { padding: 10px 18px; border: 1.5px solid rgb(0 0 0 / .35); border-radius: 999px; background: transparent; font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; transition: background .3s, color .3s, border-color .3s; }
+  .pres__close { padding: 10px 18px; border: 1.5px solid rgb(74 75 37 / .4); border-radius: 999px; background: transparent; font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; transition: background .3s, color .3s, border-color .3s; }
   .pres__close:hover { background: var(--rojo); color: var(--hueso); border-color: var(--rojo); }
   .pres__item { padding: 20px var(--g) 40px; }
   .pres__item[hidden] { display: none; }
@@ -130,7 +130,7 @@
   .pres__grid--phones { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
   .pres__grid--boards img, .pres__grid--phones img { position: static; height: auto; }
   .pres__nav { display: flex; justify-content: space-between; gap: 12px; padding: 0 var(--g) clamp(40px, 6vw, 80px); }
-  .pres__nav button { padding: 14px 22px; border: 1.5px solid rgb(0 0 0 / .3); border-radius: 999px; background: transparent; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; transition: background .3s, color .3s, border-color .3s; }
+  .pres__nav button { padding: 14px 22px; border: 1.5px solid rgb(74 75 37 / .4); border-radius: 999px; background: transparent; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; transition: background .3s, color .3s, border-color .3s; }
   .pres__nav button:hover { background: var(--tinta); color: var(--hueso); border-color: var(--tinta); }
 
   /* ---------- proceso ---------- */
@@ -169,7 +169,7 @@
   /* ---------- responsive ---------- */
   @media (max-width: 900px) {
     .nav ul { display: none; }
-    .nav__burger { display: grid; place-items: center; width: 44px; height: 44px; border: 1.5px solid rgb(0 0 0 / .45); border-radius: 50%; background: transparent; color: inherit; font-size: .7rem; font-weight: 800; letter-spacing: .1em; }
+    .nav__burger { display: grid; place-items: center; width: 44px; height: 44px; border: 1.5px solid rgb(74 75 37 / .5); border-radius: 50%; background: transparent; color: inherit; font-size: .7rem; font-weight: 800; letter-spacing: .1em; }
     .nav.open ul { display: flex; position: fixed; inset: 0; z-index: -1; background: var(--nude); flex-direction: column; justify-content: center; align-items: flex-start; padding: 0 var(--g); gap: 22px; font-size: 1.6rem; letter-spacing: -.01em; text-transform: none; }
     .nav.open .pill { font-size: 1rem; }
     .top__foot { flex-direction: column; align-items: flex-start; gap: 12px; }
@@ -527,13 +527,12 @@
      Si WebGL falla, queda el logo plano (.top__fallback). -->
 <script type="module">
 import * as THREE from 'three';
-import { SVGLoader } from 'three/addons/loaders/SVGLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 const top = document.querySelector('.top'), host = document.querySelector('.top__3d');
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 try {
-  const U = 1 / 300, CX = 469, CY = 301;                         // el logo vive en 939×602; 300 px = 1 unidad
+  const U = 1 / 300, CX = 262, CY = 301;                         // la e vive en 524×602 (centro 262,301); 300 px = 1 unidad
   const v = (x, y, z = 0) => new THREE.Vector3((x - CX) * U, -(y - CY) * U, z);
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
@@ -556,28 +555,20 @@ try {
   logo.add(new THREE.Mesh(new THREE.TubeGeometry(path, 260, R, 36, false), mat));
   for (const [x, y] of [P[0], P[P.length - 1]]) { const cap = new THREE.Mesh(new THREE.SphereGeometry(R, 32, 24), mat); cap.position.copy(v(x, y)); logo.add(cap); }
 
-  // el punto
-  const dot = new THREE.Mesh(new THREE.SphereGeometry(62 * U, 40, 32), mat); dot.position.copy(v(706, 491)); dot.scale.set(1, 1.1, 1); dot.rotation.z = .3; logo.add(dot);
-
-  // "agencia", extruida del SVG oficial (unidades del SVG original → 939×602: ×4.1718, origen en 70.477,111.775)
-  fetch('../assets/logo-agencia.svg').then(r => r.text()).then(txt => {
-    const K = 4.1718, g = new THREE.Group();
-    for (const p of new SVGLoader().parse(txt).paths) for (const sh of SVGLoader.createShapes(p)) {
-      const geo = new THREE.ExtrudeGeometry(sh, { depth: 4, bevelEnabled: true, bevelThickness: 1.2, bevelSize: 1, bevelSegments: 3, curveSegments: 8 });
-      geo.translate(0, 0, -2); g.add(new THREE.Mesh(geo, mat));
-    }
-    g.scale.set(K * U, -K * U, K * U); g.position.set((-70.477 * K - CX) * U, (111.775 * K + CY) * U, 0); logo.add(g);
-  }).catch(() => {});
+  // el punto va aparte: le da vueltas a la e (órbita inclinada, pasa por delante y por detrás)
+  const dot = new THREE.Mesh(new THREE.SphereGeometry(62 * U, 40, 32), mat); dot.scale.set(1, 1.1, 1); scene.add(dot);
+  const orbit = new THREE.Group(); orbit.rotation.x = .55; orbit.rotation.z = -.25; orbit.add(dot); scene.add(orbit);
+  const ORB = 1.15; // radio de la órbita, en unidades (300 px = 1)
 
   // tamaño: el logo ocupa ~62% del ancho en desktop, ~88% en celu
   const fit = () => {
     const w = host.clientWidth, h = host.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h;
-    const fill = w < 700 ? .88 : .62, want = 939 * U / fill;
+    const fill = w < 700 ? .52 : .30, want = 524 * U / fill; // la e ocupa ~30% del ancho (52% en celu), con aire para la órbita del punto
     camera.position.z = want / (2 * Math.tan(camera.fov * Math.PI / 360) * camera.aspect); camera.position.y = 0.08; camera.updateProjectionMatrix();
   };
   fit(); addEventListener('resize', fit);
 
-  // gira siempre, se mece, y sigue un poco al mouse
+  // la e se mece sobre sí misma (nunca se da vuelta del todo, así siempre se lee), el punto le da vueltas, y todo sigue un poco al mouse
   let mx = 0, my = 0; if (matchMedia('(pointer: fine)').matches) addEventListener('pointermove', e => { mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; }, { passive: true });
   let vis = true; new IntersectionObserver(en => { vis = en[0].isIntersecting; if (vis) tick(); }).observe(top);
   let raf = null, sx = 0, sy = 0;
@@ -585,10 +576,12 @@ try {
     raf = null; if (!vis || document.hidden) return;
     const t = performance.now() / 1000;
     sx += (mx - sx) * .05; sy += (my - sy) * .05;
-    logo.rotation.y = (reduced ? 0 : t * .55) + sx * .6;
-    logo.rotation.x = (reduced ? 0 : Math.sin(t * .7) * .16) + sy * .4;
-    logo.rotation.z = reduced ? 0 : Math.sin(t * .45) * .06;
-    logo.position.y = reduced ? 0.12 : 0.12 + Math.sin(t * 1.1) * .04;
+    logo.rotation.y = (reduced ? 0 : Math.sin(t * .62) * .62) + sx * .5;
+    logo.rotation.x = (reduced ? 0 : Math.sin(t * .81) * .14) + sy * .35;
+    logo.rotation.z = reduced ? 0 : Math.sin(t * .47) * .07;
+    logo.position.set(0, 0.08 + (reduced ? 0 : Math.sin(t * 1.1) * .04), 0);
+    const a = reduced ? .9 : t * .9; dot.position.set(Math.cos(a) * ORB, 0, Math.sin(a) * ORB); orbit.position.copy(logo.position);
+    orbit.rotation.y = sx * .5;
     renderer.render(scene, camera);
     raf = requestAnimationFrame(tick);
   };
