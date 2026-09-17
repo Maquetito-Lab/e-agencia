@@ -1,5 +1,5 @@
-// Fondo de la opción E: el mismo degradé "líquido" de C, pero con los colores
-// de la marca a pleno (rosa chicle, lima, oliva, fucsia y el rojo del logo).
+// Fondo de la opción E (v2): el degradé "líquido" de C con la paleta de "colores marca.jpeg"
+// (rojo, rosa pálido, oliva, lima), compuesto como el degradé de referencia y en movimiento constante.
 // Corre en WebGL. Si el navegador no puede, queda el degradé CSS de respaldo.
 //
 // Para ajustar:  SPEED = velocidad del movimiento en reposo
@@ -8,7 +8,7 @@
 //                Los colores están en "paleta de marca", más abajo (0..1 = 0..255).
 
 (() => {
-  const SPEED = 0.048;        // más alto = fluye más rápido
+  const SPEED = 0.11;         // más alto = fluye más rápido (la v2 pide movimiento constante)
   const SPOT_SIZE = 16.0;    // más alto = mancha más chica
   const SPOT_PUSH = 0.20;    // 0 = no aparta nada
   const PIXEL_SCALE = 0.5;   // resolución interna (0.5 = mitad, sobra para algo tan difuso)
@@ -59,42 +59,49 @@
       // deformación líquida: dos capas de ruido que se arrastran una a la otra
       float n1 = snoise(p * 0.85 + vec2(t * 0.9, -t * 0.6));
       float n2 = snoise(p * 1.3 - vec2(t * 0.7, t * 0.5) + n1 * 0.5);
-      vec2 q = p + 0.24 * vec2(n1, n2);
+      vec2 q = p + 0.30 * vec2(n1, n2);
 
-      // paleta de marca en versión suave: rosa chicle, lima, crema y un coral que viene del rojo del logo.
-      // Sin el oliva oscuro ni el fucsia, para que el texto oscuro se lea en todos lados.
-      vec3 rosa   = vec3(0.949, 0.659, 0.847);   // rosa chicle #F2A8D8
-      vec3 rosaCl = vec3(0.975, 0.820, 0.905);   // rosa claro, base
-      vec3 lima   = vec3(0.855, 0.905, 0.470);   // lima aclarada
-      vec3 crema  = vec3(1.000, 0.960, 0.890);   // crema #FFF6E6
-      vec3 coral  = vec3(0.960, 0.590, 0.560);   // rojo de marca aclarado
-      vec3 duraz  = vec3(0.990, 0.800, 0.720);   // durazno: entre coral y crema
+      // paleta de "colores marca.jpeg": rojo, rosa pálido, oliva y lima, compuestos como el degradé de referencia
+      // (rosa arriba a la izquierda, lima a la izquierda, rojo a la derecha, oliva abajo a la izquierda, claro abajo al centro)
+      vec3 rosaCl = vec3(0.930, 0.790, 0.800);   // rosa pálido #E8BFC5 aclarado
+      vec3 claro  = vec3(0.965, 0.935, 0.925);   // casi blanco
+      vec3 rosa   = vec3(0.910, 0.620, 0.660);   // rosa
+      vec3 lima   = vec3(0.760, 0.905, 0.000);   // lima #C1E700
+      vec3 rojo   = vec3(0.880, 0.040, 0.070);   // rojo #E00A12
+      vec3 oliva  = vec3(0.353, 0.357, 0.184);   // oliva #5A5B2F
+      vec3 vino   = vec3(0.600, 0.000, 0.110);   // rojo oscuro, esquina inferior derecha
 
-      // composición: rosa a la izquierda → crema a la derecha
-      vec3 col = mix(rosaCl, crema, smoothstep(0.25, 1.05, q.x / aspect));
+      // base: rosa pálido a la izquierda → claro a la derecha
+      vec3 col = mix(rosaCl, claro, smoothstep(0.20, 1.10, q.x / aspect));
 
-      // rosa chicle arriba a la izquierda
-      vec2 dp = (q - vec2(0.12 * aspect, 0.85)) * vec2(1.0, 1.3);
-      col = mix(col, rosa, clamp(exp(-dot(dp, dp) * 3.2), 0.0, 1.0) * 0.9);
+      // rosa arriba a la izquierda
+      vec2 dp = (q - vec2(0.10 * aspect, 0.90)) * vec2(1.0, 1.3);
+      col = mix(col, rosa, clamp(exp(-dot(dp, dp) * 3.0), 0.0, 1.0) * 0.8);
 
-      // banda lima al centro-izquierda, ondulando
-      float bx = (q.x - (0.42 * aspect + 0.10 * n2)) * 3.0;
-      float lm = exp(-bx * bx) * smoothstep(-0.25, 0.55, q.y + 0.25 * n1);
-      col = mix(col, lima, lm * 0.7);
+      // lima a la izquierda, ondulando
+      vec2 dl = (q - vec2(0.22 * aspect + 0.08 * n2, 0.55 + 0.1 * n1)) * vec2(1.3, 1.1);
+      col = mix(col, lima, clamp(exp(-dot(dl, dl) * 3.2), 0.0, 1.0) * 0.9);
 
-      // coral abajo a la izquierda
-      vec2 df = (q - vec2(0.28 * aspect, -0.02)) * vec2(1.1, 1.7);
-      col = mix(col, coral, clamp(exp(-dot(df, df) * 2.8), 0.0, 1.0) * 0.75);
+      // rojo a la derecha, grande
+      vec2 dr = (q - vec2(0.78 * aspect + 0.06 * n1, 0.55 + 0.1 * n2)) * vec2(0.9, 1.0);
+      col = mix(col, rojo, clamp(exp(-dot(dr, dr) * 2.2), 0.0, 1.0) * 0.9);
 
-      // durazno abajo a la derecha, para que el crema no quede plano
-      vec2 dr = (q - vec2(0.85 * aspect, -0.05)) * vec2(0.9, 1.5);
-      col = mix(col, duraz, clamp(exp(-dot(dr, dr) * 2.4), 0.0, 1.0) * 0.8);
+      // oliva abajo a la izquierda (a media fuerza, para que el texto oscuro siga leyéndose)
+      vec2 dq = (q - vec2(0.05 * aspect, -0.05)) * vec2(1.2, 1.6);
+      col = mix(col, oliva, clamp(exp(-dot(dq, dq) * 2.6), 0.0, 1.0) * 0.6);
 
-      // la mancha del mouse: coral más vivo, con los bordes deformados por el mismo líquido
+      // vino abajo a la derecha
+      vec2 dv = (q - vec2(1.0 * aspect, -0.05)) * vec2(1.2, 1.6);
+      col = mix(col, vino, clamp(exp(-dot(dv, dv) * 2.6), 0.0, 1.0) * 0.6);
+
+      // claro abajo al centro
+      vec2 dc = (q - vec2(0.55 * aspect, 0.0)) * vec2(1.6, 2.2);
+      col = mix(col, claro, clamp(exp(-dot(dc, dc) * 3.0), 0.0, 1.0) * 0.75);
+
+      // la mancha del mouse: rosa, con los bordes deformados por el mismo líquido
       vec2 ds = q - m;
       float sp = exp(-dot(ds, ds) * ${SPOT_SIZE.toFixed(1)});
-      vec3 mancha = vec3(0.94, 0.45, 0.48);
-      col = mix(col, mancha, sp * 0.8 * u_mstr);
+      col = mix(col, rosa, sp * 0.8 * u_mstr);
 
       gl_FragColor = vec4(col, 1.0);
     }`;
@@ -129,11 +136,11 @@
   // mouse (solo puntero fino; en celu no hay)
   let mx = 0.42, my = 0.5, tx = mx, ty = my, mstr = 0, tstr = 0;
   if (matchMedia('(pointer: fine)').matches) {
-    hero.addEventListener('pointermove', (e) => {
+    window.addEventListener('pointermove', (e) => { // en window: el contenido tapa al hero y si no, no llegan los eventos
       const r = hero.getBoundingClientRect();
       tx = (e.clientX - r.left) / r.width; ty = 1 - (e.clientY - r.top) / r.height; tstr = 1;
     });
-    hero.addEventListener('pointerleave', () => { tstr = 0; });
+    document.addEventListener('pointerleave', () => { tstr = 0; });
   }
 
   // loop, solo mientras el hero está a la vista y la pestaña activa
@@ -152,6 +159,6 @@
   const kick = () => { if (!raf) raf = requestAnimationFrame(frame); };
   new IntersectionObserver((en) => { visible = en[0].isIntersecting; kick(); }).observe(hero);
   document.addEventListener('visibilitychange', kick);
-  hero.addEventListener('pointermove', kick);
+  window.addEventListener('pointermove', kick, { passive: true });
   kick();
 })();
