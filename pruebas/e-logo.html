@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>e. · opciones de animación del logo</title>
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&display=swap" rel="stylesheet">
+<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/" } }</script>
+<style>
+  :root { --rojo-logo: #e30613; --rojo: #de4f57; --oliva: #5a5b2f; --nude: #fffaf1; --tinta: #4a4b25; --hueso: oklch(97% 0.01 80); --linea: rgb(74 75 37 / .22); --ease: cubic-bezier(.22,1,.36,1); --g: clamp(20px, 5vw, 80px); }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Archivo", Arial, sans-serif; background: #e8bfc5; color: var(--tinta); line-height: 1.4; overflow: hidden; height: 100svh; }
+  h1,h2,h3,p,ul { margin: 0; } ul { padding: 0; list-style: none; } a { color: inherit; text-decoration: none; } button { font: inherit; color: inherit; }
+  .hero { position: fixed; inset: 0; z-index: -1; background: linear-gradient(100deg, #e8bfc5 0%, #c1e700 35%, #e00a12 75%, #f4ede9 100%); }
+  .hero__gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .grain { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .12; mix-blend-mode: multiply; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); background-size: 220px; }
+  .nav { position: fixed; inset: 0 0 auto 0; z-index: 70; display: flex; justify-content: space-between; align-items: center; padding: 18px var(--g); }
+  .nav__logo { width: 64px; aspect-ratio: 939/602; background: var(--tinta); -webkit-mask: url("../assets/logo.svg") no-repeat center/contain; mask: url("../assets/logo.svg") no-repeat center/contain; }
+  .nav ul { display: flex; align-items: center; gap: 26px; font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+  .nav .pill { padding: 10px 18px; border: 1.5px solid rgb(74 75 37 / .5); border-radius: 999px; }
+  .top { position: relative; height: 100svh; display: grid; grid-template-rows: 1fr auto; padding: 100px var(--g) 110px; overflow: hidden; }
+  .top__3d { position: absolute; inset: 0; }
+  .top__3d canvas, .top__3d svg { display: block; width: 100%; height: 100%; }
+  .top__tag { position: relative; align-self: end; justify-self: center; text-align: center; margin-bottom: clamp(24px, 5vh, 60px); font-size: clamp(1.1rem, 2.2vw, 1.7rem); font-weight: 500; letter-spacing: -.01em; min-height: 1.4em; }
+  .top__tag i { display: inline-block; width: 2px; height: 1em; margin-left: 3px; vertical-align: -.15em; background: var(--rojo-logo); animation: blink 1s steps(2) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .top__foot { position: relative; display: flex; justify-content: space-between; align-items: end; font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; opacity: .75; }
+
+  /* selector de opciones */
+  .ops { position: fixed; left: 0; right: 0; bottom: 0; z-index: 80; display: flex; gap: 8px; padding: 12px var(--g); overflow-x: auto; scrollbar-width: none; background: linear-gradient(transparent, rgb(255 250 241 / .75) 40%); backdrop-filter: blur(8px); }
+  .ops::-webkit-scrollbar { display: none; }
+  .op { flex: none; display: grid; gap: 2px; text-align: left; padding: 10px 14px; border: 1.5px solid rgb(74 75 37 / .35); border-radius: 12px; background: rgb(255 250 241 / .7); transition: background .3s, border-color .3s; }
+  .op b { font-size: .8rem; font-weight: 800; letter-spacing: .02em; }
+  .op small { font-size: .68rem; opacity: .75; max-width: 22ch; line-height: 1.25; }
+  .op.on { background: var(--tinta); color: var(--hueso); border-color: var(--tinta); }
+  .op:hover:not(.on) { border-color: var(--tinta); }
+  @media (max-width: 900px) { .nav ul { display: none; } .top { padding-bottom: 140px; } }
+</style>
+</head>
+<body>
+<div class="hero" aria-hidden="true"><canvas class="hero__gl"></canvas></div>
+<div class="grain" aria-hidden="true"></div>
+<header class="nav">
+  <a class="nav__logo" href="e.html" aria-label="e. agencia"></a>
+  <ul><li><a href="e.html">Inicio</a></li><li><a href="e.html#servicios">Servicios</a></li><li><a href="e.html#quienes-somos">Quiénes somos</a></li><li><a class="pill" href="e.html#contacto">Contacto</a></li></ul>
+</header>
+<main>
+<section class="top" id="inicio">
+  <div class="top__3d" aria-hidden="true"></div>
+  <p class="top__tag" data-frases="Comunicación visual y RR.SS|Ideas con dirección|Marcas con identidad|Elevamos tu marca"><span class="top__txt"></span><i></i></p>
+  <div class="top__foot"><span>Opciones de animación · elegí una abajo</span><span>Buenos Aires</span></div>
+</section>
+</main>
+<nav class="ops" aria-label="Opciones">
+  <button class="op" data-op="orbita"><b>A · Mecida + órbita</b><small>La e se mece, el punto le da vueltas (la actual)</small></button>
+  <button class="op" data-op="escribe"><b>B · Se escribe</b><small>El trazo crece solo, el punto cae, se borra y vuelve</small></button>
+  <button class="op" data-op="gelatina"><b>C · Gelatina</b><small>Rebote blando; el punto pica encima como pelota</small></button>
+  <button class="op" data-op="giro"><b>D · Giro completo</b><small>Gira en redondo sin parar, con el punto al lado</small></button>
+  <button class="op" data-op="plastilina"><b>E · Plastilina</b><small>Material mate, flotando en gravedad cero</small></button>
+  <button class="op" data-op="puntos"><b>F · Puntos</b><small>La e hecha de puntitos que se dispersan con el mouse</small></button>
+  <button class="op" data-op="respira"><b>G · Respira</b><small>El tubo se infla y desinfla, como un globo</small></button>
+  <button class="op" data-op="tinta"><b>H · Tinta (2D)</b><small>Plano como el logo: se escribe, gotea y salpica</small></button>
+  <button class="op" data-op="pileta"><b>I · Pileta de es</b><small>El banner lleno de es flotando; el mouse las empuja</small></button>
+</nav>
+
+<script src="e-bg.js"></script>
+<script>
+(() => { // la bajada que se tipea (igual que en e.html)
+  const tag = document.querySelector('.top__tag'), txt = document.querySelector('.top__txt'), frases = tag.dataset.frases.split('|');
+  let f = 0, i = 0, del = false;
+  const tick = () => { const s = frases[f];
+    if (!del) { i++; txt.textContent = s.slice(0, i); if (i === s.length) { del = true; return setTimeout(tick, 2200); } return setTimeout(tick, 55 + Math.random() * 60); }
+    i--; txt.textContent = s.slice(0, i); if (i === 0) { del = false; f = (f + 1) % frases.length; return setTimeout(tick, 500); } setTimeout(tick, 28); };
+  setTimeout(tick, 600);
+})();
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
+
+const host = document.querySelector('.top__3d');
+const U = 1 / 300, CX = 262, CY = 301;                 // la e vive en 524×602 (centro 262,301); 300 px = 1 unidad
+const v = (x, y, z = 0) => new THREE.Vector3((x - CX) * U, -(y - CY) * U, z);
+const P = [[118,415],[180,330],[280,205],[350,135],[405,80],[365,12],[250,20],[130,35],[40,140],[28,260],[18,380],[40,500],[120,565],[210,600],[330,520],[430,420],[470,380],[495,345],[502,328]];
+const makePath = () => { const path = new THREE.CurvePath(); for (let i = 0; i + 3 < P.length; i += 3) path.add(new THREE.CubicBezierCurve3(v(...P[i]), v(...P[i + 1]), v(...P[i + 2]), v(...P[i + 3]))); return path; };
+const path = makePath(), R = 67.5 * U, DOT = v(706, 491); // DOT: dónde va el punto en el logo (relativo al centro de la e)
+const ROJO = 0xe30613;
+
+/* ---------- escena compartida ---------- */
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+host.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), .04).texture;
+const camera = new THREE.PerspectiveCamera(28, 1, .1, 50);
+const key = new THREE.DirectionalLight(0xffffff, 1.6); key.position.set(2, 3, 4); scene.add(key);
+const fill = new THREE.DirectionalLight(0xffe0e6, .6); fill.position.set(-3, -1, 2); scene.add(fill);
+scene.add(new THREE.AmbientLight(0xffffff, .35));
+const gloss = () => new THREE.MeshPhysicalMaterial({ color: ROJO, roughness: .26, metalness: .05, clearcoat: 1, clearcoatRoughness: .12, envMapIntensity: .9 });
+const matte = () => new THREE.MeshStandardMaterial({ color: ROJO, roughness: .78, metalness: 0, envMapIntensity: .35 });
+const tube = (mat, seg = 260, rad = R) => new THREE.Mesh(new THREE.TubeGeometry(path, seg, rad, 36, false), mat);
+const caps = (mat, rad = R) => [P[0], P[P.length - 1]].map(([x, y]) => { const c = new THREE.Mesh(new THREE.SphereGeometry(rad, 32, 24), mat); c.position.copy(v(x, y)); return c; });
+const sphere = (mat, r = 62 * U) => { const d = new THREE.Mesh(new THREE.SphereGeometry(r, 40, 32), mat); d.scale.set(1, 1.1, 1); return d; };
+let mx = 0, my = 0, sx = 0, sy = 0; addEventListener('pointermove', e => { mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; }, { passive: true });
+const fit = () => { const w = host.clientWidth, h = host.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; const f = w < 700 ? .52 : .30; camera.position.z = (524 * U / f) / (2 * Math.tan(camera.fov * Math.PI / 360) * camera.aspect); camera.position.y = .08; camera.updateProjectionMatrix(); };
+fit(); addEventListener('resize', fit);
+const svgHost = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); // para la opción 2D
+svgHost.setAttribute('viewBox', '-300 -230 1200 1000'); svgHost.style.display = 'none'; host.appendChild(svgHost);
+
+/* ---------- opciones: cada una devuelve { update(t), dispose() } ---------- */
+const root = new THREE.Group(); scene.add(root);
+const clear = () => { root.clear(); svgHost.style.display = 'none'; svgHost.innerHTML = ''; renderer.domElement.style.display = ''; };
+const sway = (g, t, k = 1) => { g.rotation.y = Math.sin(t * .62) * .62 * k + sx * .5; g.rotation.x = Math.sin(t * .81) * .14 * k + sy * .35; g.rotation.z = Math.sin(t * .47) * .07 * k; };
+
+const OPS = {
+  orbita() { const m = gloss(), e = new THREE.Group(); e.add(tube(m), ...caps(m)); root.add(e);
+    const dot = sphere(m), orbit = new THREE.Group(); orbit.rotation.x = .55; orbit.rotation.z = -.25; orbit.add(dot); root.add(orbit);
+    return { update(t) { sway(e, t); e.position.y = .08 + Math.sin(t * 1.1) * .04; orbit.position.copy(e.position); orbit.rotation.y = sx * .5; const a = t * .9; dot.position.set(Math.cos(a) * 1.15, 0, Math.sin(a) * 1.15); } }; },
+
+  escribe() { const m = gloss(), e = new THREE.Group(); const tb = tube(m, 300); e.add(tb); const start = caps(m)[0]; e.add(start);
+    const tip = new THREE.Mesh(new THREE.SphereGeometry(R, 32, 24), m); e.add(tip); const dot = sphere(m); e.add(dot); root.add(e);
+    const perSeg = 36 * 6, total = 300 * perSeg; // índices por segmento del tubo
+    return { update(t) { sway(e, t, .6); e.position.y = .08;
+      const T = 7.5, c = (t % T); let p; // ciclo: 0-2.6 se escribe · 2.6-3.2 cae el punto · hasta 6.4 queda · 6.4-7.5 se borra
+      if (c < 2.6) p = 1 - Math.pow(1 - c / 2.6, 3); else if (c < 6.4) p = 1; else p = 1 - Math.pow((c - 6.4) / 1.1, 2);
+      tb.geometry.setDrawRange(0, Math.floor(p * 300) * perSeg); tip.position.copy(path.getPointAt(Math.max(.001, p))); start.visible = p > .002;
+      const d = Math.min(1, Math.max(0, (c - 2.6) / .6)), bounce = d < 1 ? (1 - Math.pow(1 - d, 2)) : 1, fall = c >= 6.4 ? 1 - Math.pow((c - 6.4) / 1.1, 2) : 1;
+      dot.visible = c >= 2.6 && fall > 0; dot.position.set(DOT.x, DOT.y + (1 - bounce) * 2.2, 0); dot.scale.set(fall, 1.1 * fall * (1 + (1 - bounce) * .3), fall); } }; },
+
+  gelatina() { const m = gloss(), e = new THREE.Group(); e.add(tube(m), ...caps(m)); root.add(e); const dot = sphere(m); root.add(dot);
+    return { update(t) { const T = 2.4, c = (t % T) / T, boing = Math.sin(c * Math.PI * 4) * Math.exp(-c * 4) * .18; // rebote amortiguado
+      e.scale.set(1 - boing * .6, 1 + boing, 1 - boing * .6); e.rotation.y = sx * .5; e.rotation.x = sy * .35; e.rotation.z = Math.sin(t * .9) * .05; e.position.y = -.1;
+      const h = Math.abs(Math.sin(t * 2.6)), squash = h < .08 ? 1 - (.08 - h) * 5 : 1; // el punto pica sobre la e
+      dot.position.set(.35 + Math.sin(t * .5) * .25, .95 + h * 1.1, 0); dot.scale.set(1 / squash, 1.1 * squash, 1 / squash); } }; },
+
+  giro() { const m = gloss(), g = new THREE.Group(); g.add(tube(m), ...caps(m)); const dot = sphere(m); dot.position.copy(DOT); g.add(dot); g.position.x = -.5; root.add(g);
+    return { update(t) { g.rotation.y = t * .55 + sx * .6; g.rotation.x = Math.sin(t * .7) * .16 + sy * .4; g.rotation.z = Math.sin(t * .45) * .06; g.position.y = .08 + Math.sin(t * 1.1) * .04; } }; },
+
+  plastilina() { const m = matte(), e = new THREE.Group(); e.add(tube(m), ...caps(m)); root.add(e); const dot = sphere(m); root.add(dot);
+    return { update(t) { e.rotation.set(Math.sin(t * .31) * .5 + sy * .3, Math.sin(t * .23) * .9 + sx * .5, Math.cos(t * .19) * .35); e.position.set(Math.sin(t * .27) * .12, .1 + Math.cos(t * .33) * .12, 0);
+      dot.position.set(1.25 + Math.sin(t * .41) * .25, -.55 + Math.cos(t * .37) * .35, Math.sin(t * .29) * .4); dot.rotation.y = t * .4; } }; },
+
+  puntos() { const N = 900, m = gloss(), e = new THREE.Group(); root.add(e);
+    const inst = new THREE.InstancedMesh(new THREE.SphereGeometry(8 * U, 10, 8), m, N); e.add(inst);
+    const base = [], seed = [], M = new THREE.Matrix4(), tmp = new THREE.Vector3(), nrm = new THREE.Vector3(), fr = path.computeFrenetFrames(200, false);
+    for (let i = 0; i < N; i++) { const u = Math.random(), p = path.getPointAt(u), k = Math.min(199, Math.floor(u * 200)), a = Math.random() * Math.PI * 2, rr = R * Math.sqrt(Math.random()) * 1.05;
+      nrm.copy(fr.normals[k]).multiplyScalar(Math.cos(a) * rr).addScaledVector(fr.binormals[k], Math.sin(a) * rr); base.push(p.clone().add(nrm)); seed.push(Math.random() * 10); }
+    const dot = sphere(m); dot.position.copy(DOT); e.add(dot); e.position.x = -.5;
+    const mouse = new THREE.Vector3(), ray = new THREE.Raycaster(), plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+    return { update(t) { sway(e, t, .5); e.position.y = .08;
+      ray.setFromCamera(new THREE.Vector2(mx * 2, -my * 2), camera); ray.ray.intersectPlane(plane, mouse); e.worldToLocal(mouse);
+      for (let i = 0; i < N; i++) { const b = base[i], s = seed[i]; tmp.set(b.x + Math.sin(t * 1.3 + s) * .012, b.y + Math.cos(t * 1.1 + s * 1.7) * .012, b.z + Math.sin(t * .9 + s * .6) * .012);
+        const d = tmp.distanceTo(mouse); if (d < .55) { const push = (.55 - d) / .55; tmp.addScaledVector(tmp.clone().sub(mouse).normalize(), push * .5); }
+        M.makeTranslation(tmp.x, tmp.y, tmp.z); inst.setMatrixAt(i, M); } inst.instanceMatrix.needsUpdate = true; } }; },
+
+  respira() { const m = gloss(), e = new THREE.Group(); let tb = tube(m, 160, R); e.add(tb); const c = caps(m); e.add(...c); const dot = sphere(m); dot.position.copy(DOT); e.add(dot); e.position.x = -.5; root.add(e);
+    return { update(t) { const k = 1 + Math.sin(t * 1.6) * .32; tb.geometry.dispose(); tb.geometry = new THREE.TubeGeometry(path, 160, R * k, 28, false); c.forEach(s => s.scale.setScalar(k));
+      const kd = 1 - Math.sin(t * 1.6) * .25; dot.scale.set(kd, 1.1 * kd, kd); sway(e, t, .7); e.position.y = .08; } }; },
+
+  pileta() { const N = 90, m = gloss(), e = new THREE.Group(); root.add(e);
+    // una e chica (tubo + tapas + punto) fusionada en una sola geometría, repetida N veces
+    const parts = [new THREE.TubeGeometry(path, 70, R, 14, false)];
+    for (const [x, y] of [P[0], P[P.length - 1]]) { const g = new THREE.SphereGeometry(R, 14, 10); const q = v(x, y); g.translate(q.x, q.y, 0); parts.push(g); }
+    const pg = new THREE.SphereGeometry(62 * U, 16, 12); pg.scale(1, 1.1, 1); pg.translate(DOT.x, DOT.y, 0); parts.push(pg);
+    const geo = mergeGeometries(parts); geo.translate(-.4, 0, 0); // centrada con el punto incluido
+    const inst = new THREE.InstancedMesh(geo, m, N); e.add(inst);
+    const vis = () => { const h = 2 * camera.position.z * Math.tan(camera.fov * Math.PI / 360); return [h * camera.aspect, h]; }; // ancho y alto visibles en z=0
+    const es = []; { const [W, H] = vis(); for (let i = 0; i < N; i++) es.push({ x: (Math.random() - .5) * W, y: (Math.random() - .5) * H, vx: 0, vy: 0, r: Math.random() * Math.PI * 2, vr: 0, s: .085 + Math.random() * .11, tx: (Math.random() - .5) * .5, ty: (Math.random() - .5) * .5, seed: Math.random() * 10 }); }
+    const M = new THREE.Matrix4(), Q = new THREE.Quaternion(), E = new THREE.Euler(), S = new THREE.Vector3(), Pv = new THREE.Vector3(), mouse = new THREE.Vector3(), ray = new THREE.Raycaster(), plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+    let last = performance.now();
+    return { update(t) { const now = performance.now(), dt = Math.min(.05, (now - last) / 1000); last = now; const [W, H] = vis();
+      ray.setFromCamera(new THREE.Vector2(mx * 2, -my * 2), camera); ray.ray.intersectPlane(plane, mouse);
+      es.forEach((o, i) => {
+        // deriva suave, como flotando; el mouse las empuja y las hace girar
+        o.vx += Math.sin(t * .4 + o.seed) * .06 * dt; o.vy += Math.cos(t * .35 + o.seed * 1.3) * .06 * dt;
+        const dx = o.x - mouse.x, dy = o.y - mouse.y, d = Math.hypot(dx, dy); if (d < 1.1 && d > .001) { const k = (1.1 - d) / 1.1 * 3.2 * dt; o.vx += dx / d * k; o.vy += dy / d * k; o.vr += (dx > 0 ? 1 : -1) * k * 2; }
+        // las es se apartan un poco entre sí
+        for (let j = i + 1; j < N; j++) { const q = es[j], ex = o.x - q.x, ey = o.y - q.y, dd = Math.hypot(ex, ey), min = (o.s + q.s) * 1.9; if (dd < min && dd > .001) { const k = (min - dd) / min * .6 * dt; o.vx += ex / dd * k; o.vy += ey / dd * k; q.vx -= ex / dd * k; q.vy -= ey / dd * k; } }
+        o.vx *= .985; o.vy *= .985; o.vr *= .97; o.x += o.vx * dt * 60 / 60; o.y += o.vy * dt * 60 / 60; o.r += o.vr * dt;
+        const hw = W / 2 - o.s * .9, hh = H / 2 - o.s * .9; if (o.x > hw) { o.x = hw; o.vx = -Math.abs(o.vx) * .6; } if (o.x < -hw) { o.x = -hw; o.vx = Math.abs(o.vx) * .6; } if (o.y > hh) { o.y = hh; o.vy = -Math.abs(o.vy) * .6; } if (o.y < -hh) { o.y = -hh; o.vy = Math.abs(o.vy) * .6; }
+        Pv.set(o.x, o.y, Math.sin(t * .7 + o.seed) * .15); E.set(o.tx + Math.sin(t * .5 + o.seed) * .25, o.ty + Math.cos(t * .45 + o.seed) * .35, o.r); Q.setFromEuler(E); S.setScalar(o.s); M.compose(Pv, Q, S); inst.setMatrixAt(i, M);
+      }); inst.instanceMatrix.needsUpdate = true; } }; },
+
+  tinta() { renderer.domElement.style.display = 'none'; svgHost.style.display = 'block';
+    svgHost.innerHTML = `<g transform="translate(-40 -60)"><path id="tr" d="M 118 415 C 180 330, 280 205, 350 135 C 405 80, 365 12, 250 20 C 130 35, 40 140, 28 260 C 18 380, 40 500, 120 565 C 210 600, 330 520, 430 420 C 470 380, 495 345, 502 328" fill="none" stroke="#e30613" stroke-width="135" stroke-linecap="round" stroke-linejoin="round"/>
+      <g id="ds"></g><g id="pt" transform="translate(706 491)"><ellipse rx="63" ry="70" fill="#e30613" transform="rotate(20)"/></g></g>`;
+    const tr = svgHost.querySelector('#tr'), pt = svgHost.querySelector('#pt'), ds = svgHost.querySelector('#ds'), L = tr.getTotalLength(); tr.style.strokeDasharray = L;
+    let drops = [], lastSplash = -1;
+    return { update(t) { const T = 6.5, c = t % T; let p; // 0-2.2 se escribe · 2.2 cae el punto y salpica · 5.6 se borra
+      if (c < 2.2) p = 1 - Math.pow(1 - c / 2.2, 2.4); else if (c < 5.6) p = 1; else p = 1 - Math.pow((c - 5.6) / .9, 2);
+      tr.style.strokeDashoffset = L * (1 - p); tr.style.opacity = c >= 5.6 ? Math.max(0, 1 - (c - 5.6) / .9) : 1;
+      const d = Math.min(1, Math.max(0, (c - 2.2) / .5)), b = 1 - Math.pow(1 - d, 3);
+      pt.setAttribute('transform', `translate(706 ${491 - (1 - b) * 500}) scale(${c >= 2.2 && c < 5.6 ? b : (c >= 5.6 ? Math.max(0, 1 - (c - 5.6) / .9) : 0)})`);
+      const cycle = Math.floor(t / T); if (d >= 1 && lastSplash !== cycle) { lastSplash = cycle; drops = []; for (let i = 0; i < 14; i++) { const a = Math.random() * Math.PI * 2, s = 4 + Math.random() * 9; drops.push({ x: 706, y: 491, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 6, r: 4 + Math.random() * 10, life: 1 }); } }
+      for (const q of drops) { q.x += q.vx; q.y += q.vy; q.vy += .5; q.life -= .022; } drops = drops.filter(q => q.life > 0);
+      ds.innerHTML = drops.map(q => `<circle cx="${q.x}" cy="${q.y}" r="${q.r * q.life}" fill="#e30613" opacity="${q.life}"/>`).join('');
+      svgHost.style.transform = `rotate(${Math.sin(t * .8) * 1.5}deg) translateY(${Math.sin(t * 1.1) * 6}px)`; } }; },
+};
+
+/* ---------- selector ---------- */
+let cur = null, curName = null;
+const pick = (name) => { clear(); curName = name; cur = OPS[name](); document.querySelectorAll('.op').forEach(b => b.classList.toggle('on', b.dataset.op === name)); history.replaceState(null, '', '#' + name); };
+document.querySelectorAll('.op').forEach(b => b.addEventListener('click', () => pick(b.dataset.op)));
+pick(OPS[location.hash.slice(1)] ? location.hash.slice(1) : 'orbita');
+const t0 = performance.now();
+const tick = () => { const t = (performance.now() - t0) / 1000; sx += (mx - sx) * .05; sy += (my - sy) * .05; cur.update(t); if (curName !== 'tinta') renderer.render(scene, camera); requestAnimationFrame(tick); };
+tick();
+</script>
+</body>
+</html>
