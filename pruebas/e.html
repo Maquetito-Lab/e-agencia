@@ -12,19 +12,20 @@
   :root {
     /* paleta de "colores marca.jpeg". --rojo es un rojo un poco más suave que el del logo, para botones */
     --rojo-logo: #e30613; --rojo: #de4f57; --rosa: #e8bfc5; --rosa-txt: #e2808f; --oliva: #5a5b2f; --lima: #c1e700; --nude: #fffaf1;
-    --vino: #8a0a1c; --tinta: #4a4b25; /* oliva oscuro de la marca: es el color de todo el texto (nada de negro) */ --hueso: oklch(97% 0.01 80); --linea: rgb(74 75 37 / .22);
+    --vino: #8a0a1c; --tinta: #4a4b25; /* oliva oscuro de la marca: es el color de todo el texto (nada de negro) */ --hueso: oklch(97% 0.01 80); --linea: rgb(255 255 255 / .35);
     --ease: cubic-bezier(.22,1,.36,1); --g: clamp(20px, 5vw, 80px);
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: auto; }
-  body { margin: 0; font-family: "Archivo", Arial, sans-serif; background: var(--rosa); color: var(--tinta); line-height: 1.4; overflow-x: hidden; }
+  body { margin: 0; font-family: "Archivo", Arial, sans-serif; background: var(--rosa); color: var(--hueso); /* texto de la web en blanco hueso; --tinta queda para el logo de la nav y para lo que va sobre paneles claros */ line-height: 1.4; overflow-x: hidden; }
   body.pres-on { overflow: hidden; }
   body.pres-solo main, body.pres-solo .nav { visibility: hidden; } /* con la presentación abierta, debajo queda solo el fondo animado (el marco) */
   @media (pointer: fine) { body, a, button { cursor: none; } }
   h1,h2,h3,p,ul,figure,blockquote { margin: 0; } ul { padding: 0; list-style: none; } a { color: inherit; text-decoration: none; }
   button { font: inherit; color: inherit; }
   img { display: block; max-width: 100%; }
-  .k { font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--rojo-logo); }
+  .k { font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+  .pres .k { color: var(--rojo-logo); }
 
   /* ---------- fondo líquido + grano ---------- */
   .hero { position: fixed; inset: 0; z-index: -1; background: linear-gradient(100deg, #e8bfc5 0%, #c1e700 35%, #e00a12 75%, #f4ede9 100%); }
@@ -45,8 +46,8 @@
   .nav__logo { width: 64px; aspect-ratio: 939/602; background: var(--tinta); -webkit-mask: url("../assets/logo.svg") no-repeat center/contain; mask: url("../assets/logo.svg") no-repeat center/contain; }
   .nav ul { display: flex; align-items: center; gap: 26px; font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
   .nav ul a { opacity: .85; } .nav ul a:hover { opacity: 1; }
-  .nav .pill { padding: 10px 18px; border: 1.5px solid rgb(74 75 37 / .5); border-radius: 999px; opacity: 1; transition: background .3s, color .3s, border-color .3s; }
-  .nav .pill:hover { background: var(--tinta); color: var(--hueso); border-color: var(--tinta); }
+  .nav .pill { padding: 10px 18px; border: 1.5px solid rgb(255 255 255 / .7); border-radius: 999px; opacity: 1; transition: background .3s, color .3s, border-color .3s; }
+  .nav .pill:hover { background: var(--hueso); color: var(--tinta); border-color: var(--hueso); }
   .nav__burger { display: none; }
 
   /* ---------- inicio: la e. en 3D girando ---------- */
@@ -56,7 +57,7 @@
   .top__fallback { position: absolute; left: 50%; top: 46%; width: min(64vw, 720px); aspect-ratio: 939/602; transform: translate(-50%, -50%); background: var(--rojo-logo); -webkit-mask: url("../assets/logo.svg") no-repeat center/contain; mask: url("../assets/logo.svg") no-repeat center/contain; display: none; }
   .top.no3d .top__fallback { display: block; }
   .top__tag { position: relative; align-self: end; justify-self: center; text-align: center; margin-bottom: clamp(24px, 5vh, 60px); font-size: clamp(1.1rem, 2.2vw, 1.7rem); font-weight: 500; letter-spacing: -.01em; min-height: 1.4em; }
-  .top__tag i { display: inline-block; width: 2px; height: 1em; margin-left: 3px; vertical-align: -.15em; background: var(--rojo-logo); animation: blink 1s steps(2) infinite; }
+  .top__tag i { display: inline-block; width: 2px; height: 1em; margin-left: 3px; vertical-align: -.15em; background: currentColor; animation: blink 1s steps(2) infinite; }
   @keyframes blink { 50% { opacity: 0; } }
   .top__foot { position: relative; display: flex; justify-content: space-between; align-items: end; font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; opacity: .75; }
   .top__foot .scroll { display: inline-flex; align-items: center; gap: 10px; }
@@ -70,9 +71,9 @@
   .ideas h1 em { font-style: italic; font-weight: 300; color: var(--rojo-logo); }
   .ideas__p { margin: 26px auto 0; max-width: 46ch; padding: 0 var(--g); font-size: clamp(1rem, 1.4vw, 1.2rem); }
   .ideas__p b { font-weight: 700; display: block; }
-  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 999px; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; border: 1.5px solid rgb(74 75 37 / .5); background: transparent; transition: background .3s, color .3s, border-color .3s; }
-  .btn:hover { background: var(--tinta); color: var(--hueso); border-color: var(--tinta); }
-  .btn--solid { background: var(--rojo); border-color: var(--rojo); color: var(--hueso); } .btn--solid:hover { background: var(--tinta); border-color: var(--tinta); color: var(--hueso); }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 999px; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; border: 1.5px solid rgb(255 255 255 / .7); background: transparent; transition: background .3s, color .3s, border-color .3s; }
+  .btn:hover { background: var(--hueso); color: var(--tinta); border-color: var(--hueso); }
+  .btn--solid { background: var(--rojo); border-color: var(--rojo); color: var(--hueso); } .btn--solid:hover { background: var(--hueso); border-color: var(--hueso); color: var(--rojo); }
   .ideas .btn { margin-top: 28px; }
   .carr { position: relative; height: clamp(300px, 42vw, 520px); margin-top: clamp(40px, 6vw, 80px); perspective: 1400px; }
   .carr__stage { position: absolute; inset: 0; transform-style: preserve-3d; }
@@ -89,7 +90,7 @@
   .servicios { padding: clamp(80px, 12vw, 160px) var(--g); border-top: 1px solid var(--linea); }
   .servicios h2 { font-size: clamp(3.4rem, 13vw, 13rem); font-weight: 800; line-height: .86; letter-spacing: -.055em; }
   .scards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; margin-top: clamp(28px, 4vw, 48px); }
-  .scard { width: 100%; text-align: left; border: 0; border-radius: 16px; background: rgb(255 250 241 / .82); padding: 18px 18px 0; display: grid; gap: 14px; animation: breathe var(--dur, 7s) ease-in-out var(--del, 0s) infinite alternate; transition: background .3s, box-shadow .4s; }
+  .scard { width: 100%; text-align: left; border: 0; border-radius: 16px; background: rgb(255 250 241 / .82); color: var(--tinta); padding: 18px 18px 0; display: grid; gap: 14px; animation: breathe var(--dur, 7s) ease-in-out var(--del, 0s) infinite alternate; transition: background .3s, box-shadow .4s; }
   .scard:hover { background: var(--nude); box-shadow: 0 24px 50px -30px rgb(0 0 0 / .35); }
   .scard__t { font-size: 1.15rem; font-weight: 800; letter-spacing: -.02em; line-height: 1.1; display: flex; justify-content: space-between; gap: 12px; }
   .scard__t small { font-size: .7rem; font-weight: 700; letter-spacing: .12em; color: var(--rojo-logo); }
@@ -137,7 +138,7 @@
   .proc { padding: clamp(80px, 12vw, 160px) var(--g); border-top: 1px solid var(--linea); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: clamp(24px, 4vw, 64px); }
   .proc__h { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: end; margin-bottom: 20px; gap: 24px; }
   .proc__h h2 { font-size: clamp(2rem, 5vw, 5rem); font-weight: 800; line-height: .9; letter-spacing: -.045em; }
-  .step .n { font-size: clamp(3rem, 6vw, 6rem); font-weight: 200; line-height: 1; letter-spacing: -.05em; color: var(--rojo-logo); }
+  .step .n { font-size: clamp(3rem, 6vw, 6rem); font-weight: 200; line-height: 1; letter-spacing: -.05em; }
   .step h3 { margin-top: 12px; font-size: clamp(1.2rem, 1.8vw, 1.6rem); font-weight: 800; letter-spacing: -.02em; }
   .step p { margin-top: 10px; font-size: .95rem; opacity: .85; max-width: 34ch; }
 
@@ -147,7 +148,7 @@
   .cta h2 { font-size: clamp(2.8rem, 9.5vw, 10rem); font-weight: 900; line-height: .86; letter-spacing: -.055em; text-transform: uppercase; }
   .cta__go { display: flex; align-items: center; gap: 14px 28px; flex-wrap: wrap; margin-top: 32px; }
   .cta .btn--solid { padding: 18px 28px; font-size: .84rem; }
-  .cta__mail { display: inline-block; font-size: clamp(1.1rem, 2.4vw, 2rem); font-weight: 500; letter-spacing: -.02em; border-bottom: 2px solid var(--rojo-logo); }
+  .cta__mail { display: inline-block; font-size: clamp(1.1rem, 2.4vw, 2rem); font-weight: 500; letter-spacing: -.02em; border-bottom: 2px solid currentColor; }
   .cta__links { display: grid; gap: 10px; text-align: right; font-size: .82rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
   .cta__links a { display: inline-flex; align-items: center; gap: 10px; justify-content: flex-end; }
   .cta__links a::after { content: "↗"; }
@@ -169,8 +170,8 @@
   /* ---------- responsive ---------- */
   @media (max-width: 900px) {
     .nav ul { display: none; }
-    .nav__burger { display: grid; place-items: center; width: 44px; height: 44px; border: 1.5px solid rgb(74 75 37 / .5); border-radius: 50%; background: transparent; color: inherit; font-size: .7rem; font-weight: 800; letter-spacing: .1em; }
-    .nav.open ul { display: flex; position: fixed; inset: 0; z-index: -1; background: var(--nude); flex-direction: column; justify-content: center; align-items: flex-start; padding: 0 var(--g); gap: 22px; font-size: 1.6rem; letter-spacing: -.01em; text-transform: none; }
+    .nav__burger { display: grid; place-items: center; width: 44px; height: 44px; border: 1.5px solid rgb(255 255 255 / .7); border-radius: 50%; background: transparent; color: inherit; font-size: .7rem; font-weight: 800; letter-spacing: .1em; }
+    .nav.open ul { display: flex; position: fixed; inset: 0; z-index: -1; background: var(--nude); color: var(--tinta); flex-direction: column; justify-content: center; align-items: flex-start; padding: 0 var(--g); gap: 22px; font-size: 1.6rem; letter-spacing: -.01em; text-transform: none; }
     .nav.open .pill { font-size: 1rem; }
     .top__foot { flex-direction: column; align-items: flex-start; gap: 12px; }
     .mani { grid-template-columns: 1fr; gap: 18px; }
