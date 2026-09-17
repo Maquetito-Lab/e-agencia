@@ -35,6 +35,14 @@
   .op b { font-size: .8rem; font-weight: 800; letter-spacing: .02em; }
   .op small { font-size: .68rem; opacity: .75; max-width: 22ch; line-height: 1.25; }
   .op.on { background: var(--tinta); color: var(--hueso); border-color: var(--tinta); }
+  .op--star { border-color: var(--rojo-logo); } .op--star b::before { content: "★ "; color: var(--rojo-logo); } .op--star.on b::before { color: var(--hueso); }
+  .top__3d .ventana { position: absolute; inset: 0; }
+  .ventana__e { position: absolute; left: 50%; top: 48%; width: min(52vw, 62svh); aspect-ratio: 524/602; transform: translate(-50%, -50%); -webkit-mask: url("../assets/logo-e.svg") no-repeat center/contain; mask: url("../assets/logo-e.svg") no-repeat center/contain; overflow: hidden; background: #e30613; }
+  .ventana__in { position: absolute; top: 0; bottom: 0; left: 0; display: flex; gap: 0; height: 100%; width: max-content; animation: vrun var(--sp, 26s) linear infinite; }
+  .ventana__in img, .ventana__in video { height: 100%; width: auto; object-fit: cover; display: block; }
+  @keyframes vrun { to { transform: translateX(-50%); } }
+  .ventana__dot { position: absolute; left: calc(50% + min(26vw, 31svh) + 2vw); top: 48%; width: min(6vw, 7svh); aspect-ratio: 126/139; background: #e30613; -webkit-mask: url("../assets/logo-dot.svg") no-repeat center/contain; mask: url("../assets/logo-dot.svg") no-repeat center/contain; transform: translateY(160%); animation: vdot 2.6s cubic-bezier(.34,1.56,.64,1) infinite alternate; }
+  @keyframes vdot { from { transform: translateY(150%) scale(.9); } to { transform: translateY(200%) scale(1.08); } }
   .op:hover:not(.on) { border-color: var(--tinta); }
   @media (max-width: 900px) { .nav ul { display: none; } .top { padding-bottom: 140px; } }
 </style>
@@ -63,6 +71,9 @@
   <button class="op" data-op="respira"><b>G · Respira</b><small>El tubo se infla y desinfla, como un globo</small></button>
   <button class="op" data-op="tinta"><b>H · Tinta (2D)</b><small>Plano como el logo: se escribe, gotea y salpica</small></button>
   <button class="op" data-op="pileta"><b>I · Pileta de es</b><small>El banner lleno de es flotando; el mouse las empuja</small></button>
+  <button class="op op--star" data-op="fluido"><b>J · Tinta viva</b><small>Fluido real: la e se escribe en tinta y el mouse la revuelve</small></button>
+  <button class="op op--star" data-op="ventana"><b>K · Ventana</b><small>La e es una ventana por la que pasa el contenido</small></button>
+  <button class="op op--star" data-op="feed"><b>L · Feed 3D</b><small>Una pared curva de trabajos girando detrás de la e</small></button>
 </nav>
 
 <script src="e-bg.js"></script>
@@ -113,7 +124,7 @@ svgHost.setAttribute('viewBox', '-300 -230 1200 1000'); svgHost.style.display = 
 
 /* ---------- opciones: cada una devuelve { update(t), dispose() } ---------- */
 const root = new THREE.Group(); scene.add(root);
-const clear = () => { root.clear(); svgHost.style.display = 'none'; svgHost.innerHTML = ''; renderer.domElement.style.display = ''; };
+const clear = () => { cur?.dispose?.(); root.clear(); svgHost.style.display = 'none'; svgHost.innerHTML = ''; renderer.domElement.style.display = ''; };
 const sway = (g, t, k = 1) => { g.rotation.y = Math.sin(t * .62) * .62 * k + sx * .5; g.rotation.x = Math.sin(t * .81) * .14 * k + sy * .35; g.rotation.z = Math.sin(t * .47) * .07 * k; };
 
 const OPS = {
@@ -161,7 +172,7 @@ const OPS = {
     return { update(t) { const k = 1 + Math.sin(t * 1.6) * .32; tb.geometry.dispose(); tb.geometry = new THREE.TubeGeometry(path, 160, R * k, 28, false); c.forEach(s => s.scale.setScalar(k));
       const kd = 1 - Math.sin(t * 1.6) * .25; dot.scale.set(kd, 1.1 * kd, kd); sway(e, t, .7); e.position.y = .08; } }; },
 
-  pileta() { const N = 90, m = gloss(), e = new THREE.Group(); root.add(e);
+  pileta() { const N = 190, m = gloss(), e = new THREE.Group(); root.add(e);
     // una e chica (tubo + tapas + punto) fusionada en una sola geometría, repetida N veces
     const parts = [new THREE.TubeGeometry(path, 70, R, 14, false)];
     for (const [x, y] of [P[0], P[P.length - 1]]) { const g = new THREE.SphereGeometry(R, 14, 10); const q = v(x, y); g.translate(q.x, q.y, 0); parts.push(g); }
@@ -169,7 +180,7 @@ const OPS = {
     const geo = mergeGeometries(parts); geo.translate(-.4, 0, 0); // centrada con el punto incluido
     const inst = new THREE.InstancedMesh(geo, m, N); e.add(inst);
     const vis = () => { const h = 2 * camera.position.z * Math.tan(camera.fov * Math.PI / 360); return [h * camera.aspect, h]; }; // ancho y alto visibles en z=0
-    const es = []; { const [W, H] = vis(); for (let i = 0; i < N; i++) es.push({ x: (Math.random() - .5) * W, y: (Math.random() - .5) * H, vx: 0, vy: 0, r: Math.random() * Math.PI * 2, vr: 0, s: .085 + Math.random() * .11, tx: (Math.random() - .5) * .5, ty: (Math.random() - .5) * .5, seed: Math.random() * 10 }); }
+    const es = []; { const [W, H] = vis(); for (let i = 0; i < N; i++) es.push({ x: (Math.random() - .5) * W, y: (Math.random() - .5) * H, vx: 0, vy: 0, r: Math.random() * Math.PI * 2, vr: 0, s: .06 + Math.random() * .085, tx: (Math.random() - .5) * .5, ty: (Math.random() - .5) * .5, seed: Math.random() * 10 }); }
     const M = new THREE.Matrix4(), Q = new THREE.Quaternion(), E = new THREE.Euler(), S = new THREE.Vector3(), Pv = new THREE.Vector3(), mouse = new THREE.Vector3(), ray = new THREE.Raycaster(), plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
     let last = performance.now();
     return { update(t) { const now = performance.now(), dt = Math.min(.05, (now - last) / 1000); last = now; const [W, H] = vis();
@@ -184,6 +195,91 @@ const OPS = {
         const hw = W / 2 - o.s * .9, hh = H / 2 - o.s * .9; if (o.x > hw) { o.x = hw; o.vx = -Math.abs(o.vx) * .6; } if (o.x < -hw) { o.x = -hw; o.vx = Math.abs(o.vx) * .6; } if (o.y > hh) { o.y = hh; o.vy = -Math.abs(o.vy) * .6; } if (o.y < -hh) { o.y = -hh; o.vy = Math.abs(o.vy) * .6; }
         Pv.set(o.x, o.y, Math.sin(t * .7 + o.seed) * .15); E.set(o.tx + Math.sin(t * .5 + o.seed) * .25, o.ty + Math.cos(t * .45 + o.seed) * .35, o.r); Q.setFromEuler(E); S.setScalar(o.s); M.compose(Pv, Q, S); inst.setMatrixAt(i, M);
       }); inst.instanceMatrix.needsUpdate = true; } }; },
+
+  /* ---- J · tinta viva: simulación de fluido en la GPU. La e se "escribe" en tinta roja todo el tiempo y el mouse la revuelve ---- */
+  fluido() { renderer.domElement.style.display = 'none';
+    const cv = document.createElement('canvas'); cv.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;display:block'; host.appendChild(cv);
+    const gl = cv.getContext('webgl2', { alpha: true, premultipliedAlpha: false, antialias: false });
+    if (!gl || !gl.getExtension('EXT_color_buffer_float')) { cv.remove(); renderer.domElement.style.display = ''; return OPS.tinta(); }
+    gl.getExtension('OES_texture_float_linear');
+    const VS = `#version 300 es
+      in vec2 a; out vec2 vUv; out vec2 vL, vR, vT, vB; uniform vec2 texel;
+      void main(){ vUv = a * .5 + .5; vL = vUv - vec2(texel.x, 0.); vR = vUv + vec2(texel.x, 0.); vT = vUv + vec2(0., texel.y); vB = vUv - vec2(0., texel.y); gl_Position = vec4(a, 0., 1.); }`;
+    const F = (body, head = '') => `#version 300 es
+      precision highp float; precision highp sampler2D; in vec2 vUv, vL, vR, vT, vB; out vec4 o; ${head} void main(){ ${body} }`;
+    const SH = {
+      splat: F(`vec2 p = vUv - point; p.x *= aspect; vec3 s = exp(-dot(p, p) / radius) * color; vec3 b = texture(uTarget, vUv).xyz; o = vec4(b + s, 1.);`, 'uniform sampler2D uTarget; uniform float aspect, radius; uniform vec2 point; uniform vec3 color;'),
+      advect: F(`vec2 c = vUv - dt * texture(uVelocity, vUv).xy * texelSize; o = dissipation * texture(uSource, c);`, 'uniform sampler2D uVelocity, uSource; uniform vec2 texelSize; uniform float dt, dissipation;'),
+      div: F(`float L = texture(uVelocity, vL).x, R = texture(uVelocity, vR).x, T = texture(uVelocity, vT).y, B = texture(uVelocity, vB).y; vec2 C = texture(uVelocity, vUv).xy;
+        if (vL.x < 0.) L = -C.x; if (vR.x > 1.) R = -C.x; if (vT.y > 1.) T = -C.y; if (vB.y < 0.) B = -C.y; o = vec4(.5 * (R - L + T - B), 0., 0., 1.);`, 'uniform sampler2D uVelocity;'),
+      curl: F(`float L = texture(uVelocity, vL).y, R = texture(uVelocity, vR).y, T = texture(uVelocity, vT).x, B = texture(uVelocity, vB).x; o = vec4(.5 * (R - L - T + B), 0., 0., 1.);`, 'uniform sampler2D uVelocity;'),
+      vort: F(`float L = texture(uCurl, vL).x, R = texture(uCurl, vR).x, T = texture(uCurl, vT).x, B = texture(uCurl, vB).x, C = texture(uCurl, vUv).x;
+        vec2 f = .5 * vec2(abs(T) - abs(B), abs(R) - abs(L)); f /= length(f) + 1e-4; f *= curl * C; f.y *= -1.; vec2 v = texture(uVelocity, vUv).xy + f * dt; o = vec4(clamp(v, -1000., 1000.), 0., 1.);`, 'uniform sampler2D uVelocity, uCurl; uniform float curl, dt;'),
+      press: F(`float L = texture(uPressure, vL).x, R = texture(uPressure, vR).x, T = texture(uPressure, vT).x, B = texture(uPressure, vB).x, d = texture(uDivergence, vUv).x; o = vec4((L + R + B + T - d) * .25, 0., 0., 1.);`, 'uniform sampler2D uPressure, uDivergence;'),
+      grad: F(`float L = texture(uPressure, vL).x, R = texture(uPressure, vR).x, T = texture(uPressure, vT).x, B = texture(uPressure, vB).x; vec2 v = texture(uVelocity, vUv).xy - vec2(R - L, T - B); o = vec4(v, 0., 1.);`, 'uniform sampler2D uPressure, uVelocity;'),
+      clear: F(`o = value * texture(uTexture, vUv);`, 'uniform sampler2D uTexture; uniform float value;'),
+      show: F(`vec3 c = texture(uTexture, vUv).rgb; float mx = max(c.r, max(c.g, c.b)); float a = clamp(mx * 1.6, 0., 1.); vec3 col = c / max(mx, 1e-3); o = vec4(mix(col, c, .35), a);`, 'uniform sampler2D uTexture;'),
+    };
+    const prog = (fs) => { const p = gl.createProgram(); for (const [t, src] of [[gl.VERTEX_SHADER, VS], [gl.FRAGMENT_SHADER, fs]]) { const sh = gl.createShader(t); gl.shaderSource(sh, src); gl.compileShader(sh); if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) console.warn(gl.getShaderInfoLog(sh)); gl.attachShader(p, sh); } gl.linkProgram(p);
+      const u = {}; for (let i = 0; i < gl.getProgramParameter(p, gl.ACTIVE_UNIFORMS); i++) { const n = gl.getActiveUniform(p, i).name; u[n] = gl.getUniformLocation(p, n); } return { p, u }; };
+    const PR = {}; for (const k in SH) PR[k] = prog(SH[k]);
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW); gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+    const fbo = (w, h, fmt, ifmt, type) => { const t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texImage2D(gl.TEXTURE_2D, 0, ifmt, w, h, 0, fmt, type, null); const f = gl.createFramebuffer(); gl.bindFramebuffer(gl.FRAMEBUFFER, f); gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, t, 0); gl.viewport(0, 0, w, h); gl.clearColor(0, 0, 0, 1); gl.clear(gl.COLOR_BUFFER_BIT);
+      return { t, f, w, h, texel: [1 / w, 1 / h], bind(i) { gl.activeTexture(gl.TEXTURE0 + i); gl.bindTexture(gl.TEXTURE_2D, t); return i; } }; };
+    const dfbo = (w, h, fmt, ifmt, type) => { let a = fbo(w, h, fmt, ifmt, type), b = fbo(w, h, fmt, ifmt, type); return { get r() { return a; }, get w() { return b; }, texel: a.texel, swap() { [a, b] = [b, a]; } }; };
+    let W, H, vel, dye, div, curlT, pres;
+    const size = () => { const ar = host.clientWidth / host.clientHeight; W = cv.width = Math.round(host.clientWidth * .75); H = cv.height = Math.round(host.clientHeight * .75);
+      const sw = Math.round(ar >= 1 ? 160 * ar : 160), sh = Math.round(ar >= 1 ? 160 : 160 / ar), dw = Math.round(ar >= 1 ? 640 * ar : 640), dh = Math.round(ar >= 1 ? 640 : 640 / ar);
+      vel = dfbo(sw, sh, gl.RG, gl.RG16F, gl.HALF_FLOAT); dye = dfbo(dw, dh, gl.RGBA, gl.RGBA16F, gl.HALF_FLOAT); div = fbo(sw, sh, gl.RED, gl.R16F, gl.HALF_FLOAT); curlT = fbo(sw, sh, gl.RED, gl.R16F, gl.HALF_FLOAT); pres = dfbo(sw, sh, gl.RED, gl.R16F, gl.HALF_FLOAT); };
+    size(); addEventListener('resize', size);
+    const use = (P, target) => { gl.useProgram(P.p); gl.bindFramebuffer(gl.FRAMEBUFFER, target ? target.f : null); gl.viewport(0, 0, target ? target.w : W, target ? target.h : H); return P.u; };
+    const draw = () => gl.drawArrays(gl.TRIANGLES, 0, 3);
+    const aspect = () => W / H;
+    const splat = (x, y, dx, dy, color, rad) => { // x,y en 0..1 (y hacia arriba)
+      let u = use(PR.splat, vel.w); gl.uniform2fv(u.texel, vel.texel); gl.uniform1i(u.uTarget, vel.r.bind(0)); gl.uniform1f(u.aspect, aspect()); gl.uniform2f(u.point, x, y); gl.uniform3f(u.color, dx, dy, 0); gl.uniform1f(u.radius, rad); draw(); vel.swap();
+      u = use(PR.splat, dye.w); gl.uniform2fv(u.texel, dye.texel); gl.uniform1i(u.uTarget, dye.r.bind(0)); gl.uniform1f(u.aspect, aspect()); gl.uniform2f(u.point, x, y); gl.uniform3fv(u.color, color); gl.uniform1f(u.radius, rad); draw(); dye.swap(); };
+    // la e, en coordenadas 0..1 del canvas: centrada, 62% del alto (la e mide 2.0067 unidades de alto)
+    const E = (u) => { const q = path.getPointAt(u); return [.5 + q.x * .62 / 2.0067 / aspect(), .5 + q.y * .62 / 2.0067]; };
+    let lm = null, last = performance.now(), ft = 0; // ft: reloj propio, avanza con dt (si un cuadro tarda, la lapicera no salta)
+    const pointer = (e) => { const r = cv.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width, y = 1 - (e.clientY - r.top) / r.height; if (lm) { const dx = (x - lm[0]) * 9000, dy = (y - lm[1]) * 9000; if (Math.abs(dx) + Math.abs(dy) > 0) splat(x, y, dx, dy, [.045, .05, 0], .0009); } lm = [x, y]; };
+    addEventListener('pointermove', pointer, { passive: true }); const leave = () => lm = null; addEventListener('pointerleave', leave);
+    const pens = [0, 1 / 6, 2 / 6, 3 / 6, 4 / 6, 5 / 6];
+    return { update() { const now = performance.now(), dt = Math.min(.033, (now - last) / 1000); last = now; ft += dt; const t = ft;
+      // la e se escribe: 4 "lapiceras" recorren el trazo sin parar, soltando tinta roja con un empujoncito hacia adelante
+      const steps = 2; // si el cuadro tardó mucho, la lapicera igual deja trazo continuo
+      pens.forEach((o) => { for (let k = 0; k < steps; k++) { const u = ((t - dt * (1 - k / steps)) * .2 + o + 1) % 1, [x, y] = E(u), [x2, y2] = E(Math.min(1, u + .004)); splat(x, y, (x2 - x) * 260, (y2 - y) * 260, [.36, .011, .03], .00016); } });
+      if (Math.floor(t * .5) % 2 === 0) splat(.5 + DOT.x * .62 / 2.0067 / aspect(), .5 + DOT.y * .62 / 2.0067, 0, 0, [.25, .008, .02], .0002); // el punto, a pulsos
+      let u = use(PR.curl, curlT); gl.uniform2fv(u.texel, vel.texel); gl.uniform1i(u.uVelocity, vel.r.bind(0)); draw();
+      u = use(PR.vort, vel.w); gl.uniform2fv(u.texel, vel.texel); gl.uniform1i(u.uVelocity, vel.r.bind(0)); gl.uniform1i(u.uCurl, curlT.bind(1)); gl.uniform1f(u.curl, 22); gl.uniform1f(u.dt, dt); draw(); vel.swap();
+      u = use(PR.div, div); gl.uniform2fv(u.texel, vel.texel); gl.uniform1i(u.uVelocity, vel.r.bind(0)); draw();
+      u = use(PR.clear, pres.w); gl.uniform2fv(u.texel, vel.texel); gl.uniform1i(u.uTexture, pres.r.bind(0)); gl.uniform1f(u.value, .8); draw(); pres.swap();
+      for (let i = 0; i < 18; i++) { u = use(PR.press, pres.w); gl.uniform2fv(u.texel, vel.texel); gl.uniform1i(u.uDivergence, div.bind(0)); gl.uniform1i(u.uPressure, pres.r.bind(1)); draw(); pres.swap(); }
+      u = use(PR.grad, vel.w); gl.uniform2fv(u.texel, vel.texel); gl.uniform1i(u.uPressure, pres.r.bind(0)); gl.uniform1i(u.uVelocity, vel.r.bind(1)); draw(); vel.swap();
+      u = use(PR.advect, vel.w); gl.uniform2fv(u.texel, vel.texel); gl.uniform2fv(u.texelSize, vel.texel); gl.uniform1i(u.uVelocity, vel.r.bind(0)); gl.uniform1i(u.uSource, vel.r.bind(0)); gl.uniform1f(u.dt, dt); gl.uniform1f(u.dissipation, .99); draw(); vel.swap();
+      u = use(PR.advect, dye.w); gl.uniform2fv(u.texel, dye.texel); gl.uniform2fv(u.texelSize, vel.texel); gl.uniform1i(u.uVelocity, vel.r.bind(0)); gl.uniform1i(u.uSource, dye.r.bind(1)); gl.uniform1f(u.dt, dt); gl.uniform1f(u.dissipation, .994); draw(); dye.swap();
+      u = use(PR.show, null); gl.uniform2fv(u.texel, dye.texel); gl.uniform1i(u.uTexture, dye.r.bind(0)); draw(); },
+      dispose() { removeEventListener('pointermove', pointer); removeEventListener('pointerleave', leave); removeEventListener('resize', size); cv.remove(); } }; },
+
+  /* ---- K · ventana: la e es un recorte por el que pasa el contenido de la agencia ---- */
+  ventana() { renderer.domElement.style.display = 'none';
+    const A = '../assets/servicios', items = ['fotografia/gpt-2.jpg', 'contenido/unboxing', 'community/img-4817.jpg', 'fotografia/dsc07842.jpg', 'ugc/tezza-9126', 'ia/gpt-3.jpg', 'fotografia/tezza-vintage.jpg', 'eventos/recap-evento-2', 'branding/pricobowls.jpg', 'ia/cuadro1.jpg'];
+    const it = (f) => f.includes('.') ? `<img src="${A}/${f}" alt="">` : `<video src="${A}/${f}.mp4" poster="${A}/${f}.jpg" muted loop playsinline autoplay></video>`;
+    const el = document.createElement('div'); el.className = 'ventana'; el.innerHTML = `<div class="ventana__e"><div class="ventana__in">${items.map(it).join('')}${items.map(it).join('')}</div></div><div class="ventana__dot"></div>`; host.appendChild(el);
+    const e = el.querySelector('.ventana__e'), inner = el.querySelector('.ventana__in');
+    return { update(t) { e.style.transform = `translate(-50%, -50%) perspective(900px) rotateY(${sx * 18}deg) rotateX(${-sy * 12}deg) rotate(${Math.sin(t * .6) * 1.5}deg)`; inner.style.marginLeft = `${sx * -60}px`; }, dispose() { el.remove(); } }; },
+
+  /* ---- L · feed 3D: una pared curva de trabajos (fotos y posters de reels) girando despacio detrás de la e brillante ---- */
+  feed() { const m = gloss(), e = new THREE.Group(); e.add(tube(m), ...caps(m)); const dot = sphere(m); dot.position.copy(DOT); e.add(dot); e.scale.setScalar(.72); e.position.set(-.3, .05, .6); root.add(e);
+    const A = '../assets/servicios/', files = ['fotografia/gpt-2.jpg', 'contenido/unboxing.jpg', 'community/img-4817.jpg', 'fotografia/dsc07842.jpg', 'branding/cabra-01.jpg', 'ugc/tezza-9126.jpg', 'ia/gpt-3.jpg', 'fotografia/tezza-vintage.jpg', 'community/img-4818.jpg', 'eventos/recap-evento-2.jpg', 'fotografia/gpt-1.jpg', 'ia/cuadro1.jpg', 'contenido/nov-5.jpg', 'ugc/video-5.jpg', 'community/mba-despues.jpg', 'ia/wa-1.jpg', 'fotografia/gpt-3.jpg', 'produccion/wa-3.jpg', 'branding/pricobowls.jpg', 'contenido/captions.jpg'];
+    const loader = new THREE.TextureLoader(), wall = new THREE.Group(); root.add(wall);
+    const COLS = 18, ROWS = 5, RAD = 5.2, GEO = new THREE.PlaneGeometry(.88, 1.1); // 4:5
+    for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { const tex = loader.load(A + files[(r * 5 + c) % files.length]); tex.colorSpace = THREE.SRGBColorSpace;
+      const mesh = new THREE.Mesh(GEO, new THREE.MeshBasicMaterial({ map: tex, transparent: true, opacity: .96 })); const a = (c / COLS) * Math.PI * 2 + (r % 2) * .22;
+      mesh.position.set(Math.sin(a) * RAD, (r - (ROWS - 1) / 2) * 1.25, Math.cos(a) * RAD); mesh.lookAt(0, mesh.position.y, 0); mesh.userData = { a, r }; wall.add(mesh); }
+    wall.position.y = -.1;
+    return { update(t) { wall.rotation.y = t * .06 + sx * .35; wall.rotation.x = sy * .08; wall.children.forEach((mh, i) => mh.position.y = (mh.userData.r - (ROWS - 1) / 2) * 1.25 + Math.sin(t * .8 + i) * .04);
+      sway(e, t, .5); e.position.y = .05 + Math.sin(t * 1.1) * .04; } }; },
 
   tinta() { renderer.domElement.style.display = 'none'; svgHost.style.display = 'block';
     svgHost.innerHTML = `<g transform="translate(-40 -60)"><path id="tr" d="M 118 415 C 180 330, 280 205, 350 135 C 405 80, 365 12, 250 20 C 130 35, 40 140, 28 260 C 18 380, 40 500, 120 565 C 210 600, 330 520, 430 420 C 470 380, 495 345, 502 328" fill="none" stroke="#e30613" stroke-width="135" stroke-linecap="round" stroke-linejoin="round"/>
@@ -207,7 +303,7 @@ const pick = (name) => { clear(); curName = name; cur = OPS[name](); document.qu
 document.querySelectorAll('.op').forEach(b => b.addEventListener('click', () => pick(b.dataset.op)));
 pick(OPS[location.hash.slice(1)] ? location.hash.slice(1) : 'orbita');
 const t0 = performance.now();
-const tick = () => { const t = (performance.now() - t0) / 1000; sx += (mx - sx) * .05; sy += (my - sy) * .05; cur.update(t); if (curName !== 'tinta') renderer.render(scene, camera); requestAnimationFrame(tick); };
+const tick = () => { const t = (performance.now() - t0) / 1000; sx += (mx - sx) * .05; sy += (my - sy) * .05; cur.update(t); if (!['tinta', 'fluido', 'ventana'].includes(curName)) renderer.render(scene, camera); requestAnimationFrame(tick); };
 tick();
 </script>
 </body>
