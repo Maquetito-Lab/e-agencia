@@ -13,6 +13,29 @@
   const SPOT_PUSH = 0.20;    // 0 = no aparta nada
   const PIXEL_SCALE = 0.5;   // resolución interna (0.5 = mitad, sobra para algo tan difuso)
 
+  // paletas (0..1 = 0..255). Las manchas conservan su lugar; cambia solo el color de cada una.
+  // "marca": el degradé de referencia, vivo. "crema": la misma composición pero en cremas y rosados, minimal.
+  // Se elige con <body data-bg="crema">; sin el atributo queda "marca".
+  const PALETAS = {
+    marca: `
+      vec3 rosaCl = vec3(0.930, 0.790, 0.800);   // rosa pálido #E8BFC5 aclarado
+      vec3 claro  = vec3(0.965, 0.935, 0.925);   // casi blanco
+      vec3 rosa   = vec3(0.910, 0.620, 0.660);   // rosa
+      vec3 lima   = vec3(0.760, 0.905, 0.000);   // lima #C1E700
+      vec3 rojo   = vec3(0.880, 0.040, 0.070);   // rojo #E00A12
+      vec3 oliva  = vec3(0.353, 0.357, 0.184);   // oliva #5A5B2F
+      vec3 vino   = vec3(0.600, 0.000, 0.110);   // rojo oscuro, esquina inferior derecha`,
+    crema: `
+      vec3 rosaCl = vec3(0.953, 0.867, 0.855);   // rosa empolvado #F3DDDA
+      vec3 claro  = vec3(0.984, 0.957, 0.933);   // crema casi blanco #FBF4EE
+      vec3 rosa   = vec3(0.922, 0.765, 0.780);   // rosa #EBC3C7 (donde iba el rosa)
+      vec3 lima   = vec3(0.961, 0.890, 0.812);   // durazno claro #F5E3CF (donde iba la lima)
+      vec3 rojo   = vec3(0.902, 0.686, 0.710);   // rosa viejo #E6AFB5 (donde iba el rojo)
+      vec3 oliva  = vec3(0.894, 0.827, 0.769);   // beige tostado #E4D3C4 (donde iba el oliva)
+      vec3 vino   = vec3(0.875, 0.639, 0.675);   // rosa profundo #DFA3AC (donde iba el vino)`,
+  };
+  const PAL = PALETAS[document.body.dataset.bg] || PALETAS.marca;
+
   const hero = document.querySelector('.hero');
   const canvas = document.querySelector('.hero__gl');
   if (!hero || !canvas) return;
@@ -63,13 +86,7 @@
 
       // paleta de "colores marca.jpeg": rojo, rosa pálido, oliva y lima, compuestos como el degradé de referencia
       // (rosa arriba a la izquierda, lima a la izquierda, rojo a la derecha, oliva abajo a la izquierda, claro abajo al centro)
-      vec3 rosaCl = vec3(0.930, 0.790, 0.800);   // rosa pálido #E8BFC5 aclarado
-      vec3 claro  = vec3(0.965, 0.935, 0.925);   // casi blanco
-      vec3 rosa   = vec3(0.910, 0.620, 0.660);   // rosa
-      vec3 lima   = vec3(0.760, 0.905, 0.000);   // lima #C1E700
-      vec3 rojo   = vec3(0.880, 0.040, 0.070);   // rojo #E00A12
-      vec3 oliva  = vec3(0.353, 0.357, 0.184);   // oliva #5A5B2F
-      vec3 vino   = vec3(0.600, 0.000, 0.110);   // rojo oscuro, esquina inferior derecha
+      ${PAL}
 
       // base: rosa pálido a la izquierda → claro a la derecha
       vec3 col = mix(rosaCl, claro, smoothstep(0.20, 1.10, q.x / aspect));

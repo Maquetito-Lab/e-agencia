@@ -12,7 +12,7 @@
     /* paleta de "colores marca.jpeg". --rojo es un rojo un poco más suave que el del logo, para botones */
     --rojo-logo: #e30613; --rojo: #de4f57; --rosa: #e8bfc5; --rosa-txt: #e2808f; --oliva: #5a5b2f; --lima: #c1e700; --nude: #fffaf1;
     --vino: #8a0a1c; --tinta: #4a4b25; /* oliva oscuro de la marca: es el color de todo el texto (nada de negro) */ --hueso: oklch(97% 0.01 80);
-    --crema: #f6e9e3; /* fondo de toda la web: crema con un toque rosado, liso */ --linea: rgb(74 75 37 / .16); --borde: rgb(74 75 37 / .45);
+    --crema: #f6e9e3; /* color base del fondo (el degradé líquido va encima, ver e-bg.js paleta "crema") */ --linea: rgb(74 75 37 / .16); --borde: rgb(74 75 37 / .45);
     --ease: cubic-bezier(.22,1,.36,1); --g: clamp(20px, 5vw, 80px);
   }
   * { box-sizing: border-box; }
@@ -27,10 +27,10 @@
   .k { font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
   .pres .k { color: var(--rojo-logo); }
 
-  /* ---------- fondo: crema rosado liso, con un velo apenas más rosa en dos esquinas, y grano finito ---------- */
-  .hero { position: fixed; inset: 0; z-index: -1; background: var(--crema); }
-  .hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 55% at 22% 18%, rgb(232 191 197 / .45), transparent 70%), radial-gradient(50% 45% at 85% 90%, rgb(232 191 197 / .3), transparent 70%); }
-  .grain { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .07; mix-blend-mode: multiply; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); background-size: 220px; }
+  /* ---------- fondo líquido (e-bg.js, paleta "crema": cremas y rosados en movimiento) + grano ---------- */
+  .hero { position: fixed; inset: 0; z-index: -1; background: linear-gradient(100deg, #f3ddda 0%, #f5e3cf 35%, #e6afb5 75%, #fbf4ee 100%); /* respaldo si no hay WebGL */ }
+  .hero__gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .grain { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .09; mix-blend-mode: multiply; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); background-size: 220px; }
   main > *, footer { position: relative; z-index: 1; }
 
   /* ---------- cursor ---------- */
@@ -186,8 +186,8 @@
   }
 </style>
 </head>
-<body>
-<div class="hero" aria-hidden="true"></div>
+<body data-bg="crema">
+<div class="hero" aria-hidden="true"><canvas class="hero__gl"></canvas></div>
 <div class="grain" aria-hidden="true"></div>
 <div class="cur" aria-hidden="true"><span class="cur__dot"></span></div>
 
@@ -405,6 +405,7 @@
   </div>
 </div>
 
+<script src="e-bg.js"></script>
 <script>
 (() => {
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
