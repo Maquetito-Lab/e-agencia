@@ -93,6 +93,7 @@
 <script type="module">
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { MarchingCubes } from 'three/addons/objects/MarchingCubes.js';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 
 const host = document.querySelector('.top__3d');
@@ -104,8 +105,8 @@ const R = 67.5 * U, DOT = v(706, 491); // DOT: dónde va el punto en el logo (re
 // y el arranque del palo escondido detrás del trazo izquierdo (z negativa) para que no se cruce con la panza de la e y haga un filo.
 const makePath = () => {
   const bez = new THREE.CurvePath(); for (let i = 0; i + 3 < P.length; i += 3) bez.add(new THREE.CubicBezierCurve3(v(...P[i]), v(...P[i + 1]), v(...P[i + 2]), v(...P[i + 3])));
-  const pts = [v(58, 472, -2.15 * R)]; // arranca adentro/detrás del trazo izquierdo
-  for (let i = 0; i <= 90; i++) { const u = i / 90, q = bez.getPointAt(u), s = Math.min(1, Math.max(0, (u - .07) / .18)); pts.push(new THREE.Vector3(q.x, q.y, -2.15 * R * (1 - s * s * (3 - 2 * s)))); }
+  const pts = [v(62, 470)]; // arranca adentro del trazo izquierdo, donde se funde con la curva
+  for (let i = 0; i <= 90; i++) pts.push(bez.getPointAt(i / 90));
   return new THREE.CatmullRomCurve3(pts, false, 'centripetal', .5);
 };
 const path = makePath();
@@ -125,6 +126,30 @@ const gloss = () => new THREE.MeshPhysicalMaterial({ color: ROJO, roughness: .26
 const matte = () => new THREE.MeshStandardMaterial({ color: ROJO, roughness: .78, metalness: 0, envMapIntensity: .35 });
 const tube = (mat, seg = 260, rad = R) => new THREE.Mesh(new THREE.TubeGeometry(path, seg, rad, 36, false), mat);
 const caps = (mat, rad = R) => [path.getPointAt(0), path.getPointAt(1)].map((q) => { const c = new THREE.Mesh(new THREE.SphereGeometry(rad, 32, 24), mat); c.position.copy(q); return c; });
+
+// La e como una sola superficie: campo de distancia del trazo (cápsulas con unión suave, así el palo se funde en la
+// curva con un fillet en vez de cruzarla) pasado por marching cubes. Se calcula una vez y queda como malla normal.
+const buildBlob = (mat) => {
+  const RES = 128, S = 1.34, K = .09, mc = new MarchingCubes(RES, mat, false, false, 800000);
+  const pts = path.getSpacedPoints(170), n = pts.length - 1, sz2 = RES * RES, d = 2 / RES;
+  const ax = new Float32Array(n), ay = new Float32Array(n), bx = new Float32Array(n), by = new Float32Array(n);
+  for (let i = 0; i < n; i++) { ax[i] = pts[i].x; ay[i] = pts[i].y; bx[i] = pts[i + 1].x; by[i] = pts[i + 1].y; }
+  const smin = (a, b) => { const h = Math.max(K - Math.abs(a - b), 0) / K; return Math.min(a, b) - h * h * K * .25; };
+  const f = mc.field; f.fill(-200); const dd = new Float32Array(n);
+  const zmax = R + K + .06, lz0 = Math.max(0, Math.floor((-zmax / S + 1) / d)), lz1 = Math.min(RES - 1, Math.ceil((zmax / S + 1) / d));
+  for (let l = lz0; l <= lz1; l++) { const z = (l * d - 1) * S;
+    for (let j = 0; j < RES; j++) { const y = (j * d - 1) * S;
+      for (let i = 0; i < RES; i++) { const x = (i * d - 1) * S;
+        // distancia a cada segmento; la unión es exacta a lo largo del trazo y suave (fillet) solo donde el trazo
+        // se cruza consigo mismo (el palo contra la curva), o sea entre segmentos lejanos en el recorrido
+        let d1 = 1e9, s1 = -1;
+        for (let s = 0; s < n; s++) { const vx = bx[s] - ax[s], vy = by[s] - ay[s], wx = x - ax[s], wy = y - ay[s], t = Math.max(0, Math.min(1, (wx * vx + wy * vy) / (vx * vx + vy * vy || 1)));
+          const ex = wx - vx * t, ey = wy - vy * t; dd[s] = Math.sqrt(ex * ex + ey * ey + z * z) - R; if (dd[s] < d1) { d1 = dd[s]; s1 = s; } }
+        let d2 = 1e9; for (let s = 0; s < n; s++) if (Math.abs(s - s1) > 28 && dd[s] < d2) d2 = dd[s];
+        f[l * sz2 + j * RES + i] = 80 - smin(d1, d2) * 600;
+      } } }
+  mc.isolation = 80; mc.update(); mc.scale.setScalar(S); return mc;
+};
 const sphere = (mat, r = 62 * U) => { const d = new THREE.Mesh(new THREE.SphereGeometry(r, 40, 32), mat); d.scale.set(1, 1.1, 1); return d; };
 let mx = 0, my = 0, sx = 0, sy = 0; addEventListener('pointermove', e => { mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; }, { passive: true });
 const fit = () => { const w = host.clientWidth, h = host.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; const f = w < 700 ? .52 : .30; camera.position.z = (524 * U / f) / (2 * Math.tan(camera.fov * Math.PI / 360) * camera.aspect); camera.position.y = .08; camera.updateProjectionMatrix(); };
@@ -138,7 +163,7 @@ const clear = () => { cur?.dispose?.(); root.clear(); svgHost.style.display = 'n
 const sway = (g, t, k = 1) => { g.rotation.y = Math.sin(t * .62) * .62 * k + sx * .5; g.rotation.x = Math.sin(t * .81) * .14 * k + sy * .35; g.rotation.z = Math.sin(t * .47) * .07 * k; };
 
 const OPS = {
-  orbita() { const m = gloss(), e = new THREE.Group(); e.add(tube(m), ...caps(m)); root.add(e);
+  orbita() { const m = gloss(), e = new THREE.Group(); e.add(buildBlob(m)); root.add(e);
     const dot = sphere(m), orbit = new THREE.Group(); orbit.rotation.x = .55; orbit.rotation.z = -.25; orbit.add(dot); root.add(orbit);
     return { update(t) { sway(e, t); e.position.y = .08 + Math.sin(t * 1.1) * .04; orbit.position.copy(e.position); orbit.rotation.y = sx * .5; const a = t * .9; dot.position.set(Math.cos(a) * 1.15, 0, Math.sin(a) * 1.15); } }; },
 
@@ -152,16 +177,16 @@ const OPS = {
       const d = Math.min(1, Math.max(0, (c - 2.6) / .6)), bounce = d < 1 ? (1 - Math.pow(1 - d, 2)) : 1, fall = c >= 6.4 ? 1 - Math.pow((c - 6.4) / 1.1, 2) : 1;
       dot.visible = c >= 2.6 && fall > 0; dot.position.set(DOT.x, DOT.y + (1 - bounce) * 2.2, 0); dot.scale.set(fall, 1.1 * fall * (1 + (1 - bounce) * .3), fall); } }; },
 
-  gelatina() { const m = gloss(), e = new THREE.Group(); e.add(tube(m), ...caps(m)); root.add(e); const dot = sphere(m); root.add(dot);
+  gelatina() { const m = gloss(), e = new THREE.Group(); e.add(buildBlob(m)); root.add(e); const dot = sphere(m); root.add(dot);
     return { update(t) { const T = 2.4, c = (t % T) / T, boing = Math.sin(c * Math.PI * 4) * Math.exp(-c * 4) * .18; // rebote amortiguado
       e.scale.set(1 - boing * .6, 1 + boing, 1 - boing * .6); e.rotation.y = sx * .5; e.rotation.x = sy * .35; e.rotation.z = Math.sin(t * .9) * .05; e.position.y = -.1;
       const h = Math.abs(Math.sin(t * 2.6)), squash = h < .08 ? 1 - (.08 - h) * 5 : 1; // el punto pica sobre la e
       dot.position.set(.35 + Math.sin(t * .5) * .25, .95 + h * 1.1, 0); dot.scale.set(1 / squash, 1.1 * squash, 1 / squash); } }; },
 
-  giro() { const m = gloss(), g = new THREE.Group(); g.add(tube(m), ...caps(m)); const dot = sphere(m); dot.position.copy(DOT); g.add(dot); g.position.x = -.5; root.add(g);
+  giro() { const m = gloss(), g = new THREE.Group(); g.add(buildBlob(m)); const dot = sphere(m); dot.position.copy(DOT); g.add(dot); g.position.x = -.5; root.add(g);
     return { update(t) { g.rotation.y = t * .55 + sx * .6; g.rotation.x = Math.sin(t * .7) * .16 + sy * .4; g.rotation.z = Math.sin(t * .45) * .06; g.position.y = .08 + Math.sin(t * 1.1) * .04; } }; },
 
-  plastilina() { const m = matte(), e = new THREE.Group(); e.add(tube(m), ...caps(m)); root.add(e); const dot = sphere(m); root.add(dot);
+  plastilina() { const m = matte(), e = new THREE.Group(); e.add(buildBlob(m)); root.add(e); const dot = sphere(m); root.add(dot);
     return { update(t) { e.rotation.set(Math.sin(t * .31) * .5 + sy * .3, Math.sin(t * .23) * .9 + sx * .5, Math.cos(t * .19) * .35); e.position.set(Math.sin(t * .27) * .12, .1 + Math.cos(t * .33) * .12, 0);
       dot.position.set(1.25 + Math.sin(t * .41) * .25, -.55 + Math.cos(t * .37) * .35, Math.sin(t * .29) * .4); dot.rotation.y = t * .4; } }; },
 
@@ -309,7 +334,7 @@ const OPS = {
     return { update(t) { e.style.transform = `translate(-50%, -50%) perspective(900px) rotateY(${sx * 18}deg) rotateX(${-sy * 12}deg) rotate(${Math.sin(t * .6) * 1.5}deg)`; inner.style.marginLeft = `${sx * -60}px`; }, dispose() { el.remove(); } }; },
 
   /* ---- L · feed 3D: una pared curva de trabajos (fotos y posters de reels) girando despacio detrás de la e brillante ---- */
-  feed() { const m = gloss(), e = new THREE.Group(); e.add(tube(m), ...caps(m)); const dot = sphere(m); dot.position.copy(DOT); e.add(dot); e.scale.setScalar(.72); e.position.set(-.3, .05, .6); root.add(e);
+  feed() { const m = gloss(), e = new THREE.Group(); e.add(buildBlob(m)); const dot = sphere(m); dot.position.copy(DOT); e.add(dot); e.scale.setScalar(.72); e.position.set(-.3, .05, .6); root.add(e);
     const A = '../assets/servicios/', files = ['fotografia/gpt-2.jpg', 'contenido/unboxing.jpg', 'community/img-4817.jpg', 'fotografia/dsc07842.jpg', 'branding/cabra-01.jpg', 'ugc/tezza-9126.jpg', 'ia/gpt-3.jpg', 'fotografia/tezza-vintage.jpg', 'community/img-4818.jpg', 'eventos/recap-evento-2.jpg', 'fotografia/gpt-1.jpg', 'ia/cuadro1.jpg', 'contenido/nov-5.jpg', 'ugc/video-5.jpg', 'community/mba-despues.jpg', 'ia/wa-1.jpg', 'fotografia/gpt-3.jpg', 'produccion/wa-3.jpg', 'branding/pricobowls.jpg', 'contenido/captions.jpg'];
     const loader = new THREE.TextureLoader(), wall = new THREE.Group(); root.add(wall);
     const COLS = 18, ROWS = 5, RAD = 5.2, GEO = new THREE.PlaneGeometry(.88, 1.1); // 4:5
