@@ -14,7 +14,7 @@
   const PIXEL_SCALE = 0.5;   // resolución interna (0.5 = mitad, sobra para algo tan difuso)
 
   // paletas (0..1 = 0..255). Las manchas conservan su lugar; cambia solo el color de cada una.
-  // "marca": el degradé de referencia, vivo. "crema": cremas y rosados, minimal. "rojo": rojos, corales, rosas y blanco (sin lima ni oliva).
+  // "marca": el degradé de referencia, vivo. "crema": cremas y rosados, minimal. "rojo": base crema con manchas rojas y coral (sin lima ni oliva).
   // Se elige con <body data-bg="crema">; sin el atributo queda "marca".
   const PALETAS = {
     marca: `
@@ -24,7 +24,8 @@
       vec3 lima   = vec3(0.760, 0.905, 0.000);   // lima #C1E700
       vec3 rojo   = vec3(0.880, 0.040, 0.070);   // rojo #E00A12
       vec3 oliva  = vec3(0.353, 0.357, 0.184);   // oliva #5A5B2F
-      vec3 vino   = vec3(0.600, 0.000, 0.110);   // rojo oscuro, esquina inferior derecha`,
+      vec3 vino   = vec3(0.600, 0.000, 0.110);   // rojo oscuro, esquina inferior derecha
+      float wRosa = 0.8, wLima = 0.9, wRojo = 0.9, wOliva = 0.6, wVino = 0.6, wClaro = 0.75; // fuerza de cada mancha`,
     crema: `
       vec3 rosaCl = vec3(0.953, 0.867, 0.855);   // rosa empolvado #F3DDDA
       vec3 claro  = vec3(0.984, 0.957, 0.933);   // crema casi blanco #FBF4EE
@@ -32,15 +33,17 @@
       vec3 lima   = vec3(0.961, 0.890, 0.812);   // durazno claro #F5E3CF (donde iba la lima)
       vec3 rojo   = vec3(0.902, 0.686, 0.710);   // rosa viejo #E6AFB5 (donde iba el rojo)
       vec3 oliva  = vec3(0.894, 0.827, 0.769);   // beige tostado #E4D3C4 (donde iba el oliva)
-      vec3 vino   = vec3(0.875, 0.639, 0.675);   // rosa profundo #DFA3AC (donde iba el vino)`,
+      vec3 vino   = vec3(0.875, 0.639, 0.675);   // rosa profundo #DFA3AC (donde iba el vino)
+      float wRosa = 0.8, wLima = 0.9, wRojo = 0.9, wOliva = 0.6, wVino = 0.6, wClaro = 0.75;`,
     rojo: `
-      vec3 rosaCl = vec3(0.980, 0.800, 0.800);   // rosa claro #FACCCC
-      vec3 claro  = vec3(1.000, 0.960, 0.940);   // blanco cálido #FFF5F0
-      vec3 rosa   = vec3(0.980, 0.560, 0.620);   // rosa #FA8F9E
-      vec3 lima   = vec3(0.960, 0.400, 0.300);   // coral #F5664D (donde iba la lima)
-      vec3 rojo   = vec3(0.900, 0.080, 0.130);   // rojo #E61421
-      vec3 oliva  = vec3(0.780, 0.100, 0.280);   // frambuesa #C71A47 (donde iba el oliva)
-      vec3 vino   = vec3(0.640, 0.020, 0.120);   // vino #A3051F`,
+      vec3 rosaCl = vec3(0.965, 0.914, 0.890);   // crema rosado #F6E9E3 (base)
+      vec3 claro  = vec3(0.984, 0.957, 0.933);   // crema casi blanco #FBF4EE
+      vec3 rosa   = vec3(0.950, 0.720, 0.690);   // rosa cálido #F2B8B0
+      vec3 lima   = vec3(0.910, 0.310, 0.240);   // rojo coral #E84F3D (donde iba la lima)
+      vec3 rojo   = vec3(0.890, 0.024, 0.075);   // rojo del logo #E30613
+      vec3 oliva  = vec3(0.720, 0.050, 0.120);   // rojo profundo #B80D1E (donde iba el oliva)
+      vec3 vino   = vec3(0.540, 0.040, 0.110);   // vino #8A0A1C
+      float wRosa = 0.55, wLima = 0.6, wRojo = 0.7, wOliva = 0.35, wVino = 0.4, wClaro = 0.9; // más suaves: que se vea el crema`,
   };
   const PAL = PALETAS[document.body.dataset.bg] || PALETAS.marca;
 
@@ -101,27 +104,27 @@
 
       // rosa arriba a la izquierda
       vec2 dp = (q - vec2(0.10 * aspect, 0.90)) * vec2(1.0, 1.3);
-      col = mix(col, rosa, clamp(exp(-dot(dp, dp) * 3.0), 0.0, 1.0) * 0.8);
+      col = mix(col, rosa, clamp(exp(-dot(dp, dp) * 3.0), 0.0, 1.0) * wRosa);
 
       // lima a la izquierda, ondulando
       vec2 dl = (q - vec2(0.22 * aspect + 0.08 * n2, 0.55 + 0.1 * n1)) * vec2(1.3, 1.1);
-      col = mix(col, lima, clamp(exp(-dot(dl, dl) * 3.2), 0.0, 1.0) * 0.9);
+      col = mix(col, lima, clamp(exp(-dot(dl, dl) * 3.2), 0.0, 1.0) * wLima);
 
       // rojo a la derecha, grande
       vec2 dr = (q - vec2(0.78 * aspect + 0.06 * n1, 0.55 + 0.1 * n2)) * vec2(0.9, 1.0);
-      col = mix(col, rojo, clamp(exp(-dot(dr, dr) * 2.2), 0.0, 1.0) * 0.9);
+      col = mix(col, rojo, clamp(exp(-dot(dr, dr) * 2.2), 0.0, 1.0) * wRojo);
 
       // oliva abajo a la izquierda (a media fuerza, para que el texto oscuro siga leyéndose)
       vec2 dq = (q - vec2(0.05 * aspect, -0.05)) * vec2(1.2, 1.6);
-      col = mix(col, oliva, clamp(exp(-dot(dq, dq) * 2.6), 0.0, 1.0) * 0.6);
+      col = mix(col, oliva, clamp(exp(-dot(dq, dq) * 2.6), 0.0, 1.0) * wOliva);
 
       // vino abajo a la derecha
       vec2 dv = (q - vec2(1.0 * aspect, -0.05)) * vec2(1.2, 1.6);
-      col = mix(col, vino, clamp(exp(-dot(dv, dv) * 2.6), 0.0, 1.0) * 0.6);
+      col = mix(col, vino, clamp(exp(-dot(dv, dv) * 2.6), 0.0, 1.0) * wVino);
 
       // claro abajo al centro
       vec2 dc = (q - vec2(0.55 * aspect, 0.0)) * vec2(1.6, 2.2);
-      col = mix(col, claro, clamp(exp(-dot(dc, dc) * 3.0), 0.0, 1.0) * 0.75);
+      col = mix(col, claro, clamp(exp(-dot(dc, dc) * 3.0), 0.0, 1.0) * wClaro);
 
       // la mancha del mouse: rosa, con los bordes deformados por el mismo líquido
       vec2 ds = q - m;
