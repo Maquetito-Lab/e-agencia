@@ -14,7 +14,7 @@
   const PIXEL_SCALE = 0.5;   // resolución interna (0.5 = mitad, sobra para algo tan difuso)
 
   // paletas (0..1 = 0..255). Las manchas conservan su lugar; cambia solo el color de cada una.
-  // "marca": el degradé de referencia, vivo. "crema": la misma composición pero en cremas y rosados, minimal.
+  // "marca": el degradé de referencia, vivo. "crema": cremas y rosados, minimal. "rojo": rojos, corales, rosas y blanco (sin lima ni oliva).
   // Se elige con <body data-bg="crema">; sin el atributo queda "marca".
   const PALETAS = {
     marca: `
@@ -33,6 +33,14 @@
       vec3 rojo   = vec3(0.902, 0.686, 0.710);   // rosa viejo #E6AFB5 (donde iba el rojo)
       vec3 oliva  = vec3(0.894, 0.827, 0.769);   // beige tostado #E4D3C4 (donde iba el oliva)
       vec3 vino   = vec3(0.875, 0.639, 0.675);   // rosa profundo #DFA3AC (donde iba el vino)`,
+    rojo: `
+      vec3 rosaCl = vec3(0.980, 0.800, 0.800);   // rosa claro #FACCCC
+      vec3 claro  = vec3(1.000, 0.960, 0.940);   // blanco cálido #FFF5F0
+      vec3 rosa   = vec3(0.980, 0.560, 0.620);   // rosa #FA8F9E
+      vec3 lima   = vec3(0.960, 0.400, 0.300);   // coral #F5664D (donde iba la lima)
+      vec3 rojo   = vec3(0.900, 0.080, 0.130);   // rojo #E61421
+      vec3 oliva  = vec3(0.780, 0.100, 0.280);   // frambuesa #C71A47 (donde iba el oliva)
+      vec3 vino   = vec3(0.640, 0.020, 0.120);   // vino #A3051F`,
   };
   const PAL = PALETAS[document.body.dataset.bg] || PALETAS.marca;
 
