@@ -17,7 +17,7 @@
   .hero__gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
   .grain { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .12; mix-blend-mode: multiply; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); background-size: 220px; }
   .nav { position: fixed; inset: 0 0 auto 0; z-index: 70; display: flex; justify-content: space-between; align-items: center; padding: 18px var(--g); }
-  .nav__logo { width: 64px; aspect-ratio: 939/602; background: var(--tinta); -webkit-mask: url("../assets/logo.svg") no-repeat center/contain; mask: url("../assets/logo.svg") no-repeat center/contain; }
+  .nav__logo { width: 64px; aspect-ratio: 939/602; background: var(--rojo-logo); -webkit-mask: url("../assets/logo.svg") no-repeat center/contain; mask: url("../assets/logo.svg") no-repeat center/contain; }
   .nav ul { display: flex; align-items: center; gap: 26px; font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
   .nav .pill { padding: 10px 18px; border: 1.5px solid rgb(255 255 255 / .7); border-radius: 999px; }
   .top { position: relative; height: 100svh; display: grid; grid-template-rows: 1fr auto; padding: 100px var(--g) 150px; overflow: hidden; }
@@ -68,6 +68,7 @@
   <button class="op" data-op="gelatina"><b>C · Gelatina</b><small>Rebote blando; el punto pica encima como pelota</small></button>
   <button class="op" data-op="giro"><b>D · Giro completo</b><small>Gira en redondo sin parar, con el punto al lado</small></button>
   <button class="op" data-op="plastilina"><b>E · Plastilina</b><small>Material mate, flotando en gravedad cero</small></button>
+  <button class="op op--star" data-op="plastilina2"><b>E2 · Plastilina interactiva</b><small>Se abolla cuando la tocás, y la podés agarrar y hacer girar</small></button>
   <button class="op" data-op="puntos"><b>F · Puntos</b><small>La e hecha de puntitos que se dispersan con el mouse</small></button>
   <button class="op" data-op="respira"><b>G · Respira</b><small>El tubo se infla y desinfla, como un globo</small></button>
   <button class="op" data-op="tinta"><b>H · Tinta (2D)</b><small>Plano como el logo: se escribe, gotea y salpica</small></button>
@@ -196,6 +197,35 @@ const OPS = {
         const hw = W / 2 - o.s * .9, hh = H / 2 - o.s * .9; if (o.x > hw) { o.x = hw; o.vx = -Math.abs(o.vx) * .6; } if (o.x < -hw) { o.x = -hw; o.vx = Math.abs(o.vx) * .6; } if (o.y > hh) { o.y = hh; o.vy = -Math.abs(o.vy) * .6; } if (o.y < -hh) { o.y = -hh; o.vy = Math.abs(o.vy) * .6; }
         Pv.set(o.x, o.y, Math.sin(t * .7 + o.seed) * .15); E.set(o.tx + Math.sin(t * .5 + o.seed) * .25, o.ty + Math.cos(t * .45 + o.seed) * .35, o.r); Q.setFromEuler(E); S.setScalar(o.s); M.compose(Pv, Q, S); inst.setMatrixAt(i, M);
       }); inst.instanceMatrix.needsUpdate = true; } }; },
+
+  /* ---- E2 · plastilina interactiva: el mouse la abolla al pasar (y se recupera despacio), y arrastrando la hacés girar con inercia ---- */
+  plastilina2() { const m = matte(), e = new THREE.Group(); root.add(e);
+    const geo = new THREE.TubeGeometry(path, 240, R, 32, false), pos = geo.attributes.position, base = pos.array.slice(), dent = new Float32Array(pos.count * 3);
+    const tb = new THREE.Mesh(geo, m); e.add(tb); e.add(...caps(m)); const dot = sphere(m); dot.position.copy(DOT); e.add(dot);
+    const ray = new THREE.Raycaster(), hit = new THREE.Vector3(), dir = new THREE.Vector3(), vtx = new THREE.Vector3();
+    let drag = null, rvx = 0, rvy = 0, ox = 0, oy = 0, squish = 0, downT = 0; // ox/oy: giro acumulado por el usuario; rvx/rvy: su inercia
+    const cvs = renderer.domElement;
+    const down = (ev) => { drag = { x: ev.clientX, y: ev.clientY }; downT = performance.now(); cvs.setPointerCapture?.(ev.pointerId); };
+    const move = (ev) => { if (!drag) return; rvy = (ev.clientX - drag.x) * .006; rvx = (ev.clientY - drag.y) * .006; oy += rvy; ox += rvx; drag = { x: ev.clientX, y: ev.clientY }; };
+    const up = () => { drag = null; };
+    cvs.addEventListener('pointerdown', down); addEventListener('pointermove', move, { passive: true }); addEventListener('pointerup', up); addEventListener('pointercancel', up);
+    return { update(t) {
+      // flota en gravedad cero + lo que el usuario giró (con inercia que se apaga sola)
+      if (!drag) { rvx *= .96; rvy *= .96; ox += rvx; oy += rvy; }
+      e.rotation.set(Math.sin(t * .31) * .35 + ox, Math.sin(t * .23) * .6 + oy, Math.cos(t * .19) * .25);
+      e.position.set(Math.sin(t * .27) * .1, .08 + Math.cos(t * .33) * .1, 0);
+      e.updateMatrixWorld();
+      // abolladura: donde el mouse toca el tubo, los vértices cercanos se hunden en la dirección de la mirada
+      ray.setFromCamera(new THREE.Vector2(mx * 2, -my * 2), camera);
+      const hits = ray.intersectObjects([tb, dot], false); cvs.style.cursor = hits.length ? 'grab' : '';
+      const h = hits.find(x => x.object === tb);
+      if (h) { hit.copy(h.point); tb.worldToLocal(hit); dir.copy(ray.ray.direction).transformDirection(tb.matrixWorld.clone().invert()).normalize();
+        const RAD = .34, DEEP = drag ? .22 : .13;
+        for (let i = 0; i < pos.count; i++) { vtx.set(base[i * 3], base[i * 3 + 1], base[i * 3 + 2]); const d = vtx.distanceTo(hit); if (d < RAD) { const k = Math.pow(1 - d / RAD, 2) * DEEP; dent[i * 3] += (dir.x * k - dent[i * 3]) * .25; dent[i * 3 + 1] += (dir.y * k - dent[i * 3 + 1]) * .25; dent[i * 3 + 2] += (dir.z * k - dent[i * 3 + 2]) * .25; } } }
+      const sq = hits.some(x => x.object === dot); squish += ((sq ? .28 : 0) - squish) * .15; dot.scale.set(1 + squish, 1.1 - squish * 1.4, 1 + squish);
+      for (let i = 0; i < dent.length; i++) { dent[i] *= .975; pos.array[i] = base[i] + dent[i]; } // se recupera despacio, como plastilina blanda
+      pos.needsUpdate = true; geo.computeVertexNormals(); },
+      dispose() { cvs.removeEventListener('pointerdown', down); removeEventListener('pointermove', move); removeEventListener('pointerup', up); removeEventListener('pointercancel', up); cvs.style.cursor = ''; } }; },
 
   /* ---- J · tinta viva: simulación de fluido en la GPU. La e se "escribe" en tinta roja todo el tiempo y el mouse la revuelve ---- */
   fluido() { renderer.domElement.style.display = 'none';
