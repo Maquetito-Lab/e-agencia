@@ -7,17 +7,17 @@
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&display=swap" rel="stylesheet">
-<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/" } }</script>
 <style>
   :root {
     /* paleta de "colores marca.jpeg". --rojo es un rojo un poco más suave que el del logo, para botones */
     --rojo-logo: #e30613; --rojo: #de4f57; --rosa: #e8bfc5; --rosa-txt: #e2808f; --oliva: #5a5b2f; --lima: #c1e700; --nude: #fffaf1;
-    --vino: #8a0a1c; --tinta: #4a4b25; /* oliva oscuro de la marca: es el color de todo el texto (nada de negro) */ --hueso: oklch(97% 0.01 80); --linea: rgb(255 255 255 / .35);
+    --vino: #8a0a1c; --tinta: #4a4b25; /* oliva oscuro de la marca: es el color de todo el texto (nada de negro) */ --hueso: oklch(97% 0.01 80);
+    --crema: #f6e9e3; /* fondo de toda la web: crema con un toque rosado, liso */ --linea: rgb(74 75 37 / .16); --borde: rgb(74 75 37 / .45);
     --ease: cubic-bezier(.22,1,.36,1); --g: clamp(20px, 5vw, 80px);
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: auto; }
-  body { margin: 0; font-family: "Archivo", Arial, sans-serif; background: var(--rosa); color: var(--hueso); /* texto de la web en blanco hueso; --tinta queda para el logo de la nav y para lo que va sobre paneles claros */ line-height: 1.4; overflow-x: hidden; }
+  body { margin: 0; font-family: "Archivo", Arial, sans-serif; background: var(--crema); color: var(--tinta); /* fondo crema rosado y texto oliva (minimal) */ line-height: 1.4; overflow-x: hidden; }
   body.pres-on { overflow: hidden; }
   body.pres-solo main, body.pres-solo .nav { visibility: hidden; } /* con la presentación abierta, debajo queda solo el fondo animado (el marco) */
   @media (pointer: fine) { body, a, button { cursor: none; } }
@@ -27,11 +27,10 @@
   .k { font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
   .pres .k { color: var(--rojo-logo); }
 
-  /* ---------- fondo líquido + grano ---------- */
-  .hero { position: fixed; inset: 0; z-index: -1; background: linear-gradient(100deg, #e8bfc5 0%, #c1e700 35%, #e00a12 75%, #f4ede9 100%); }
-  .hero__gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-  .hero__layer { display: none; }
-  .grain { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .12; mix-blend-mode: multiply; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); background-size: 220px; }
+  /* ---------- fondo: crema rosado liso, con un velo apenas más rosa en dos esquinas, y grano finito ---------- */
+  .hero { position: fixed; inset: 0; z-index: -1; background: var(--crema); }
+  .hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 55% at 22% 18%, rgb(232 191 197 / .45), transparent 70%), radial-gradient(50% 45% at 85% 90%, rgb(232 191 197 / .3), transparent 70%); }
+  .grain { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .07; mix-blend-mode: multiply; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); background-size: 220px; }
   main > *, footer { position: relative; z-index: 1; }
 
   /* ---------- cursor ---------- */
@@ -46,16 +45,16 @@
   .nav__logo { width: 64px; aspect-ratio: 939/602; background: var(--rojo-logo); -webkit-mask: url("../assets/logo.svg") no-repeat center/contain; mask: url("../assets/logo.svg") no-repeat center/contain; }
   .nav ul { display: flex; align-items: center; gap: 26px; font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
   .nav ul a { opacity: .85; } .nav ul a:hover { opacity: 1; }
-  .nav .pill { padding: 10px 18px; border: 1.5px solid rgb(255 255 255 / .7); border-radius: 999px; opacity: 1; transition: background .3s, color .3s, border-color .3s; }
-  .nav .pill:hover { background: var(--hueso); color: var(--tinta); border-color: var(--hueso); }
+  .nav .pill { padding: 10px 18px; border: 1.5px solid var(--borde); border-radius: 999px; opacity: 1; transition: background .3s, color .3s, border-color .3s; }
+  .nav .pill:hover { background: var(--tinta); color: var(--hueso); border-color: var(--tinta); }
   .nav__burger { display: none; }
 
-  /* ---------- inicio: la e. en 3D girando ---------- */
-  .top { position: relative; min-height: 100svh; display: grid; grid-template-rows: 1fr auto; padding: 100px var(--g) 40px; overflow: hidden; }
-  .top__3d { position: absolute; inset: 0; }
-  .top__3d canvas { display: block; width: 100%; height: 100%; }
-  .top__fallback { position: absolute; left: 50%; top: 46%; width: min(64vw, 720px); aspect-ratio: 939/602; transform: translate(-50%, -50%); background: var(--rojo-logo); -webkit-mask: url("../assets/logo.svg") no-repeat center/contain; mask: url("../assets/logo.svg") no-repeat center/contain; display: none; }
-  .top.no3d .top__fallback { display: block; }
+  /* ---------- inicio: la e. en tinta 2D (se escribe, cae el punto y salpica, se borra) ----------
+     Tamaño de la e: --e-w es el ancho de la caja del SVG (la e con su punto ocupa ~2/3 de esa caja). */
+  .top { position: relative; min-height: 100svh; display: grid; grid-template-rows: 1fr auto; padding: 100px var(--g) 40px; overflow: hidden; --e-w: min(44vw, 480px); }
+  .top__ink { position: absolute; left: 50%; top: 45%; width: var(--e-w); aspect-ratio: 6/5; transform: translate(-50%, -50%); pointer-events: none; }
+  .top__ink svg { display: block; width: 100%; height: 100%; overflow: visible; }
+  @media (max-width: 700px) { .top { --e-w: min(76vw, 360px); } }
   .top__tag { position: relative; align-self: end; justify-self: center; text-align: center; margin-bottom: clamp(24px, 5vh, 60px); font-size: clamp(1.1rem, 2.2vw, 1.7rem); font-weight: 500; letter-spacing: -.01em; min-height: 1.4em; }
   .top__tag i { display: inline-block; width: 2px; height: 1em; margin-left: 3px; vertical-align: -.15em; background: currentColor; animation: blink 1s steps(2) infinite; }
   @keyframes blink { 50% { opacity: 0; } }
@@ -71,13 +70,13 @@
   .ideas h1 em { font-style: italic; font-weight: 300; color: var(--rojo-logo); }
   .ideas__p { margin: 26px auto 0; max-width: 46ch; padding: 0 var(--g); font-size: clamp(1rem, 1.4vw, 1.2rem); }
   .ideas__p b { font-weight: 700; display: block; }
-  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 999px; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; border: 1.5px solid rgb(255 255 255 / .7); background: transparent; transition: background .3s, color .3s, border-color .3s; }
-  .btn:hover { background: var(--hueso); color: var(--tinta); border-color: var(--hueso); }
-  .btn--solid { background: var(--rojo); border-color: var(--rojo); color: var(--hueso); } .btn--solid:hover { background: var(--hueso); border-color: var(--hueso); color: var(--rojo); }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 999px; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; border: 1.5px solid var(--borde); background: transparent; transition: background .3s, color .3s, border-color .3s; }
+  .btn:hover { background: var(--tinta); color: var(--hueso); border-color: var(--tinta); }
+  .btn--solid { background: var(--rojo); border-color: var(--rojo); color: var(--hueso); } .btn--solid:hover { background: var(--rojo-logo); border-color: var(--rojo-logo); color: var(--hueso); }
   .ideas .btn { margin-top: 28px; }
   .carr { position: relative; height: clamp(300px, 42vw, 520px); margin-top: clamp(40px, 6vw, 80px); perspective: 1400px; }
   .carr__stage { position: absolute; inset: 0; transform-style: preserve-3d; }
-  .card { position: absolute; left: 50%; top: 50%; width: clamp(170px, 22vw, 300px); aspect-ratio: 4/5; margin: calc(clamp(170px, 22vw, 300px) * -.625) 0 0 calc(clamp(170px, 22vw, 300px) * -.5); border-radius: 10px; overflow: hidden; background: #eadfcf; box-shadow: 0 30px 60px -30px rgb(0 0 0 / .45); will-change: transform; }
+  .card { position: absolute; left: 50%; top: 50%; width: clamp(170px, 22vw, 300px); aspect-ratio: 4/5; margin: calc(clamp(170px, 22vw, 300px) * -.625) 0 0 calc(clamp(170px, 22vw, 300px) * -.5); border-radius: 10px; overflow: hidden; background: #eadfcf; box-shadow: 0 30px 60px -30px rgb(74 75 37 / .35); will-change: transform; }
   .card img, .card video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
   /* ---------- quiénes somos: el manifiesto se enciende al scrollear ---------- */
@@ -90,8 +89,8 @@
   .servicios { padding: clamp(80px, 12vw, 160px) var(--g); border-top: 1px solid var(--linea); }
   .servicios h2 { font-size: clamp(3.4rem, 13vw, 13rem); font-weight: 800; line-height: .86; letter-spacing: -.055em; }
   .scards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; margin-top: clamp(28px, 4vw, 48px); }
-  .scard { width: 100%; text-align: left; border: 0; border-radius: 16px; background: rgb(255 250 241 / .82); color: var(--tinta); padding: 18px; display: grid; gap: 14px; animation: breathe var(--dur, 7s) ease-in-out var(--del, 0s) infinite alternate; transition: background .3s, box-shadow .4s; }
-  .scard:hover { background: var(--nude); box-shadow: 0 24px 50px -30px rgb(0 0 0 / .35); }
+  .scard { width: 100%; text-align: left; border: 1px solid var(--linea); border-radius: 16px; background: rgb(255 250 241 / .7); color: var(--tinta); padding: 18px; display: grid; gap: 14px; animation: breathe var(--dur, 7s) ease-in-out var(--del, 0s) infinite alternate; transition: background .3s, box-shadow .4s; }
+  .scard:hover { background: var(--nude); box-shadow: 0 24px 50px -30px rgb(74 75 37 / .3); }
   .scard__t { font-size: 1.15rem; font-weight: 800; letter-spacing: -.02em; line-height: 1.1; display: flex; justify-content: space-between; gap: 12px; color: var(--rojo-logo); }
   .scard__t small { font-size: .7rem; font-weight: 700; letter-spacing: .12em; color: var(--tinta); opacity: .6; }
   .scard__strip { display: block; overflow: hidden; height: 132px; border-radius: 10px; -webkit-mask: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
@@ -170,7 +169,7 @@
   /* ---------- responsive ---------- */
   @media (max-width: 900px) {
     .nav ul { display: none; }
-    .nav__burger { display: grid; place-items: center; width: 44px; height: 44px; border: 1.5px solid rgb(255 255 255 / .7); border-radius: 50%; background: transparent; color: inherit; font-size: .7rem; font-weight: 800; letter-spacing: .1em; }
+    .nav__burger { display: grid; place-items: center; width: 44px; height: 44px; border: 1.5px solid var(--borde); border-radius: 50%; background: transparent; color: inherit; font-size: .7rem; font-weight: 800; letter-spacing: .1em; }
     .nav.open ul { display: flex; position: fixed; inset: 0; z-index: -1; background: var(--nude); color: var(--tinta); flex-direction: column; justify-content: center; align-items: flex-start; padding: 0 var(--g); gap: 22px; font-size: 1.6rem; letter-spacing: -.01em; text-transform: none; }
     .nav.open .pill { font-size: 1rem; }
     .top__foot { flex-direction: column; align-items: flex-start; gap: 12px; }
@@ -191,7 +190,7 @@
 </style>
 </head>
 <body>
-<div class="hero" aria-hidden="true"><canvas class="hero__gl"></canvas><div class="hero__layer"></div></div>
+<div class="hero" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
 <div class="cur" aria-hidden="true"><span class="cur__dot"></span></div>
 
@@ -207,10 +206,13 @@
 </header>
 
 <main>
-<!-- ===== INICIO: la e. en 3D girando + una bajada que se tipea =====
+<!-- ===== INICIO: la e. en tinta 2D + una bajada que se tipea =====
      Las frases de la bajada están en data-frases (separadas por |). -->
 <section class="top" id="inicio">
-  <div class="top__3d" aria-hidden="true"><div class="top__fallback"></div></div>
+  <div class="top__ink" aria-hidden="true"><svg viewBox="-300 -230 1200 1000"><g transform="translate(-40 -60)">
+    <path class="ink__tr" d="M 118 415 C 180 330, 280 205, 350 135 C 405 80, 365 12, 250 20 C 130 35, 40 140, 28 260 C 18 380, 40 500, 120 565 C 210 600, 330 520, 430 420 C 470 380, 495 345, 502 328" fill="none" stroke="#e30613" stroke-width="135" stroke-linecap="round" stroke-linejoin="round"/>
+    <g class="ink__ds"></g><g class="ink__pt" transform="translate(706 491) scale(0)"><ellipse rx="63" ry="70" fill="#e30613" transform="rotate(20)"/></g>
+  </g></svg></div>
   <p class="top__tag" data-frases="Comunicación visual y RR.SS|Ideas con dirección|Marcas con identidad|Elevamos tu marca" aria-label="Comunicación visual y RR.SS"><span class="top__txt"></span><i></i></p>
   <div class="top__foot"><span class="scroll"><i></i>Scrolleá</span><span>Buenos Aires</span></div>
 </section>
@@ -406,7 +408,6 @@
   </div>
 </div>
 
-<script src="e-bg.js"></script>
 <script>
 (() => {
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -523,100 +524,35 @@
 })();
 </script>
 
-<!-- ===== la e. en 3D (Three.js) =====
-     La "e" es un tubo que sigue el trazo del logo, el punto es una esfera y "agencia" sale extruida del SVG oficial.
-     Si WebGL falla, queda el logo plano (.top__fallback). -->
-<script type="module">
-import * as THREE from 'three';
-import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import { MarchingCubes } from 'three/addons/objects/MarchingCubes.js';
-
-const top = document.querySelector('.top'), host = document.querySelector('.top__3d');
-const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-try {
-  const U = 1 / 300, CX = 262, CY = 301;                         // la e vive en 524×602 (centro 262,301); 300 px = 1 unidad
-  const v = (x, y, z = 0) => new THREE.Vector3((x - CX) * U, -(y - CY) * U, z);
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
-  host.appendChild(renderer.domElement);
-  const scene = new THREE.Scene();
-  scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), .04).texture;
-  const camera = new THREE.PerspectiveCamera(28, 1, .1, 50);
-  const key = new THREE.DirectionalLight(0xffffff, 1.6); key.position.set(2, 3, 4); scene.add(key);
-  const fill = new THREE.DirectionalLight(0xffe0e6, .6); fill.position.set(-3, -1, 2); scene.add(fill);
-  scene.add(new THREE.AmbientLight(0xffffff, .35));
-
-  const mat = new THREE.MeshPhysicalMaterial({ color: 0xe30613, roughness: .26, metalness: .05, clearcoat: 1, clearcoatRoughness: .12, envMapIntensity: .9 });
-  const logo = new THREE.Group(); scene.add(logo);
-
-  // la "e": tubo por el centro del trazo (mismo recorrido que usaba la intro que se escribía)
-  const P = [[118,415],[180,330],[280,205],[350,135],[405,80],[365,12],[250,20],[130,35],[40,140],[28,260],[18,380],[40,500],[120,565],[210,600],[330,520],[430,420],[470,380],[495,345],[502,328]];
-  const R = 67.5 * U;
-  // las bézier del logo remuestreadas en una Catmull-Rom (sin quiebres en las uniones), con el arranque del palo escondido
-  // detrás del trazo izquierdo (z negativa) para que no se cruce con la panza de la e y haga un filo
-  const bez = new THREE.CurvePath(); for (let i = 0; i + 3 < P.length; i += 3) bez.add(new THREE.CubicBezierCurve3(v(...P[i]), v(...P[i + 1]), v(...P[i + 2]), v(...P[i + 3])));
-  const pts = [v(62, 470)]; // arranca adentro del trazo izquierdo, donde se funde con la curva
-  for (let i = 0; i <= 90; i++) pts.push(bez.getPointAt(i / 90));
-  const path = new THREE.CatmullRomCurve3(pts, false, 'centripetal', .5);
-
-// La e como una sola superficie: campo de distancia del trazo (cápsulas con unión suave, así el palo se funde en la
-// curva con un fillet en vez de cruzarla) pasado por marching cubes. Se calcula una vez y queda como malla normal.
-const buildBlob = (mat) => {
-  const RES = 128, S = 1.34, K = .09, mc = new MarchingCubes(RES, mat, false, false, 800000);
-  const pts = path.getSpacedPoints(170), n = pts.length - 1, sz2 = RES * RES, d = 2 / RES;
-  const ax = new Float32Array(n), ay = new Float32Array(n), bx = new Float32Array(n), by = new Float32Array(n);
-  for (let i = 0; i < n; i++) { ax[i] = pts[i].x; ay[i] = pts[i].y; bx[i] = pts[i + 1].x; by[i] = pts[i + 1].y; }
-  const smin = (a, b) => { const h = Math.max(K - Math.abs(a - b), 0) / K; return Math.min(a, b) - h * h * K * .25; };
-  const f = mc.field; f.fill(-200); const dd = new Float32Array(n);
-  const zmax = R + K + .06, lz0 = Math.max(0, Math.floor((-zmax / S + 1) / d)), lz1 = Math.min(RES - 1, Math.ceil((zmax / S + 1) / d));
-  for (let l = lz0; l <= lz1; l++) { const z = (l * d - 1) * S;
-    for (let j = 0; j < RES; j++) { const y = (j * d - 1) * S;
-      for (let i = 0; i < RES; i++) { const x = (i * d - 1) * S;
-        // distancia a cada segmento; la unión es exacta a lo largo del trazo y suave (fillet) solo donde el trazo
-        // se cruza consigo mismo (el palo contra la curva), o sea entre segmentos lejanos en el recorrido
-        let d1 = 1e9, s1 = -1;
-        for (let s = 0; s < n; s++) { const vx = bx[s] - ax[s], vy = by[s] - ay[s], wx = x - ax[s], wy = y - ay[s], t = Math.max(0, Math.min(1, (wx * vx + wy * vy) / (vx * vx + vy * vy || 1)));
-          const ex = wx - vx * t, ey = wy - vy * t; dd[s] = Math.sqrt(ex * ex + ey * ey + z * z) - R; if (dd[s] < d1) { d1 = dd[s]; s1 = s; } }
-        let d2 = 1e9; for (let s = 0; s < n; s++) if (Math.abs(s - s1) > 28 && dd[s] < d2) d2 = dd[s];
-        f[l * sz2 + j * RES + i] = 80 - smin(d1, d2) * 600;
-      } } }
-  mc.isolation = 80; mc.update(); mc.scale.setScalar(S); return mc;
-};
-  logo.add(buildBlob(mat));
-
-  // el punto va aparte: le da vueltas a la e (órbita inclinada, pasa por delante y por detrás)
-  const dot = new THREE.Mesh(new THREE.SphereGeometry(62 * U, 40, 32), mat); dot.scale.set(1, 1.1, 1); scene.add(dot);
-  const orbit = new THREE.Group(); orbit.rotation.x = .55; orbit.rotation.z = -.25; orbit.add(dot); scene.add(orbit);
-  const ORB = 1.15; // radio de la órbita, en unidades (300 px = 1)
-
-  // tamaño: el logo ocupa ~62% del ancho en desktop, ~88% en celu
-  const fit = () => {
-    const w = host.clientWidth, h = host.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h;
-    const fill = w < 700 ? .52 : .30, want = 524 * U / fill; // la e ocupa ~30% del ancho (52% en celu), con aire para la órbita del punto
-    camera.position.z = want / (2 * Math.tan(camera.fov * Math.PI / 360) * camera.aspect); camera.position.y = 0.08; camera.updateProjectionMatrix();
-  };
-  fit(); addEventListener('resize', fit);
-
-  // la e se mece sobre sí misma (nunca se da vuelta del todo, así siempre se lee), el punto le da vueltas, y todo sigue un poco al mouse
-  let mx = 0, my = 0; if (matchMedia('(pointer: fine)').matches) addEventListener('pointermove', e => { mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; }, { passive: true });
-  let vis = true; new IntersectionObserver(en => { vis = en[0].isIntersecting; if (vis) tick(); }).observe(top);
-  let raf = null, sx = 0, sy = 0;
+<!-- ===== la e. en tinta 2D =====
+     Ciclo de 6.5 s: 0–2.2 s se escribe el trazo · a los 2.2 s cae el punto y salpica · a los 5.6 s se borra y arranca de nuevo.
+     Con "reducir movimiento" queda la e quieta, entera. -->
+<script>
+(() => {
+  const host = document.querySelector('.top__ink'), top = document.querySelector('.top'); if (!host) return;
+  const svg = host.querySelector('svg'), tr = host.querySelector('.ink__tr'), pt = host.querySelector('.ink__pt'), ds = host.querySelector('.ink__ds');
+  const L = tr.getTotalLength(); tr.style.strokeDasharray = L;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { pt.setAttribute('transform', 'translate(706 491)'); return; }
+  const T = 6.5; let drops = [], lastSplash = -1, vis = true, raf = null;
+  new IntersectionObserver(en => { vis = en[0].isIntersecting; if (vis && !raf) tick(); }).observe(top);
+  const t0 = performance.now();
   const tick = () => {
     raf = null; if (!vis || document.hidden) return;
-    const t = performance.now() / 1000;
-    sx += (mx - sx) * .05; sy += (my - sy) * .05;
-    logo.rotation.y = (reduced ? 0 : Math.sin(t * .62) * .62) + sx * .5;
-    logo.rotation.x = (reduced ? 0 : Math.sin(t * .81) * .14) + sy * .35;
-    logo.rotation.z = reduced ? 0 : Math.sin(t * .47) * .07;
-    logo.position.set(0, 0.08 + (reduced ? 0 : Math.sin(t * 1.1) * .04), 0);
-    const a = reduced ? .9 : t * .9; dot.position.set(Math.cos(a) * ORB, 0, Math.sin(a) * ORB); orbit.position.copy(logo.position);
-    orbit.rotation.y = sx * .5;
-    renderer.render(scene, camera);
+    const t = (performance.now() - t0) / 1000, c = t % T; let p;
+    if (c < 2.2) p = 1 - Math.pow(1 - c / 2.2, 2.4); else if (c < 5.6) p = 1; else p = 1 - Math.pow((c - 5.6) / .9, 2);
+    tr.style.strokeDashoffset = L * (1 - p); tr.style.opacity = c >= 5.6 ? Math.max(0, 1 - (c - 5.6) / .9) : 1;
+    const d = Math.min(1, Math.max(0, (c - 2.2) / .5)), b = 1 - Math.pow(1 - d, 3);
+    pt.setAttribute('transform', `translate(706 ${491 - (1 - b) * 500}) scale(${c >= 2.2 && c < 5.6 ? b : (c >= 5.6 ? Math.max(0, 1 - (c - 5.6) / .9) : 0)})`);
+    const cycle = Math.floor(t / T);
+    if (d >= 1 && lastSplash !== cycle) { lastSplash = cycle; drops = []; for (let i = 0; i < 14; i++) { const a = Math.random() * Math.PI * 2, s = 4 + Math.random() * 9; drops.push({ x: 706, y: 491, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 6, r: 4 + Math.random() * 10, life: 1 }); } }
+    for (const q of drops) { q.x += q.vx; q.y += q.vy; q.vy += .5; q.life -= .022; } drops = drops.filter(q => q.life > 0);
+    ds.innerHTML = drops.map(q => `<circle cx="${q.x}" cy="${q.y}" r="${q.r * q.life}" fill="#e30613" opacity="${q.life}"/>`).join('');
+    svg.style.transform = `rotate(${Math.sin(t * .8) * 1.5}deg) translateY(${Math.sin(t * 1.1) * 6}px)`;
     raf = requestAnimationFrame(tick);
   };
   document.addEventListener('visibilitychange', () => { if (!document.hidden && !raf) tick(); });
   tick();
-} catch (e) { console.warn('3D no disponible', e); top.classList.add('no3d'); }
+})();
 </script>
 </body>
 </html>
