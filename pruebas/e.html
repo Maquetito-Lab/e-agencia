@@ -59,9 +59,6 @@
   .top__tag i { display: inline-block; width: 2px; height: 1em; margin-left: 3px; vertical-align: -.15em; background: currentColor; animation: blink 1s steps(2) infinite; }
   @keyframes blink { 50% { opacity: 0; } }
   .top__foot { position: relative; display: flex; justify-content: space-between; align-items: end; font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; opacity: .75; }
-  .top__foot .scroll { display: inline-flex; align-items: center; gap: 10px; }
-  .top__foot .scroll i { width: 1px; height: 36px; background: currentColor; display: block; animation: line 1.8s var(--ease) infinite; transform-origin: top; }
-  @keyframes line { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(0); transform-origin: bottom; } }
 
   /* ---------- ideas: título centrado + carrusel 3D de trabajos ---------- */
   .ideas { padding: clamp(80px, 12vw, 160px) 0 clamp(60px, 8vw, 120px); text-align: center; border-top: 1px solid var(--linea); overflow: hidden; }
@@ -184,7 +181,7 @@
     .cta__top { grid-template-columns: 1fr; } .cta__links { text-align: left; } .cta__links a { justify-content: flex-start; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .top__foot .scroll i, .scard, .scard__in, .top__tag i { animation: none !important; }
+    .scard, .scard__in, .top__tag i { animation: none !important; }
     .rv, .wds .w { opacity: 1; transform: none; transition: none; } .esc .ch { opacity: 1; transform: none; clip-path: none; transition: none; } .pres { transition: none; }
   }
 </style>
@@ -214,7 +211,7 @@
     <g class="ink__ds"></g><g class="ink__pt" transform="translate(706 491) scale(0)"><ellipse rx="63" ry="70" fill="#e30613" transform="rotate(20)"/></g>
   </g></svg></div>
   <p class="top__tag" data-frases="Comunicación visual y RR.SS|Ideas con dirección|Marcas con identidad|Elevamos tu marca" aria-label="Comunicación visual y RR.SS"><span class="top__txt"></span><i></i></p>
-  <div class="top__foot"><span class="scroll"><i></i>Scrolleá</span><span>Buenos Aires</span></div>
+  <div class="top__foot"><span>Elevemos tu marca</span><span>Comunicación visual y RR.SS</span></div>
 </section>
 
 <!-- ===== IDEAS: la bajada de la marca, centrada, con trabajos pasando abajo =====
