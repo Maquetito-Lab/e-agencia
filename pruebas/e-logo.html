@@ -68,7 +68,7 @@
   <button class="op" data-op="gelatina"><b>C · Gelatina</b><small>Rebote blando; el punto pica encima como pelota</small></button>
   <button class="op" data-op="giro"><b>D · Giro completo</b><small>Gira en redondo sin parar, con el punto al lado</small></button>
   <button class="op" data-op="plastilina"><b>E · Plastilina</b><small>Material mate, flotando en gravedad cero</small></button>
-  <button class="op op--star" data-op="plastilina2"><b>E2 · Plastilina interactiva</b><small>Se abolla cuando la tocás, y la podés agarrar y hacer girar</small></button>
+  <button class="op" data-op="plastilina2"><b>E2 · Plastilina interactiva</b><small>Se abolla cuando la tocás, y la podés agarrar y hacer girar</small></button>
   <button class="op" data-op="puntos"><b>F · Puntos</b><small>La e hecha de puntitos que se dispersan con el mouse</small></button>
   <button class="op" data-op="respira"><b>G · Respira</b><small>El tubo se infla y desinfla, como un globo</small></button>
   <button class="op" data-op="tinta"><b>H · Tinta (2D)</b><small>Plano como el logo: se escribe, gotea y salpica</small></button>
@@ -99,8 +99,16 @@ const host = document.querySelector('.top__3d');
 const U = 1 / 300, CX = 262, CY = 301;                 // la e vive en 524×602 (centro 262,301); 300 px = 1 unidad
 const v = (x, y, z = 0) => new THREE.Vector3((x - CX) * U, -(y - CY) * U, z);
 const P = [[118,415],[180,330],[280,205],[350,135],[405,80],[365,12],[250,20],[130,35],[40,140],[28,260],[18,380],[40,500],[120,565],[210,600],[330,520],[430,420],[470,380],[495,345],[502,328]];
-const makePath = () => { const path = new THREE.CurvePath(); for (let i = 0; i + 3 < P.length; i += 3) path.add(new THREE.CubicBezierCurve3(v(...P[i]), v(...P[i + 1]), v(...P[i + 2]), v(...P[i + 3]))); return path; };
-const path = makePath(), R = 67.5 * U, DOT = v(706, 491); // DOT: dónde va el punto en el logo (relativo al centro de la e)
+const R = 67.5 * U, DOT = v(706, 491); // DOT: dónde va el punto en el logo (relativo al centro de la e)
+// El trazo: las bézier del logo, remuestreadas en una Catmull-Rom (así no quedan quiebres en las uniones de las curvas),
+// y el arranque del palo escondido detrás del trazo izquierdo (z negativa) para que no se cruce con la panza de la e y haga un filo.
+const makePath = () => {
+  const bez = new THREE.CurvePath(); for (let i = 0; i + 3 < P.length; i += 3) bez.add(new THREE.CubicBezierCurve3(v(...P[i]), v(...P[i + 1]), v(...P[i + 2]), v(...P[i + 3])));
+  const pts = [v(58, 472, -2.15 * R)]; // arranca adentro/detrás del trazo izquierdo
+  for (let i = 0; i <= 90; i++) { const u = i / 90, q = bez.getPointAt(u), s = Math.min(1, Math.max(0, (u - .07) / .18)); pts.push(new THREE.Vector3(q.x, q.y, -2.15 * R * (1 - s * s * (3 - 2 * s)))); }
+  return new THREE.CatmullRomCurve3(pts, false, 'centripetal', .5);
+};
+const path = makePath();
 const ROJO = 0xe30613;
 
 /* ---------- escena compartida ---------- */
@@ -116,7 +124,7 @@ scene.add(new THREE.AmbientLight(0xffffff, .35));
 const gloss = () => new THREE.MeshPhysicalMaterial({ color: ROJO, roughness: .26, metalness: .05, clearcoat: 1, clearcoatRoughness: .12, envMapIntensity: .9 });
 const matte = () => new THREE.MeshStandardMaterial({ color: ROJO, roughness: .78, metalness: 0, envMapIntensity: .35 });
 const tube = (mat, seg = 260, rad = R) => new THREE.Mesh(new THREE.TubeGeometry(path, seg, rad, 36, false), mat);
-const caps = (mat, rad = R) => [P[0], P[P.length - 1]].map(([x, y]) => { const c = new THREE.Mesh(new THREE.SphereGeometry(rad, 32, 24), mat); c.position.copy(v(x, y)); return c; });
+const caps = (mat, rad = R) => [path.getPointAt(0), path.getPointAt(1)].map((q) => { const c = new THREE.Mesh(new THREE.SphereGeometry(rad, 32, 24), mat); c.position.copy(q); return c; });
 const sphere = (mat, r = 62 * U) => { const d = new THREE.Mesh(new THREE.SphereGeometry(r, 40, 32), mat); d.scale.set(1, 1.1, 1); return d; };
 let mx = 0, my = 0, sx = 0, sy = 0; addEventListener('pointermove', e => { mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; }, { passive: true });
 const fit = () => { const w = host.clientWidth, h = host.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; const f = w < 700 ? .52 : .30; camera.position.z = (524 * U / f) / (2 * Math.tan(camera.fov * Math.PI / 360) * camera.aspect); camera.position.y = .08; camera.updateProjectionMatrix(); };
@@ -177,7 +185,7 @@ const OPS = {
   pileta() { const N = 190, m = gloss(), e = new THREE.Group(); root.add(e);
     // una e chica (tubo + tapas + punto) fusionada en una sola geometría, repetida N veces
     const parts = [new THREE.TubeGeometry(path, 70, R, 14, false)];
-    for (const [x, y] of [P[0], P[P.length - 1]]) { const g = new THREE.SphereGeometry(R, 14, 10); const q = v(x, y); g.translate(q.x, q.y, 0); parts.push(g); }
+    for (const q of [path.getPointAt(0), path.getPointAt(1)]) { const g = new THREE.SphereGeometry(R, 14, 10); g.translate(q.x, q.y, q.z); parts.push(g); }
     const pg = new THREE.SphereGeometry(62 * U, 16, 12); pg.scale(1, 1.1, 1); pg.translate(DOT.x, DOT.y, 0); parts.push(pg);
     const geo = mergeGeometries(parts); geo.translate(-.4, 0, 0); // centrada con el punto incluido
     const inst = new THREE.InstancedMesh(geo, m, N); e.add(inst);
