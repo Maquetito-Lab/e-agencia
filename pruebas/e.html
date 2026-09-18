@@ -25,8 +25,8 @@
   .k { font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
   .pres .k { color: var(--rojo-logo); }
 
-  /* ---------- fondo líquido (e-bg.js, paleta "rojo": crema con manchas rojas en movimiento) + grano ---------- */
-  .hero { position: fixed; inset: 0; z-index: -1; background: linear-gradient(100deg, #f6e9e3 0%, #e84f3d 35%, #e30613 75%, #fbf4ee 100%); /* respaldo si no hay WebGL */ }
+  /* ---------- fondo líquido (e-bg.js, paleta "rojo": crema, rojo y rosa en movimiento) + grano ---------- */
+  .hero { position: fixed; inset: 0; z-index: -1; background: linear-gradient(100deg, #f6e5e0 0%, #f2786e 35%, #e62133 75%, #fcf5f0 100%); /* respaldo si no hay WebGL */ }
   .hero__gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
   .grain { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .09; mix-blend-mode: multiply; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); background-size: 220px; }
   main > *, footer { position: relative; z-index: 1; }
@@ -43,8 +43,8 @@
   .nav__logo { width: 64px; aspect-ratio: 939/602; background: #fff; -webkit-mask: url("../assets/logo.svg") no-repeat center/contain; mask: url("../assets/logo.svg") no-repeat center/contain; }
   .nav ul { display: flex; align-items: center; gap: 26px; font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
   .nav ul a { opacity: .85; } .nav ul a:hover { opacity: 1; }
-  .nav .pill { padding: 10px 18px; border: 1.5px solid var(--borde); border-radius: 999px; opacity: 1; transition: background .3s, color .3s, border-color .3s; }
-  .nav .pill:hover { background: #fff; color: var(--rojo-logo); border-color: #fff; }
+  .nav .pill { padding: 10px 18px; border: 1.5px solid #fff; border-radius: 999px; background: #fff; color: var(--rojo-logo); opacity: 1; transition: background .3s, color .3s, border-color .3s; }
+  .nav .pill:hover { background: var(--rojo-logo); color: #fff; border-color: var(--rojo-logo); }
   .nav__burger { display: none; }
 
   /* ---------- inicio: la e. en tinta 2D (se escribe, cae el punto y salpica, se borra) ----------
@@ -59,12 +59,12 @@
   .ideas { padding: clamp(80px, 12vw, 160px) 0 clamp(60px, 8vw, 120px); text-align: center; border-top: 1px solid var(--linea); overflow: hidden; }
   .ideas h1 { font-size: clamp(2.4rem, 7vw, 7.4rem); font-weight: 200; line-height: .96; letter-spacing: -.045em; padding: 0 var(--g); }
   .ideas h1 b { font-weight: 800; }
-  .ideas h1 em { font-style: italic; font-weight: 300; color: var(--rojo-logo); }
+  .ideas h1 em { font-style: italic; font-weight: 300; }
   .ideas__p { margin: 26px auto 0; max-width: 46ch; padding: 0 var(--g); font-size: clamp(1rem, 1.4vw, 1.2rem); }
   .ideas__p b { font-weight: 700; display: block; }
   .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 999px; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; border: 1.5px solid var(--borde); background: transparent; transition: background .3s, color .3s, border-color .3s; }
   .btn:hover { background: #fff; color: var(--rojo-logo); border-color: #fff; }
-  .btn--solid { background: var(--rojo); border-color: var(--rojo); color: var(--hueso); } .btn--solid:hover { background: #fff; border-color: #fff; color: var(--rojo); }
+  .btn--solid { background: #fff; border-color: #fff; color: var(--rojo-logo); } .btn--solid:hover { background: var(--rojo-logo); border-color: var(--rojo-logo); color: #fff; }
   .ideas .btn { margin-top: 28px; }
   .carr { position: relative; height: clamp(300px, 42vw, 520px); margin-top: clamp(40px, 6vw, 80px); perspective: 1400px; }
   .carr__stage { position: absolute; inset: 0; transform-style: preserve-3d; }
@@ -81,9 +81,9 @@
   .servicios { padding: clamp(80px, 12vw, 160px) var(--g); border-top: 1px solid var(--linea); }
   .servicios h2 { font-size: clamp(2rem, 5vw, 5rem); font-weight: 800; line-height: .9; letter-spacing: -.045em; }
   .scards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; margin-top: clamp(28px, 4vw, 48px); }
-  .scard { width: 100%; text-align: left; border: 0; border-radius: 16px; background: rgb(255 250 241 / .82); color: var(--tinta); padding: 18px; display: grid; gap: 14px; animation: breathe var(--dur, 7s) ease-in-out var(--del, 0s) infinite alternate; transition: background .3s, box-shadow .4s; }
+  .scard { width: 100%; text-align: left; border: 0; border-radius: 16px; background: var(--nude); color: var(--tinta); padding: 18px; display: grid; gap: 14px; animation: breathe var(--dur, 7s) ease-in-out var(--del, 0s) infinite alternate; transition: background .3s, box-shadow .4s; }
   .scard:hover { background: var(--nude); box-shadow: 0 24px 50px -30px rgb(0 0 0 / .35); }
-  .scard__t { font-size: 1.15rem; font-weight: 800; letter-spacing: -.02em; line-height: 1.1; display: flex; justify-content: space-between; gap: 12px; color: var(--rojo-logo); }
+  .scard__t { font-size: 1.15rem; font-weight: 400; letter-spacing: -.02em; line-height: 1.1; display: flex; justify-content: space-between; gap: 12px; color: var(--rojo-logo); }
   .scard__t small { font-size: .7rem; font-weight: 700; letter-spacing: .12em; color: var(--tinta); opacity: .6; }
   .scard__strip { display: block; overflow: hidden; height: 132px; border-radius: 10px; -webkit-mask: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
   .scard__in { display: flex; gap: 8px; width: max-content; animation: run var(--sp, 22s) linear infinite; }
@@ -142,7 +142,6 @@
   .cta__links { display: grid; gap: 10px; text-align: right; font-size: .82rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
   .cta__links a[href^="mailto"] { text-transform: none; letter-spacing: 0; }
   .cta__links a { display: inline-flex; align-items: center; gap: 10px; justify-content: flex-end; }
-  .cta__links a::after { content: "↗"; }
   .foot { margin-top: clamp(48px, 8vw, 100px); padding-top: 20px; border-top: 1px solid var(--linea); display: flex; justify-content: space-between; gap: 16px; font-size: .75rem; opacity: .65; flex-wrap: wrap; }
 
   /* ---------- textos animados ---------- */
@@ -152,11 +151,10 @@
   .esc .wd { display: inline-block; white-space: nowrap; }
   .esc .ch { display: inline-block; opacity: 0; transform: translateY(.18em) rotate(3deg); clip-path: inset(-.25em 100% -.25em -.1em); transition: opacity .05s linear, transform .55s var(--ease), clip-path .5s var(--ease); transition-delay: calc(var(--i) * 36ms); }
   .esc.in .ch { opacity: 1; transform: none; clip-path: inset(-.25em -.35em -.25em -.1em); }
-  .esc .ch--dot { width: .3em; height: .34em; margin-left: .06em; vertical-align: baseline; background: var(--rojo-logo); -webkit-mask: url("../assets/logo-dot.svg") no-repeat center/contain; mask: url("../assets/logo-dot.svg") no-repeat center/contain; clip-path: none; transform: scale(0); transform-origin: 50% 60%; transition: transform .7s cubic-bezier(.34, 1.56, .64, 1); transition-delay: calc(var(--i) * 36ms + 120ms); }
+  .esc .ch--dot { width: .3em; height: .34em; margin-left: .06em; vertical-align: baseline; background: #fff; -webkit-mask: url("../assets/logo-dot.svg") no-repeat center/contain; mask: url("../assets/logo-dot.svg") no-repeat center/contain; clip-path: none; transform: scale(0); transform-origin: 50% 60%; transition: transform .7s cubic-bezier(.34, 1.56, .64, 1); transition-delay: calc(var(--i) * 36ms + 120ms); }
   .esc.in .ch--dot { transform: scale(1); }
   /* párrafos: cada palabra da un saltito al entrar */
-  .wds .w { display: inline-block; opacity: 0; transform: translateY(.5em); transition: opacity .5s var(--ease), transform .6s var(--ease); transition-delay: calc(var(--i) * 28ms); }
-  .wds.in .w { opacity: 1; transform: none; }
+  .wds .w { opacity: .22; transition: opacity .5s; } .wds .w.on { opacity: 1; }
 
   /* ---------- responsive ---------- */
   @media (max-width: 900px) {
@@ -179,7 +177,7 @@
   }
   @media (prefers-reduced-motion: reduce) {
     .scard, .scard__in { animation: none !important; }
-    .rv, .wds .w { opacity: 1; transform: none; transition: none; } .esc .ch { opacity: 1; transform: none; clip-path: none; transition: none; } .pres { transition: none; }
+    .rv { opacity: 1; transform: none; transition: none; } .wds .w, .mani .w { opacity: 1; transition: none; } .esc .ch { opacity: 1; transform: none; clip-path: none; transition: none; } .pres { transition: none; }
   }
 </style>
 </head>
@@ -458,7 +456,7 @@
   };
   $$('.esc').forEach(escribir); $$('.wds').forEach(palabras);
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
-  $$('.rv, .esc, .wds').forEach(el => io.observe(el));
+  $$('.rv, .esc').forEach(el => io.observe(el));
 
   /* ---------- quiénes somos: palabra por palabra al scrollear ---------- */
   const mp = $('#manip');
@@ -467,9 +465,10 @@
       if (tok === '[[i]]') em = true; else if (tok === '[[/i]]') em = false; else out.push(`<span class="w${em ? ' em' : ''}">${tok}</span>`);
     }
     mp.innerHTML = out.join(' '); }
-  const words = $$('.w', mp);
-  const maniScroll = () => { const r = mp.getBoundingClientRect(), h = innerHeight; const p = Math.min(1, Math.max(0, (h * .8 - r.top) / (r.height + h * .2))); words.forEach((w, i) => w.classList.toggle('on', i / words.length < p)); };
-  addEventListener('scroll', maniScroll, { passive: true }); maniScroll();
+  // el mismo efecto va en los párrafos .wds (bajada de ideas y pasos de cómo trabajamos)
+  const bloques = [mp, ...$$('.wds')].map(el => ({ el, words: $$('.w', el) }));
+  const maniScroll = () => { const h = innerHeight; for (const { el, words } of bloques) { const r = el.getBoundingClientRect(); const p = Math.min(1, Math.max(0, (h * .8 - r.top) / (r.height + h * .2))); words.forEach((w, i) => w.classList.toggle('on', i / words.length < p)); } };
+  addEventListener('scroll', maniScroll, { passive: true }); addEventListener('resize', maniScroll); maniScroll();
 
   /* ---------- carrusel 3D de trabajos: pasa constantemente, las tarjetas giran según dónde están ---------- */
   {

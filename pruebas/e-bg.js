@@ -14,7 +14,7 @@
   const PIXEL_SCALE = 0.5;   // resolución interna (0.5 = mitad, sobra para algo tan difuso)
 
   // paletas (0..1 = 0..255). Las manchas conservan su lugar; cambia solo el color de cada una.
-  // "marca": el degradé de referencia, vivo. "crema": cremas y rosados, minimal. "rojo": base crema con manchas rojas y coral (sin lima ni oliva).
+  // "marca": el degradé de referencia, vivo. "crema": cremas y rosados, minimal. "rojo": crema, rojo y rosa (sin lima ni oliva).
   // Se elige con <body data-bg="crema">; sin el atributo queda "marca".
   const PALETAS = {
     marca: `
@@ -36,14 +36,14 @@
       vec3 vino   = vec3(0.875, 0.639, 0.675);   // rosa profundo #DFA3AC (donde iba el vino)
       float wRosa = 0.8, wLima = 0.9, wRojo = 0.9, wOliva = 0.6, wVino = 0.6, wClaro = 0.75;`,
     rojo: `
-      vec3 rosaCl = vec3(0.965, 0.914, 0.890);   // crema rosado #F6E9E3 (base)
-      vec3 claro  = vec3(0.984, 0.957, 0.933);   // crema casi blanco #FBF4EE
-      vec3 rosa   = vec3(0.950, 0.720, 0.690);   // rosa cálido #F2B8B0
-      vec3 lima   = vec3(0.910, 0.310, 0.240);   // rojo coral #E84F3D (donde iba la lima)
-      vec3 rojo   = vec3(0.890, 0.024, 0.075);   // rojo del logo #E30613
-      vec3 oliva  = vec3(0.720, 0.050, 0.120);   // rojo profundo #B80D1E (donde iba el oliva)
-      vec3 vino   = vec3(0.540, 0.040, 0.110);   // vino #8A0A1C
-      float wRosa = 0.55, wLima = 0.6, wRojo = 0.7, wOliva = 0.35, wVino = 0.4, wClaro = 0.9; // más suaves: que se vea el crema`,
+      vec3 rosaCl = vec3(0.965, 0.900, 0.880);   // crema rosado #F6E5E0 (base)
+      vec3 claro  = vec3(0.990, 0.960, 0.940);   // crema casi blanco #FCF5F0
+      vec3 rosa   = vec3(0.960, 0.640, 0.680);   // rosa #F5A3AD
+      vec3 lima   = vec3(0.950, 0.470, 0.430);   // coral rosado #F2786E (donde iba la lima)
+      vec3 rojo   = vec3(0.900, 0.130, 0.200);   // rojo #E62133
+      vec3 oliva  = vec3(0.880, 0.330, 0.450);   // frambuesa rosada #E05473 (donde iba el oliva)
+      vec3 vino   = vec3(0.760, 0.150, 0.280);   // rojo profundo #C22647
+      float wRosa = 0.85, wLima = 0.7, wRojo = 0.75, wOliva = 0.5, wVino = 0.45, wClaro = 0.85; // crema, rojo y rosa parejos`,
   };
   const PAL = PALETAS[document.body.dataset.bg] || PALETAS.marca;
 
