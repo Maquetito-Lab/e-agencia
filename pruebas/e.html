@@ -25,8 +25,8 @@
   .k { font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
   .pres .k { color: var(--rojo-logo); }
 
-  /* ---------- fondo líquido (e-bg.js, paleta "rojo": crema, rojo y rosa en movimiento) + grano ---------- */
-  .hero { position: fixed; inset: 0; z-index: -1; background: linear-gradient(100deg, #f6e5e0 0%, #f2786e 35%, #e62133 75%, #fcf5f0 100%); /* respaldo si no hay WebGL */ }
+  /* ---------- fondo líquido (e-bg.js, paleta "rojo": rojo y rosa del logo, saturados, en movimiento) + grano ---------- */
+  .hero { position: fixed; inset: 0; z-index: -1; background: linear-gradient(100deg, #f1b8c2 0%, #f04a3b 35%, #e30613 75%, #fcede8 100%); /* respaldo si no hay WebGL */ }
   .hero__gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
   .grain { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .09; mix-blend-mode: multiply; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); background-size: 220px; }
   main > *, footer { position: relative; z-index: 1; }
@@ -53,7 +53,8 @@
   .top__ink { position: absolute; left: 50%; top: 45%; width: var(--e-w); aspect-ratio: 240/190; transform: translate(-50%, -50%); pointer-events: none; }
   .top__ink svg { display: block; width: 100%; height: 100%; overflow: visible; }
   @media (max-width: 700px) { .top { --e-w: min(64vw, 300px); } }
-  .top__foot { position: relative; display: flex; justify-content: space-between; align-items: end; font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; opacity: .75; }
+  .top__tag { position: relative; align-self: end; justify-self: center; text-align: center; margin-bottom: clamp(24px, 5vh, 60px); font-size: clamp(1.1rem, 2.2vw, 1.7rem); font-weight: 500; letter-spacing: -.01em; }
+  .top__foot { position: relative; display: flex; justify-content: center; align-items: end; font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; opacity: .75; }
 
   /* ---------- ideas: título centrado + carrusel 3D de trabajos ---------- */
   .ideas { padding: clamp(80px, 12vw, 160px) 0 clamp(60px, 8vw, 120px); text-align: center; border-top: 1px solid var(--linea); overflow: hidden; }
@@ -66,7 +67,8 @@
   .btn:hover { background: #fff; color: var(--rojo-logo); border-color: #fff; }
   .btn--solid { background: #fff; border-color: #fff; color: var(--rojo-logo); } .btn--solid:hover { background: var(--rojo-logo); border-color: var(--rojo-logo); color: #fff; }
   .ideas .btn { margin-top: 28px; }
-  .carr { position: relative; height: clamp(300px, 42vw, 520px); margin-top: clamp(40px, 6vw, 80px); perspective: 1400px; }
+  .carr { position: relative; height: clamp(300px, 42vw, 520px); margin-top: clamp(40px, 6vw, 80px); perspective: 1400px; cursor: grab; touch-action: pan-y; user-select: none; }
+  .carr.drag { cursor: grabbing; }
   .carr__stage { position: absolute; inset: 0; transform-style: preserve-3d; }
   .card { position: absolute; left: 50%; top: 50%; width: clamp(170px, 22vw, 300px); aspect-ratio: 4/5; margin: calc(clamp(170px, 22vw, 300px) * -.625) 0 0 calc(clamp(170px, 22vw, 300px) * -.5); border-radius: 10px; overflow: hidden; background: #eadfcf; box-shadow: 0 30px 60px -30px rgb(0 0 0 / .45); will-change: transform; }
   .card img, .card video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
@@ -164,7 +166,6 @@
     .nav.open .nav__burger i:nth-child(1) { transform: translateY(7px) rotate(45deg); } .nav.open .nav__burger i:nth-child(2) { opacity: 0; } .nav.open .nav__burger i:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
     .nav.open ul { display: flex; position: fixed; inset: 0; z-index: -1; background: var(--nude); color: var(--tinta); flex-direction: column; justify-content: center; align-items: flex-start; padding: 0 var(--g); gap: 22px; font-size: 1.6rem; letter-spacing: -.01em; text-transform: none; }
     .nav.open .pill { font-size: 1rem; }
-    .top__foot { flex-direction: column; align-items: flex-start; gap: 12px; }
     .mani { grid-template-columns: 1fr; gap: 18px; }
     .pres__t { grid-template-columns: 1fr; }
     .pres__grid--fotos { grid-template-columns: 1fr 1fr; }
@@ -209,7 +210,8 @@
     <g class="ink__ds" fill="#fff"></g>
     <g class="ink__pt" transform="translate(239.85 229.5) scale(0)"><path fill="#fff" transform="translate(-239.85 -229.5)" d="M240.51479,212.95529c8.90092.6681,13.69076,6.45903,14.35886,17.36426-1.3362,10.24139-7.57112,15.46881-18.70046,15.69507-6.67889-1.11848-10.46765-5.89766-11.35347-14.35886.21985-10.0194,5.45154-16.24791,15.69507-18.70046Z"/></g>
   </svg></div>
-  <div class="top__foot"><span>Elevemos tu marca</span><span>Comunicación visual y RR.SS</span></div>
+  <p class="top__tag rv">Elevemos tu marca</p>
+  <div class="top__foot"><span>Comunicación visual y RR.SS</span></div>
 </section>
 
 <!-- ===== IDEAS: la bajada de la marca, centrada, con trabajos pasando abajo =====
@@ -474,9 +476,19 @@
   {
     const carr = $('.carr'), cards = $$('.card', carr); let vis = false, raf = null, t0 = performance.now();
     const SPEED = reduced ? 0 : 42; // px por segundo
+    // scroll lateral: arrastrando con el mouse/dedo o con la rueda en horizontal (trackpad). Suma un desplazamiento al paso automático.
+    let extra = 0, vel = 0, dragging = false, lastX = 0, lastT = 0;
+    carr.addEventListener('pointerdown', e => { dragging = true; lastX = e.clientX; lastT = performance.now(); vel = 0; carr.classList.add('drag'); carr.setPointerCapture(e.pointerId); });
+    carr.addEventListener('pointermove', e => { if (!dragging) return; const now = performance.now(), dx = e.clientX - lastX; extra -= dx; vel = -dx / Math.max(1, now - lastT) * 1000; lastX = e.clientX; lastT = now; });
+    const suelta = () => { dragging = false; carr.classList.remove('drag'); };
+    carr.addEventListener('pointerup', suelta); carr.addEventListener('pointercancel', suelta);
+    carr.addEventListener('wheel', e => { if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) { e.preventDefault(); extra += e.deltaX; } }, { passive: false });
+    let prev = performance.now();
     const frame = (now) => {
       raf = null; if (!vis) return;
-      const w = cards[0].offsetWidth, S = w * 1.18, total = S * cards.length, off = ((now - t0) / 1000 * SPEED) % total;
+      const dt = Math.min(.05, (now - prev) / 1000); prev = now;
+      if (!dragging) { extra += vel * dt; vel *= Math.pow(.02, dt); } // inercia al soltar
+      const w = cards[0].offsetWidth, S = w * 1.18, total = S * cards.length, off = ((now - t0) / 1000 * SPEED + extra) % total;
       cards.forEach((c, i) => {
         const x = (((i * S - off) % total) + total) % total - total / 2, k = x / (total / 2);
         c.style.transform = `translate3d(${x}px, 0, ${-Math.abs(k) * 520}px) rotateY(${-k * 58}deg)`;
