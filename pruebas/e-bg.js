@@ -36,14 +36,14 @@
       vec3 vino   = vec3(0.875, 0.639, 0.675);   // rosa profundo #DFA3AC (donde iba el vino)
       float wRosa = 0.8, wLima = 0.9, wRojo = 0.9, wOliva = 0.6, wVino = 0.6, wClaro = 0.75;`,
     rojo: `
-      vec3 rosaCl = vec3(0.940, 0.650, 0.710);   // rosa #F0A6B5 (base, un poco más vivo que el del logo)
-      vec3 claro  = vec3(0.990, 0.930, 0.910);   // brillo claro #FCEDE8
+      vec3 rosaCl = vec3(0.945, 0.720, 0.760);   // rosa del logo #F1B8C2 (base, a la izquierda)
+      vec3 claro  = vec3(0.990, 0.930, 0.910);   // brillo claro #FCEDE8 (a la derecha y abajo al centro)
       vec3 rosa   = vec3(0.950, 0.300, 0.530);   // rosa fuerte #F24C87, arriba a la izquierda
-      vec3 lima   = vec3(0.890, 0.024, 0.075);   // rojo del logo #E30613, a la izquierda (donde iba la lima)
-      vec3 rojo   = vec3(0.950, 0.550, 0.650);   // rosa #F28CA6, la mancha grande de la derecha (donde iba el rojo)
+      vec3 lima   = vec3(0.940, 0.290, 0.230);   // coral #F04A3B, a la izquierda (donde iba la lima)
+      vec3 rojo   = vec3(0.890, 0.024, 0.075);   // rojo del logo #E30613, la mancha grande de la derecha
       vec3 oliva  = vec3(0.600, 0.020, 0.110);   // vino #99051C, abajo a la izquierda (donde iba el oliva)
       vec3 vino   = vec3(0.940, 0.290, 0.430);   // rosa intenso #F04A6E, abajo a la derecha (donde iba el vino)
-      float wRosa = 1.0, wLima = 1.0, wRojo = 0.95, wOliva = 0.9, wVino = 0.9, wClaro = 0.95; // a full: cada mancha con su color puro`,
+      float wRosa = 0.9, wLima = 1.0, wRojo = 1.0, wOliva = 0.8, wVino = 0.85, wClaro = 0.9; // como el degradé de apertura: rosa → coral → rojo → claro`,
   };
   const PAL = PALETAS[document.body.dataset.bg] || PALETAS.marca;
 
