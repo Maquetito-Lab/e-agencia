@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>e. agencia · Comunicación visual y RR.SS</title>
+<title>e. agencia · identidad, contenido & experiencias</title>
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <style>
   :root {
     /* paleta de "colores marca.jpeg". --rojo es un rojo un poco más suave que el del logo, para botones */
     --rojo-logo: #e30613; --rojo: #de4f57; --rosa: #e8bfc5; --rosa-txt: #e2808f; --oliva: #5a5b2f; --lima: #c1e700; --nude: #fffaf1;
-    --vino: #8a0a1c; --tinta: #4a4b25; /* oliva oscuro de la marca: es el color de todo el texto (nada de negro) */ --hueso: oklch(97% 0.01 80);
+    --vino: #8a0a1c; --topo: #8a8178; /* gris topo: texto chico y botones de las presentaciones */ --tinta: #4a4b25; /* oliva oscuro de la marca: es el color de todo el texto (nada de negro) */ --hueso: oklch(97% 0.01 80);
     --linea: rgb(255 255 255 / .35); --borde: rgb(255 255 255 / .7);
     --ease: cubic-bezier(.22,1,.36,1); --g: clamp(20px, 5vw, 80px);
   }
@@ -39,7 +39,6 @@
 
   /* ---------- nav ---------- */
   .nav { position: fixed; inset: 0 0 auto 0; z-index: 70; display: flex; justify-content: space-between; align-items: center; padding: 18px var(--g); transition: transform .5s var(--ease), opacity .5s; }
-  .nav.hide { transform: translateY(-110%); }
   .nav__logo { width: 64px; aspect-ratio: 939/602; background: #fff; -webkit-mask: url("../assets/logo.svg") no-repeat center/contain; mask: url("../assets/logo.svg") no-repeat center/contain; }
   .nav ul { display: flex; align-items: center; gap: 26px; font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
   .nav ul a { opacity: .85; } .nav ul a:hover { opacity: 1; }
@@ -53,7 +52,7 @@
   .top__ink { position: absolute; left: 50%; top: 45%; width: var(--e-w); aspect-ratio: 240/190; transform: translate(-50%, -50%); pointer-events: none; }
   .top__ink svg { display: block; width: 100%; height: 100%; overflow: visible; }
   @media (max-width: 700px) { .top { --e-w: min(64vw, 300px); } }
-  .top__tag { position: relative; align-self: end; justify-self: center; text-align: center; margin-bottom: clamp(24px, 5vh, 60px); font-size: clamp(1.1rem, 2.2vw, 1.7rem); font-weight: 500; letter-spacing: -.01em; }
+  .top__tag { position: relative; align-self: end; justify-self: center; text-align: center; margin-bottom: clamp(24px, 5vh, 60px); font-size: clamp(1.1rem, 2.2vw, 1.7rem); font-weight: 400; font-style: italic; text-transform: lowercase; letter-spacing: -.01em; }
   .top__foot { position: relative; display: flex; justify-content: center; align-items: end; font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; opacity: .75; }
 
   /* ---------- ideas: título centrado + carrusel 3D de trabajos ---------- */
@@ -61,7 +60,7 @@
   .ideas h1 { font-size: clamp(2.4rem, 7vw, 7.4rem); font-weight: 200; line-height: .96; letter-spacing: -.045em; padding: 0 var(--g); }
   .ideas h1 b { font-weight: 800; }
   .ideas h1 em { font-style: italic; font-weight: 300; }
-  .ideas__p { margin: 26px auto 0; max-width: 46ch; padding: 0 var(--g); font-size: clamp(1rem, 1.4vw, 1.2rem); }
+  .ideas__p { margin: clamp(40px, 6vw, 72px) auto 0; max-width: 46ch; padding: 0 var(--g); font-size: clamp(1rem, 1.4vw, 1.2rem); }
   .ideas__p b { font-weight: 700; display: block; }
   .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 999px; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; border: 1.5px solid var(--borde); background: transparent; transition: background .3s, color .3s, border-color .3s; }
   .btn:hover { background: #fff; color: var(--rojo-logo); border-color: #fff; }
@@ -74,58 +73,70 @@
   .card img, .card video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
   /* ---------- quiénes somos: el manifiesto se enciende al scrollear ---------- */
-  .mani { padding: clamp(80px, 12vw, 180px) var(--g); display: grid; grid-template-columns: 1fr 2fr; gap: 40px; border-top: 1px solid var(--linea); }
-  .mani p { font-size: clamp(1.6rem, 3.6vw, 3.6rem); font-weight: 300; line-height: 1.12; letter-spacing: -.03em; max-width: 28ch; }
+  .mani { padding: clamp(80px, 12vw, 180px) var(--g); display: grid; grid-template-columns: 1fr 2fr; gap: 40px clamp(32px, 5vw, 80px); border-top: 1px solid var(--linea); align-items: start; }
+  .mani__side { display: grid; gap: 24px; align-content: start; }
+  .mani__ph { border-radius: 14px; overflow: hidden; aspect-ratio: 4/5; background: #eadfcf; box-shadow: 0 30px 60px -30px rgb(0 0 0 / .45); }
+  .mani__ph img { width: 100%; height: 100%; object-fit: cover; }
+  .mani p { font-size: clamp(1.35rem, 2.5vw, 2.5rem); font-weight: 300; line-height: 1.18; letter-spacing: -.025em; max-width: 34ch; }
   .mani .w { opacity: .22; transition: opacity .5s; } .mani .w.on { opacity: 1; }
   .mani .w.em { font-style: italic; font-weight: 500; }
 
-  /* ---------- servicios: tarjetas que respiran, cada una con su contenido pasando ---------- */
+  /* ---------- servicios: tarjetas iguales y quietas, cada una con su contenido pasando ---------- */
   .servicios { padding: clamp(80px, 12vw, 160px) var(--g); border-top: 1px solid var(--linea); }
   .servicios h2 { font-size: clamp(2rem, 5vw, 5rem); font-weight: 800; line-height: .9; letter-spacing: -.045em; }
   .scards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; margin-top: clamp(28px, 4vw, 48px); }
-  .scard { width: 100%; text-align: left; border: 0; border-radius: 16px; background: var(--nude); color: var(--tinta); padding: 18px; display: grid; gap: 14px; animation: breathe var(--dur, 7s) ease-in-out var(--del, 0s) infinite alternate; transition: background .3s, box-shadow .4s; }
+  .scard { width: 100%; height: 100%; text-align: left; border: 0; border-radius: 16px; background: var(--nude); color: var(--tinta); padding: 18px; display: grid; grid-template-rows: auto 1fr; gap: 14px; transition: background .3s, box-shadow .4s; }
   .scard:hover { background: var(--nude); box-shadow: 0 24px 50px -30px rgb(0 0 0 / .35); }
-  .scard__t { font-size: 1.15rem; font-weight: 400; letter-spacing: -.02em; line-height: 1.1; display: flex; justify-content: space-between; gap: 12px; color: var(--rojo-logo); }
-  .scard__t small { font-size: .7rem; font-weight: 700; letter-spacing: .12em; color: var(--tinta); opacity: .6; }
+  .scard__t { font-size: 1.15rem; font-weight: 400; letter-spacing: -.02em; line-height: 1.1; min-height: 2.2em; color: var(--rojo-logo); }
   .scard__strip { display: block; overflow: hidden; height: 132px; border-radius: 10px; -webkit-mask: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
   .scard__in { display: flex; gap: 8px; width: max-content; animation: run var(--sp, 22s) linear infinite; }
   .scard:hover .scard__in { animation-duration: calc(var(--sp, 22s) / 2.5); }
   .scard__in img { height: 132px; width: 104px; object-fit: cover; object-position: top; border-radius: 8px; }
   @keyframes run { to { transform: translateX(-50%); } }
-  @keyframes breathe { from { transform: scale(.985); } to { transform: scale(1.025); } }
 
-  /* ---------- presentación de cada servicio: marco con el fondo animado, adentro panel liso ---------- */
-  .pres { position: fixed; inset: 0; z-index: 75; overflow-y: auto; overscroll-behavior: contain; padding: clamp(12px, 2.2vw, 28px); transform: translateY(100%); visibility: hidden; transition: transform .8s var(--ease), visibility 0s .8s; }
+  /* ---------- presentación de cada servicio: marco con el fondo animado, adentro panel liso ----------
+     La barra de arriba ("← Servicios") es fija y llega hasta el borde superior; el contenido pasa por debajo. */
+  .pres { position: fixed; inset: 0; z-index: 75; overflow-y: auto; overscroll-behavior: contain; padding: 0 clamp(12px, 2.2vw, 28px) clamp(12px, 2.2vw, 28px); transform: translateY(100%); visibility: hidden; transition: transform .8s var(--ease), visibility 0s .8s; }
   .pres.on { transform: none; visibility: visible; transition: transform .8s var(--ease), visibility 0s; }
-  .pres__panel { background: var(--nude); color: var(--tinta); border-radius: 18px; min-height: 100%; }
-  .pres__bar { position: sticky; top: 0; z-index: 2; display: flex; justify-content: space-between; align-items: center; padding: 18px var(--g); background: linear-gradient(var(--nude) 70%, transparent); border-radius: 18px 18px 0 0; }
-  .pres__close { padding: 10px 18px; border: 1.5px solid rgb(74 75 37 / .4); border-radius: 999px; background: transparent; font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; transition: background .3s, color .3s, border-color .3s; }
-  .pres__close:hover { background: var(--rojo); color: var(--hueso); border-color: var(--rojo); }
-  .pres__item { padding: 20px var(--g) 40px; }
+  .pres__panel { background: var(--nude); color: var(--topo); border-radius: 0 0 18px 18px; min-height: 100%; }
+  .pres__bar { position: sticky; top: 0; z-index: 2; display: flex; justify-content: space-between; align-items: center; padding: 18px var(--g); background: var(--nude); }
+  .pres__back { display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px 10px 12px; border: 1.5px solid var(--topo); border-radius: 999px; background: transparent; color: var(--topo); font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; transition: background .3s, color .3s; }
+  .pres__back:hover { background: var(--topo); color: var(--nude); }
+  .pres__back svg { width: 14px; height: 14px; }
+  .pres__item { padding: 20px var(--g) 40px; container-type: inline-size; }
   .pres__item[hidden] { display: none; }
-  .pres__t { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 48px; align-items: end; margin-bottom: clamp(28px, 4vw, 48px); }
-  .pres__t h3 { font-size: clamp(2.6rem, 7vw, 7rem); font-weight: 800; line-height: .9; letter-spacing: -.05em; }
-  .pres__item[data-color="rojo"] h3 { color: var(--rojo-logo); } .pres__item[data-color="rosa"] h3 { color: var(--rosa-txt); } .pres__item[data-color="verde"] h3 { color: var(--oliva); }
-  .pres__t h3 .n { display: block; font-size: .78rem; font-weight: 700; letter-spacing: .14em; color: var(--tinta); margin-bottom: 18px; }
-  .pres__t p { font-size: clamp(1rem, 1.4vw, 1.2rem); max-width: 44ch; opacity: .85; }
-  .pres__grid { display: grid; gap: clamp(10px, 1.5vw, 20px); }
-  .pres__grid + .pres__grid { margin-top: clamp(10px, 1.5vw, 20px); }
-  .pres__grid figure { position: relative; overflow: hidden; border-radius: 6px; background: #eadfcf; }
+  .pres__t { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 48px; align-items: start; margin-bottom: clamp(28px, 4vw, 48px); }
+  .pres__t h3 { font-size: clamp(2.6rem, 7vw, 7rem); font-weight: 800; line-height: .9; letter-spacing: -.05em; color: var(--rojo-logo); }
+  .pres__t p { font-size: clamp(1rem, 1.3vw, 1.15rem); max-width: 48ch; color: var(--topo); padding-top: .3em; }
+  /* Grilla irregular: 4 columnas (5 con --5), y cada figura dice cuánto ocupa con dos clases:
+       c1 / c2 / c4 = columnas de ancho · r4 … r14 = alto en "unidades" (una columna mide 4 unidades de ancho).
+       Así: c1 r7 ≈ vertical 9:16 · c1 r5 ≈ foto 4:5 · c1 r4 = cuadrado · c2 r10 ≈ 4:5 grande · c2 r14 ≈ 9:16 grande · c2 r6 ≈ 4:3 apaisado.
+       Combinando tamaños distintos en cada servicio, la grilla cambia de un servicio a otro. */
+  .pres__grid { --gap: clamp(8px, 1.2vw, 16px); display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: calc((100cqw - 3 * var(--gap)) / 16); grid-auto-flow: dense; gap: var(--gap); }
+  .pres__grid--5 { grid-template-columns: repeat(5, 1fr); grid-auto-rows: calc((100cqw - 4 * var(--gap)) / 20); }
+  .pres__grid figure { position: relative; overflow: hidden; border-radius: 6px; background: #eadfcf; cursor: pointer; grid-row: span 5; }
+  .pres__grid figure::after { content: ""; position: absolute; inset: 0; background: rgb(255 255 255 / 0); transition: background .3s; }
+  .pres__grid figure:hover::after { background: rgb(255 255 255 / .12); }
   .pres__grid img, .pres__grid video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .pres__grid figcaption { position: absolute; left: 14px; bottom: 12px; padding: 6px 10px; border-radius: 999px; background: rgb(255 246 230 / .9); font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
-  .pres__grid--fotos { grid-template-columns: repeat(3, 1fr); }
-  .pres__grid--fotos figure { aspect-ratio: 4/5; }
-  .pres__grid--fotos figure:first-child { grid-column: span 2; aspect-ratio: auto; }
-  .pres__grid--reels { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
-  .pres__grid--reels.pres__grid--big { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
-  .pres__grid--reels figure { aspect-ratio: 9/16; }
-  .pres__grid--boards, .pres__grid--phones { align-items: start; }
-  .pres__grid--boards { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
-  .pres__grid--phones { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
-  .pres__grid--boards img, .pres__grid--phones img { position: static; height: auto; }
-  .pres__nav { display: flex; justify-content: space-between; gap: 12px; padding: 0 var(--g) clamp(40px, 6vw, 80px); }
-  .pres__nav button { padding: 14px 22px; border: 1.5px solid rgb(74 75 37 / .4); border-radius: 999px; background: transparent; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; transition: background .3s, color .3s, border-color .3s; }
-  .pres__nav button:hover { background: var(--tinta); color: var(--hueso); border-color: var(--tinta); }
+  .pres__grid .arriba img, .pres__grid .arriba video { object-position: top; }
+  .pres__grid .c2 { grid-column: span 2; } .pres__grid .c4 { grid-column: 1 / -1; }
+  .pres__grid .r4 { grid-row: span 4; } .pres__grid .r5 { grid-row: span 5; } .pres__grid .r6 { grid-row: span 6; } .pres__grid .r7 { grid-row: span 7; } .pres__grid .r8 { grid-row: span 8; } .pres__grid .r9 { grid-row: span 9; } .pres__grid .r10 { grid-row: span 10; } .pres__grid .r12 { grid-row: span 12; } .pres__grid .r14 { grid-row: span 14; }
+  @supports not (width: 1cqw) { .pres__grid, .pres__grid--5 { grid-auto-rows: 4.5vw; } }
+  .pres__nav { display: flex; justify-content: space-between; gap: 12px; padding: clamp(12px, 2vw, 24px) var(--g) clamp(40px, 6vw, 80px); }
+  .pres__nav button { display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; padding: 0; border: 1.5px solid var(--topo); border-radius: 50%; background: transparent; color: var(--topo); transition: background .3s, color .3s; }
+  .pres__nav button svg { width: 18px; height: 18px; }
+  .pres__nav button:hover { background: var(--topo); color: var(--nude); }
+
+  /* ---------- lightbox: una foto o video en grande (se abre tocando el contenido de un servicio) ---------- */
+  .lb { position: fixed; inset: 0; z-index: 90; display: flex; align-items: center; justify-content: center; padding: clamp(16px, 4vw, 48px) clamp(56px, 8vw, 96px); background: rgb(30 20 18 / .9); opacity: 0; visibility: hidden; transition: opacity .35s, visibility 0s .35s; }
+  .lb.on { opacity: 1; visibility: visible; transition: opacity .35s, visibility 0s; }
+  .lb__m { max-width: 100%; max-height: 100%; display: flex; align-items: center; justify-content: center; }
+  .lb__m img, .lb__m video { display: block; max-width: 100%; max-height: calc(100vh - 2 * clamp(16px, 4vw, 48px)); width: auto; height: auto; object-fit: contain; border-radius: 8px; box-shadow: 0 40px 80px -30px rgb(0 0 0 / .7); }
+  .lb button { position: absolute; display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border: 1.5px solid rgb(255 255 255 / .6); border-radius: 50%; background: transparent; color: #fff; transition: background .3s, color .3s; }
+  .lb button:hover { background: #fff; color: var(--rojo-logo); }
+  .lb button svg { width: 18px; height: 18px; }
+  .lb__x { top: 20px; right: 20px; } .lb__prev { left: 16px; top: 50%; margin-top: -24px; } .lb__next { right: 16px; top: 50%; margin-top: -24px; }
+  .lb.solo .lb__prev, .lb.solo .lb__next { display: none; }
 
   /* ---------- proceso ---------- */
   .proc { padding: clamp(80px, 12vw, 160px) var(--g); border-top: 1px solid var(--linea); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: clamp(24px, 4vw, 64px); }
@@ -168,17 +179,15 @@
     .nav.open .pill { font-size: 1rem; }
     .mani { grid-template-columns: 1fr; gap: 18px; }
     .pres__t { grid-template-columns: 1fr; }
-    .pres__grid--fotos { grid-template-columns: 1fr 1fr; }
-    .pres__grid--fotos figure:first-child { aspect-ratio: 4/3; }
-    .pres__grid--reels, .pres__grid--reels.pres__grid--big { grid-template-columns: 1fr 1fr; }
-    .pres__grid--boards, .pres__grid--phones { grid-template-columns: 1fr 1fr; }
+    .pres__grid, .pres__grid--5 { grid-template-columns: repeat(2, 1fr); grid-auto-rows: calc((100cqw - var(--gap)) / 8); }
+    .lb { padding: 64px 12px; } .lb__prev { left: auto; right: 72px; top: auto; bottom: 8px; margin: 0; } .lb__next { top: auto; bottom: 8px; right: 12px; margin: 0; }
     .proc { grid-template-columns: 1fr; }
     .proc__h { flex-direction: column; align-items: flex-start; gap: 12px; }
     .cta__top { grid-template-columns: 1fr; } .cta__links { text-align: left; } .cta__links a { justify-content: flex-start; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .scard, .scard__in { animation: none !important; }
-    .rv { opacity: 1; transform: none; transition: none; } .wds .w, .mani .w { opacity: 1; transition: none; } .esc .ch { opacity: 1; transform: none; clip-path: none; transition: none; } .pres { transition: none; }
+    .scard__in { animation: none !important; }
+    .rv { opacity: 1; transform: none; transition: none; } .wds .w, .mani .w { opacity: 1; transition: none; } .esc .ch { opacity: 1; transform: none; clip-path: none; transition: none; } .pres, .lb { transition: none; }
   }
 </style>
 </head>
@@ -202,16 +211,18 @@
 <!-- ===== INICIO: la e. en tinta 2D ===== -->
 <section class="top" id="inicio">
   <!-- La forma es la del logo oficial (assets/logo-e.svg y logo-dot.svg). El trazo que "escribe" es una máscara: un camino
-       ancho que recorre el centro de la e y va destapando la forma real, así la e nunca se deforma. -->
+       ancho que recorre el centro de la e y va destapando la forma real, así la e nunca se deforma.
+       Va en el orden en que se escribe una e a mano: arranca en la intersección de adentro (donde la barra toca el palo),
+       sigue la barra hacia arriba a la derecha, da la vuelta por arriba, baja por la izquierda y sale por la cola. -->
   <div class="top__ink" aria-hidden="true"><svg viewBox="40 90 240 190"><defs>
     <clipPath id="ink-e"><path d="M143.27494,111.77513c16.02805.6681,24.04315,9.57329,24.04315,26.71342,0,18.48061-23.71016,43.85996-71.12622,76.13592.21772,4.45473,2.05554,8.51457,5.50918,12.18807,3.44937,3.6735,9.51566,5.50918,18.19885,5.50918,16.02805,0,37.28566-14.13474,63.77923-42.40849,7.79097.6681,11.90844,5.6778,12.35669,15.02697,0,5.12496-2.89653,10.46765-8.6832,16.02805-10.68537,9.57542-22.48709,17.81464-35.39662,24.71125-12.9138,6.89874-25.82547,10.35238-38.735,10.35238-16.4763-1.3362-27.71664-7.29363-33.72743-17.86587-6.01079-10.57011-9.01618-23.54154-9.01618-38.90149,0-17.14013,3.44937-32.94406,10.35238-47.41819,14.69398-26.71556,35.50548-40.0712,62.44516-40.0712ZM108.21131,151.01174c-8.01296,11.24248-12.35456,23.54154-13.02266,36.89932l10.01727-6.67889c25.82333-21.59059,38.95485-35.39662,39.40523-41.40741,0-4.45046-1.78445-6.67889-5.34268-6.67889-12.68968.6681-23.04206,6.62553-31.05715,17.86587Z"/></clipPath>
   </defs>
-    <g clip-path="url(#ink-e)"><path class="ink__tr" transform="translate(80.3 122.8) scale(.2)" d="M 118 415 C 180 330, 280 205, 350 135 C 405 80, 365 12, 250 20 C 130 35, 40 140, 28 260 C 18 380, 40 500, 120 565 C 210 600, 330 520, 430 420 C 470 380, 495 345, 502 328 C 520 300, 560 300, 600 330" fill="none" stroke="#fff" stroke-width="250" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g clip-path="url(#ink-e)"><path class="ink__tr" d="M 97 200 C 120 178, 145 156, 157 140 C 164 128, 151 116, 136 121 C 118 127, 99 145, 89 170 C 81 190, 83 227, 108 245 C 130 254, 165 236, 184 214 C 190 207, 194 200, 197 194" fill="none" stroke="#fff" stroke-width="42" stroke-linecap="round" stroke-linejoin="round"/></g>
     <g class="ink__ds" fill="#fff"></g>
     <g class="ink__pt" transform="translate(239.85 229.5) scale(0)"><path fill="#fff" transform="translate(-239.85 -229.5)" d="M240.51479,212.95529c8.90092.6681,13.69076,6.45903,14.35886,17.36426-1.3362,10.24139-7.57112,15.46881-18.70046,15.69507-6.67889-1.11848-10.46765-5.89766-11.35347-14.35886.21985-10.0194,5.45154-16.24791,15.69507-18.70046Z"/></g>
   </svg></div>
-  <p class="top__tag rv">Elevemos tu marca</p>
-  <div class="top__foot"><span>Comunicación visual y RR.SS</span></div>
+  <p class="top__tag rv">elevemos tu marca</p>
+  <div class="top__foot"><span>identidad, contenido &amp; experiencias</span></div>
 </section>
 
 <!-- ===== IDEAS: la bajada de la marca, centrada, con trabajos pasando abajo =====
@@ -219,7 +230,7 @@
 <section class="ideas" id="ideas">
   <h1 class="esc">Ideas con <b>dirección.</b><br>Marcas con <em>identidad.</em></h1>
   <p class="ideas__p wds"><b>Pensamos. Creamos. Hacemos.</b> Desarrollamos ideas y estrategias de comunicación de manera integral, acompañando cada proyecto desde el concepto hasta hacerlo realidad.</p>
-  <a class="btn btn--solid rv" href="#contacto" data-cur="link">Elevemos tu marca</a>
+  <a class="btn btn--solid rv" href="https://wa.me/5491151254075" target="_blank" rel="noopener" data-cur="link">Elevemos tu marca</a>
   <div class="carr" aria-hidden="true"><div class="carr__stage">
     <figure class="card"><img src="../assets/servicios/fotografia/gpt-2.jpg" alt="" loading="lazy"></figure>
     <figure class="card"><video src="../assets/servicios/contenido/unboxing.mp4" poster="../assets/servicios/contenido/unboxing.jpg" muted loop playsinline preload="none"></video></figure>
@@ -238,26 +249,30 @@
 
 <!-- ===== QUIÉNES SOMOS (manifiesto) ===== -->
 <section class="mani" id="quienes-somos">
-  <span class="k">Quiénes somos</span>
-  <p id="manip">Creamos universos visuales que le dan <i>coherencia</i> y personalidad a las marcas con <i>pensamiento estratégico.</i> Marcas que conectan con las personas, se diferencian y construyen valor en el tiempo.</p>
+  <div class="mani__side">
+    <span class="k">Quiénes somos</span>
+    <!-- PLACEHOLDER: foto del equipo. Reemplazar el src por la foto real (por ej. ../assets/equipo.jpg). -->
+    <figure class="mani__ph rv"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80" alt="El equipo de e. agencia" loading="lazy"></figure>
+  </div>
+  <p id="manip">Somos un equipo creativo que combina distintas miradas, experiencias y disciplinas con una misma forma de entender la comunicación. Creemos en trabajar <i>cerca de cada marca,</i> entender su esencia y transformarla en un universo <i>único, coherente y con personalidad.</i> Combinamos creatividad y <i>pensamiento estratégico</i> para construir marcas que conectan con personas, se diferencian y generan valor en el tiempo.</p>
 </section>
 
 <!-- ===== SERVICIOS =====
      Cada tarjeta abre la presentación del servicio (más abajo, en <div class="pres">).
      El data-pres tiene que coincidir con el id del <article>. Las miniaturas van en la tira (se repiten dos veces para el loop).
-     --dur / --del: ritmo y desfase de la "respiración" de cada tarjeta. --sp: velocidad de la tira. -->
+     --sp: velocidad de la tira. -->
 <section class="servicios" id="servicios">
   <h2 class="esc">Servicios.</h2>
   <ul class="scards">
-    <li><button class="scard" type="button" data-pres="p-contenido" data-cur="link" style="--dur:6.5s;--del:-1s;--sp:20s"><span class="scard__t">Creación de contenido<small>01</small></span><span class="scard__strip"><span class="scard__in"><img src="../assets/servicios/contenido/unboxing.jpg" alt=""><img src="../assets/servicios/contenido/video-1.jpg" alt=""><img src="../assets/servicios/contenido/nov-5.jpg" alt=""><img src="../assets/servicios/contenido/captions.jpg" alt=""><img src="../assets/servicios/contenido/unboxing.jpg" alt=""><img src="../assets/servicios/contenido/video-1.jpg" alt=""><img src="../assets/servicios/contenido/nov-5.jpg" alt=""><img src="../assets/servicios/contenido/captions.jpg" alt=""></span></span></button></li>
-    <li><button class="scard" type="button" data-pres="p-fotografia" data-cur="link" style="--dur:8s;--del:-3s;--sp:26s"><span class="scard__t">Fotografía<small>02</small></span><span class="scard__strip"><span class="scard__in"><img src="../assets/servicios/fotografia/gpt-2.jpg" alt=""><img src="../assets/servicios/fotografia/dsc07842.jpg" alt=""><img src="../assets/servicios/fotografia/tezza-vintage.jpg" alt=""><img src="../assets/servicios/fotografia/gpt-1.jpg" alt=""><img src="../assets/servicios/fotografia/gpt-2.jpg" alt=""><img src="../assets/servicios/fotografia/dsc07842.jpg" alt=""><img src="../assets/servicios/fotografia/tezza-vintage.jpg" alt=""><img src="../assets/servicios/fotografia/gpt-1.jpg" alt=""></span></span></button></li>
-    <li><button class="scard" type="button" data-pres="p-branding" data-cur="link" style="--dur:7.2s;--del:-5s;--sp:30s"><span class="scard__t">Branding<small>03</small></span><span class="scard__strip"><span class="scard__in"><img src="../assets/servicios/branding/cabra-01.jpg" alt=""><img src="../assets/servicios/branding/pricobowls.jpg" alt=""><img src="../assets/servicios/branding/presentacion-logo.jpg" alt=""><img src="../assets/servicios/branding/video-1.jpg" alt=""><img src="../assets/servicios/branding/cabra-01.jpg" alt=""><img src="../assets/servicios/branding/pricobowls.jpg" alt=""><img src="../assets/servicios/branding/presentacion-logo.jpg" alt=""><img src="../assets/servicios/branding/video-1.jpg" alt=""></span></span></button></li>
-    <li><button class="scard" type="button" data-pres="p-ugc" data-cur="link" style="--dur:6s;--del:-2.5s;--sp:18s"><span class="scard__t">UGC<small>04</small></span><span class="scard__strip"><span class="scard__in"><img src="../assets/servicios/ugc/tezza-9126.jpg" alt=""><img src="../assets/servicios/ugc/video-3.jpg" alt=""><img src="../assets/servicios/ugc/video-5.jpg" alt=""><img src="../assets/servicios/ugc/video-copy.jpg" alt=""><img src="../assets/servicios/ugc/tezza-9126.jpg" alt=""><img src="../assets/servicios/ugc/video-3.jpg" alt=""><img src="../assets/servicios/ugc/video-5.jpg" alt=""><img src="../assets/servicios/ugc/video-copy.jpg" alt=""></span></span></button></li>
-    <li><button class="scard" type="button" data-pres="p-community" data-cur="link" style="--dur:9s;--del:-4s;--sp:24s"><span class="scard__t">Community management<small>05</small></span><span class="scard__strip"><span class="scard__in"><img src="../assets/servicios/community/img-4817.jpg" alt=""><img src="../assets/servicios/community/mba-despues.jpg" alt=""><img src="../assets/servicios/community/img-4818.jpg" alt=""><img src="../assets/servicios/community/img-4819.jpg" alt=""><img src="../assets/servicios/community/img-4817.jpg" alt=""><img src="../assets/servicios/community/mba-despues.jpg" alt=""><img src="../assets/servicios/community/img-4818.jpg" alt=""><img src="../assets/servicios/community/img-4819.jpg" alt=""></span></span></button></li>
-    <li><button class="scard" type="button" data-pres="p-produccion" data-cur="link" style="--dur:7.6s;--del:-6s;--sp:28s"><span class="scard__t">Producción<small>06</small></span><span class="scard__strip"><span class="scard__in"><img src="../assets/servicios/produccion/wa-1.jpg" alt=""><img src="../assets/servicios/produccion/wa-3.jpg" alt=""><img src="../assets/servicios/produccion/wa-2.jpg" alt=""><img src="../assets/servicios/produccion/wa-4.jpg" alt=""><img src="../assets/servicios/produccion/wa-1.jpg" alt=""><img src="../assets/servicios/produccion/wa-3.jpg" alt=""><img src="../assets/servicios/produccion/wa-2.jpg" alt=""><img src="../assets/servicios/produccion/wa-4.jpg" alt=""></span></span></button></li>
-    <li><button class="scard" type="button" data-pres="p-eventos" data-cur="link" style="--dur:6.8s;--del:-1.5s;--sp:16s"><span class="scard__t">Cobertura de eventos<small>07</small></span><span class="scard__strip"><span class="scard__in"><img src="../assets/servicios/eventos/recap-evento-2.jpg" alt=""><img src="../assets/servicios/eventos/backstage-1.jpg" alt=""><img src="../assets/servicios/eventos/recap-evento-2.jpg" alt=""><img src="../assets/servicios/eventos/backstage-1.jpg" alt=""></span></span></button></li>
-    <li><button class="scard" type="button" data-pres="p-ia" data-cur="link" style="--dur:8.4s;--del:-3.5s;--sp:25s"><span class="scard__t">Contenido IA<small>08</small></span><span class="scard__strip"><span class="scard__in"><img src="../assets/servicios/ia/gpt-1.jpg" alt=""><img src="../assets/servicios/ia/gpt-3.jpg" alt=""><img src="../assets/servicios/ia/cuadro1.jpg" alt=""><img src="../assets/servicios/ia/wa-1.jpg" alt=""><img src="../assets/servicios/ia/gpt-1.jpg" alt=""><img src="../assets/servicios/ia/gpt-3.jpg" alt=""><img src="../assets/servicios/ia/cuadro1.jpg" alt=""><img src="../assets/servicios/ia/wa-1.jpg" alt=""></span></span></button></li>
-    <li><button class="scard" type="button" data-pres="p-merch" data-cur="link" style="--dur:7s;--del:-2s;--sp:22s"><span class="scard__t">Merchandising<small>09</small></span><span class="scard__strip"><span class="scard__in"><!-- PLACEHOLDER: sin fotos de merch todavía --><img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=300&q=70" alt=""><img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=300&q=70" alt=""><img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=300&q=70" alt=""><img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=300&q=70" alt=""><img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=300&q=70" alt=""><img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=300&q=70" alt=""></span></span></button></li>
+    <li><button class="scard" type="button" data-pres="p-contenido" data-cur="link" style="--sp:20s"><span class="scard__t">Creación de contenido</span><span class="scard__strip"><span class="scard__in"><img src="../assets/servicios/contenido/unboxing.jpg" alt=""><img src="../assets/servicios/contenido/video-1.jpg" alt=""><img src="../assets/servicios/contenido/nov-5.jpg" alt=""><img src="../assets/servicios/contenido/captions.jpg" alt=""><img src="../assets/servicios/contenido/unboxing.jpg" alt=""><img src="../assets/servicios/contenido/video-1.jpg" alt=""><img src="../assets/servicios/contenido/nov-5.jpg" alt=""><img src="../assets/servicios/contenido/captions.jpg" alt=""></span></span></button></li>
+    <li><button class="scard" type="button" data-pres="p-fotografia" data-cur="link" style="--sp:26s"><span class="scard__t">Fotografía</span><span class="scard__strip"><span class="scard__in"><img src="../assets/servicios/fotografia/gpt-2.jpg" alt=""><img src="../assets/servicios/fotografia/dsc07842.jpg" alt=""><img src="../assets/servicios/fotografia/tezza-vintage.jpg" alt=""><img src="../assets/servicios/fotografia/gpt-1.jpg" alt=""><img src="../assets/servicios/fotografia/gpt-2.jpg" alt=""><img src="../assets/servicios/fotografia/dsc07842.jpg" alt=""><img src="../assets/servicios/fotografia/tezza-vintage.jpg" alt=""><img src="../assets/servicios/fotografia/gpt-1.jpg" alt=""></span></span></button></li>
+    <li><button class="scard" type="button" data-pres="p-branding" data-cur="link" style="--sp:30s"><span class="scard__t">Branding</span><span class="scard__strip"><span class="scard__in"><img src="../assets/servicios/branding/cabra-01.jpg" alt=""><img src="../assets/servicios/branding/pricobowls.jpg" alt=""><img src="../assets/servicios/branding/presentacion-logo.jpg" alt=""><img src="../assets/servicios/branding/video-1.jpg" alt=""><img src="../assets/servicios/branding/cabra-01.jpg" alt=""><img src="../assets/servicios/branding/pricobowls.jpg" alt=""><img src="../assets/servicios/branding/presentacion-logo.jpg" alt=""><img src="../assets/servicios/branding/video-1.jpg" alt=""></span></span></button></li>
+    <li><button class="scard" type="button" data-pres="p-ugc" data-cur="link" style="--sp:18s"><span class="scard__t">UGC</span><span class="scard__strip"><span class="scard__in"><img src="../assets/servicios/ugc/tezza-9126.jpg" alt=""><img src="../assets/servicios/ugc/video-3.jpg" alt=""><img src="../assets/servicios/ugc/video-5.jpg" alt=""><img src="../assets/servicios/ugc/video-copy.jpg" alt=""><img src="../assets/servicios/ugc/tezza-9126.jpg" alt=""><img src="../assets/servicios/ugc/video-3.jpg" alt=""><img src="../assets/servicios/ugc/video-5.jpg" alt=""><img src="../assets/servicios/ugc/video-copy.jpg" alt=""></span></span></button></li>
+    <li><button class="scard" type="button" data-pres="p-community" data-cur="link" style="--sp:24s"><span class="scard__t">Community management</span><span class="scard__strip"><span class="scard__in"><img src="../assets/servicios/community/img-4817.jpg" alt=""><img src="../assets/servicios/community/mba-despues.jpg" alt=""><img src="../assets/servicios/community/img-4818.jpg" alt=""><img src="../assets/servicios/community/img-4819.jpg" alt=""><img src="../assets/servicios/community/img-4817.jpg" alt=""><img src="../assets/servicios/community/mba-despues.jpg" alt=""><img src="../assets/servicios/community/img-4818.jpg" alt=""><img src="../assets/servicios/community/img-4819.jpg" alt=""></span></span></button></li>
+    <li><button class="scard" type="button" data-pres="p-produccion" data-cur="link" style="--sp:28s"><span class="scard__t">Dirección creativa &amp; producción</span><span class="scard__strip"><span class="scard__in"><img src="../assets/servicios/produccion/wa-1.jpg" alt=""><img src="../assets/servicios/produccion/wa-3.jpg" alt=""><img src="../assets/servicios/produccion/wa-2.jpg" alt=""><img src="../assets/servicios/produccion/wa-4.jpg" alt=""><img src="../assets/servicios/produccion/wa-1.jpg" alt=""><img src="../assets/servicios/produccion/wa-3.jpg" alt=""><img src="../assets/servicios/produccion/wa-2.jpg" alt=""><img src="../assets/servicios/produccion/wa-4.jpg" alt=""></span></span></button></li>
+    <li><button class="scard" type="button" data-pres="p-eventos" data-cur="link" style="--sp:16s"><span class="scard__t">Cobertura de eventos</span><span class="scard__strip"><span class="scard__in"><img src="../assets/servicios/eventos/recap-evento-2.jpg" alt=""><img src="../assets/servicios/eventos/backstage-1.jpg" alt=""><img src="../assets/servicios/eventos/recap-evento-2.jpg" alt=""><img src="../assets/servicios/eventos/backstage-1.jpg" alt=""></span></span></button></li>
+    <li><button class="scard" type="button" data-pres="p-ia" data-cur="link" style="--sp:25s"><span class="scard__t">Contenido con IA</span><span class="scard__strip"><span class="scard__in"><img src="../assets/servicios/ia/gpt-1.jpg" alt=""><img src="../assets/servicios/ia/gpt-3.jpg" alt=""><img src="../assets/servicios/ia/cuadro1.jpg" alt=""><img src="../assets/servicios/ia/wa-1.jpg" alt=""><img src="../assets/servicios/ia/gpt-1.jpg" alt=""><img src="../assets/servicios/ia/gpt-3.jpg" alt=""><img src="../assets/servicios/ia/cuadro1.jpg" alt=""><img src="../assets/servicios/ia/wa-1.jpg" alt=""></span></span></button></li>
+    <li><button class="scard" type="button" data-pres="p-merch" data-cur="link" style="--sp:22s"><span class="scard__t">Merchandising</span><span class="scard__strip"><span class="scard__in"><!-- PLACEHOLDER: sin fotos de merch todavía --><img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=300&q=70" alt=""><img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=300&q=70" alt=""><img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=300&q=70" alt=""><img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=300&q=70" alt=""><img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=300&q=70" alt=""><img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=300&q=70" alt=""></span></span></button></li>
   </ul>
 </section>
 
@@ -278,130 +293,134 @@
         <a class="btn btn--solid" href="https://wa.me/5491151254075" target="_blank" rel="noopener" data-cur="link">Escribinos por WhatsApp</a>
       </div>
     </div>
-    <ul class="cta__links rv"><li><a href="#" data-cur="link">Instagram</a></li><li><a href="#" data-cur="link">TikTok</a></li><li><a href="#" data-cur="link">LinkedIn</a></li><li><a href="https://wa.me/5491151254075" target="_blank" rel="noopener" data-cur="link">WhatsApp</a></li><li><a href="mailto:eleagenciaa@gmail.com" data-cur="link">eleagenciaa@gmail.com</a></li></ul>
+    <ul class="cta__links rv"><li><a href="https://www.instagram.com/agenciae_/" target="_blank" rel="noopener" data-cur="link">Instagram</a></li><li><a href="https://www.tiktok.com/@e.agencia" target="_blank" rel="noopener" data-cur="link">TikTok</a></li><li><a href="#" data-cur="link">LinkedIn</a></li><li><a href="https://wa.me/5491151254075" target="_blank" rel="noopener" data-cur="link">WhatsApp</a></li><li><a href="mailto:eleagenciaa@gmail.com" data-cur="link">eleagenciaa@gmail.com</a></li></ul>
   </div>
-  <footer class="foot"><span>© 2026 e. agencia</span><span>Comunicación visual y RR.SS · Buenos Aires</span></footer>
+  <footer class="foot"><span>© 2026 e. agencia</span><span>identidad, contenido &amp; experiencias</span></footer>
 </section>
 </main>
 
 <!-- ===== PRESENTACIONES DE SERVICIOS (se abren desde las tarjetas de Servicios) =====
      Las fotos y videos están en assets/servicios/<servicio>/ (vienen de la carpeta de Drive "Agencia E - web").
      Para agregar uno: copiar el archivo a esa carpeta y sumar un <figure> igual a los de al lado.
-     Tipos de grilla: --reels (videos verticales), --fotos (fotos recortadas, la primera grande),
-     --boards (tableros altos enteros), --phones (capturas de celular enteras).
-     data-color: color del título (rojo / rosa / verde). -->
+     Cada <figure> lleva su tamaño en la grilla (ver el comentario de .pres__grid en el CSS): c1 r7 = vertical chico,
+     c2 r14 = vertical grande, c1 r5 = foto, c2 r10 = foto grande, c2 r6 = apaisada… "arriba" ancla la imagen por su borde superior.
+     Tocando una foto o video se abre en grande. -->
 <div class="pres" role="dialog" aria-modal="true" aria-label="Servicio">
   <div class="pres__panel">
-  <div class="pres__bar"><span class="k">Servicios</span><button class="pres__close" type="button" data-cur="link">Cerrar ×</button></div>
+  <div class="pres__bar"><button class="pres__back" type="button" data-cur="link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Servicios</button></div>
 
-  <article class="pres__item" id="p-contenido" data-color="rojo" hidden>
-    <div class="pres__t"><h3><span class="n">01 / 09</span>Creación de contenido</h3><p>Concepto, guion, producción y edición para redes. Contenido que la gente quiere ver, no que la marca quiere decir.</p></div>
-    <div class="pres__grid pres__grid--reels">
-      <figure><video src="../assets/servicios/contenido/unboxing.mp4" poster="../assets/servicios/contenido/unboxing.jpg" muted loop playsinline preload="none"></video></figure>
-      <figure><video src="../assets/servicios/contenido/video-1.mp4" poster="../assets/servicios/contenido/video-1.jpg" muted loop playsinline preload="none"></video></figure>
-      <figure><video src="../assets/servicios/contenido/nov-5.mp4" poster="../assets/servicios/contenido/nov-5.jpg" muted loop playsinline preload="none"></video></figure>
-      <figure><video src="../assets/servicios/contenido/captions.mp4" poster="../assets/servicios/contenido/captions.jpg" muted loop playsinline preload="none"></video></figure>
-      <figure><video src="../assets/servicios/contenido/video-copy.mp4" poster="../assets/servicios/contenido/video-copy.jpg" muted loop playsinline preload="none"></video></figure>
-      <figure><video src="../assets/servicios/contenido/video-2.mp4" poster="../assets/servicios/contenido/video-2.jpg" muted loop playsinline preload="none"></video></figure>
-      <figure><video src="../assets/servicios/contenido/video-4.mp4" poster="../assets/servicios/contenido/video-4.jpg" muted loop playsinline preload="none"></video></figure>
+  <article class="pres__item" id="p-contenido" hidden>
+    <div class="pres__t"><h3>Creación de contenido</h3><p>Desarrollamos piezas a partir de una estrategia, una dirección creativa y una identidad sólida. Pensamos cada contenido desde su concepto y objetivo, cuidando que lo visual y lo comunicacional respondan a un mismo universo de marca, adaptándose a los distintos formatos y canales manteniendo la coherencia.</p></div>
+    <div class="pres__grid pres__grid--5">
+      <figure class="c2 r14"><video src="../assets/servicios/contenido/unboxing.mp4" poster="../assets/servicios/contenido/unboxing.jpg" muted loop playsinline preload="none"></video></figure>
+      <figure class="c1 r7"><video src="../assets/servicios/contenido/video-1.mp4" poster="../assets/servicios/contenido/video-1.jpg" muted loop playsinline preload="none"></video></figure>
+      <figure class="c1 r7"><video src="../assets/servicios/contenido/nov-5.mp4" poster="../assets/servicios/contenido/nov-5.jpg" muted loop playsinline preload="none"></video></figure>
+      <figure class="c1 r7"><video src="../assets/servicios/contenido/captions.mp4" poster="../assets/servicios/contenido/captions.jpg" muted loop playsinline preload="none"></video></figure>
+      <figure class="c1 r7"><video src="../assets/servicios/contenido/video-copy.mp4" poster="../assets/servicios/contenido/video-copy.jpg" muted loop playsinline preload="none"></video></figure>
+      <figure class="c1 r7"><video src="../assets/servicios/contenido/video-2.mp4" poster="../assets/servicios/contenido/video-2.jpg" muted loop playsinline preload="none"></video></figure>
+      <figure class="c1 r7"><video src="../assets/servicios/contenido/video-4.mp4" poster="../assets/servicios/contenido/video-4.jpg" muted loop playsinline preload="none"></video></figure>
     </div>
   </article>
 
-  <article class="pres__item" id="p-fotografia" data-color="rosa" hidden>
-    <div class="pres__t"><h3><span class="n">02 / 09</span>Fotografía</h3><p>Estudio y locación. Producto, catálogo, e-commerce, campaña y retrato. La imagen que sostiene todo lo demás.</p></div>
-    <div class="pres__grid pres__grid--fotos">
-      <figure><img src="../assets/servicios/fotografia/gpt-2.jpg" alt="" loading="lazy"></figure>
-      <figure><img src="../assets/servicios/fotografia/dsc07842.jpg" alt="" loading="lazy"></figure>
-      <figure><img src="../assets/servicios/fotografia/tezza-vintage.jpg" alt="" loading="lazy"></figure>
-      <figure><img src="../assets/servicios/fotografia/gpt-1.jpg" alt="" loading="lazy"></figure>
-      <figure><img src="../assets/servicios/fotografia/gpt-3.jpg" alt="" loading="lazy"></figure>
-      <figure><img src="../assets/servicios/fotografia/gpt-4.jpg" alt="" loading="lazy"></figure>
+  <article class="pres__item" id="p-fotografia" hidden>
+    <div class="pres__t"><h3>Fotografía</h3><p>Diseñamos producciones fotográficas definiendo concepto, estética, composición, iluminación y puesta en escena según las necesidades de cada proyecto u ocasión. Trabajamos fotografía de producto, gastronomía, lifestyle, campañas, ecommerce y contenido digital.</p></div>
+    <div class="pres__grid">
+      <figure class="c2 r10"><img src="../assets/servicios/fotografia/dsc07842.jpg" alt="" loading="lazy"></figure>
+      <figure class="c1 r5"><img src="../assets/servicios/fotografia/gpt-3.jpg" alt="" loading="lazy"></figure>
+      <figure class="c1 r5"><img src="../assets/servicios/fotografia/gpt-4.jpg" alt="" loading="lazy"></figure>
+      <figure class="c2 r5"><img src="../assets/servicios/fotografia/gpt-2.jpg" alt="" loading="lazy"></figure>
+      <figure class="c2 r12"><img src="../assets/servicios/fotografia/tezza-vintage.jpg" alt="" loading="lazy"></figure>
+      <figure class="c2 r12"><img src="../assets/servicios/fotografia/gpt-1.jpg" alt="" loading="lazy"></figure>
     </div>
   </article>
 
-  <article class="pres__item" id="p-branding" data-color="verde" hidden>
-    <div class="pres__t"><h3><span class="n">03 / 09</span>Branding</h3><p>Identidad visual, sistema gráfico, tono de voz. La base de todo lo demás: una marca que se reconoce en cualquier lugar donde aparece.</p></div>
-    <div class="pres__grid pres__grid--boards">
-      <figure><img src="../assets/servicios/branding/cabra-01.jpg" alt="" loading="lazy"><figcaption>Cabra Café</figcaption></figure>
-      <figure><img src="../assets/servicios/branding/pricobowls.jpg" alt="" loading="lazy"><figcaption>Prico Bowls</figcaption></figure>
-      <figure><img src="../assets/servicios/branding/presentacion-logo.jpg" alt="" loading="lazy"><figcaption>Stampit</figcaption></figure>
-    </div>
-    <div class="pres__grid pres__grid--reels">
-      <figure><video src="../assets/servicios/branding/video-1.mp4" poster="../assets/servicios/branding/video-1.jpg" muted loop playsinline preload="none"></video><figcaption>Stampit</figcaption></figure>
+  <article class="pres__item" id="p-branding" hidden>
+    <div class="pres__t"><h3>Branding</h3><p>Construimos sistemas de identidad capaces de darle criterio, consistencia y reconocimiento a las marcas. Desde el concepto y posicionamiento hasta el lenguaje visual. Desarrollamos los recursos necesarios para que pueda adaptarlos a todos los puntos de contacto.</p></div>
+    <div class="pres__grid">
+      <figure class="c1 r14 arriba"><img src="../assets/servicios/branding/presentacion-logo.jpg" alt="Stampit" loading="lazy"></figure>
+      <figure class="c1 r7"><video src="../assets/servicios/branding/video-1.mp4" poster="../assets/servicios/branding/video-1.jpg" muted loop playsinline preload="none"></video></figure>
+      <figure class="c1 r9 arriba"><img src="../assets/servicios/branding/cabra-01.jpg" alt="Cabra Café" loading="lazy"></figure>
+      <figure class="c1 r10 arriba"><img src="../assets/servicios/branding/pricobowls.jpg" alt="Prico Bowls" loading="lazy"></figure>
     </div>
   </article>
 
-  <article class="pres__item" id="p-ugc" data-color="rojo" hidden>
-    <div class="pres__t"><h3><span class="n">04 / 09</span>UGC</h3><p>Contenido generado por usuarios y creadores: real, cercano y hecho para el feed. Guionamos, coordinamos y editamos para que se vea natural y venda.</p></div>
-    <div class="pres__grid pres__grid--reels">
-      <figure><video src="../assets/servicios/ugc/tezza-9126.mp4" poster="../assets/servicios/ugc/tezza-9126.jpg" muted loop playsinline preload="none"></video></figure>
-      <figure><video src="../assets/servicios/ugc/video-3.mp4" poster="../assets/servicios/ugc/video-3.jpg" muted loop playsinline preload="none"></video></figure>
-      <figure><video src="../assets/servicios/ugc/video-5.mp4" poster="../assets/servicios/ugc/video-5.jpg" muted loop playsinline preload="none"></video></figure>
-      <figure><video src="../assets/servicios/ugc/video-copy.mp4" poster="../assets/servicios/ugc/video-copy.jpg" muted loop playsinline preload="none"></video></figure>
-      <figure><video src="../assets/servicios/ugc/video-4e85.mp4" poster="../assets/servicios/ugc/video-4e85.jpg" muted loop playsinline preload="none"></video></figure>
+  <article class="pres__item" id="p-ugc" hidden>
+    <div class="pres__t"><h3>UGC</h3><p>Seleccionamos y gestionamos creadores afines a cada marca, desde el research y propuesta de perfiles hasta la coordinación, seguimiento y entrega del contenido. Desarrollamos briefs y lineamientos para lograr piezas naturales, relevantes y alineadas con la identidad de marca y los códigos de cada plataforma.</p></div>
+    <div class="pres__grid">
+      <figure class="c1 r7"><video src="../assets/servicios/ugc/video-3.mp4" poster="../assets/servicios/ugc/video-3.jpg" muted loop playsinline preload="none"></video></figure>
+      <figure class="c2 r14"><video src="../assets/servicios/ugc/tezza-9126.mp4" poster="../assets/servicios/ugc/tezza-9126.jpg" muted loop playsinline preload="none"></video></figure>
+      <figure class="c1 r7"><video src="../assets/servicios/ugc/video-5.mp4" poster="../assets/servicios/ugc/video-5.jpg" muted loop playsinline preload="none"></video></figure>
+      <figure class="c1 r7"><video src="../assets/servicios/ugc/video-copy.mp4" poster="../assets/servicios/ugc/video-copy.jpg" muted loop playsinline preload="none"></video></figure>
+      <figure class="c1 r7"><video src="../assets/servicios/ugc/video-4e85.mp4" poster="../assets/servicios/ugc/video-4e85.jpg" muted loop playsinline preload="none"></video></figure>
     </div>
   </article>
 
-  <article class="pres__item" id="p-community" data-color="rosa" hidden>
-    <div class="pres__t"><h3><span class="n">05 / 09</span>Community management</h3><p>Planificación, publicación y conversación. Con criterio, no con calendario: una cuenta que comunica, no que solo publica.</p></div>
-    <div class="pres__grid pres__grid--phones">
-      <figure><img src="../assets/servicios/community/mba-antes.jpg" alt="" loading="lazy"><figcaption>Antes</figcaption></figure>
-      <figure><img src="../assets/servicios/community/mba-despues.jpg" alt="" loading="lazy"><figcaption>Después</figcaption></figure>
-      <figure><img src="../assets/servicios/community/img-4817.jpg" alt="" loading="lazy"><figcaption>Prico Bowls</figcaption></figure>
-      <figure><img src="../assets/servicios/community/img-4818.jpg" alt="" loading="lazy"><figcaption>Ortuzar</figcaption></figure>
-      <figure><img src="../assets/servicios/community/img-4819.jpg" alt="" loading="lazy"><figcaption>Flash Box</figcaption></figure>
+  <article class="pres__item" id="p-community" hidden>
+    <div class="pres__t"><h3>Community Management</h3><p>Planificamos y gestionamos la comunicación diaria de las marcas en redes sociales. Definimos pilares de comunicación, calendarios editoriales, formatos, frecuencia y tono, articulando contenido y gestión de comunidad para sostener una presencia digital consistente.</p></div>
+    <div class="pres__grid">
+      <figure class="c1 r7 arriba"><img src="../assets/servicios/community/mba-antes.jpg" alt="Antes" loading="lazy"></figure>
+      <figure class="c1 r7 arriba"><img src="../assets/servicios/community/mba-despues.jpg" alt="Después" loading="lazy"></figure>
+      <figure class="c2 r14 arriba"><img src="../assets/servicios/community/img-4817.jpg" alt="Prico Bowls" loading="lazy"></figure>
+      <figure class="c1 r7 arriba"><img src="../assets/servicios/community/img-4818.jpg" alt="Ortuzar" loading="lazy"></figure>
+      <figure class="c1 r7 arriba"><img src="../assets/servicios/community/img-4819.jpg" alt="Flash Box" loading="lazy"></figure>
     </div>
   </article>
 
-  <article class="pres__item" id="p-produccion" data-color="verde" hidden>
-    <div class="pres__t"><h3><span class="n">06 / 09</span>Producción</h3><p>Shootings, video, dirección de arte. Pre producción, rodaje y edición con equipo propio y aliados.</p></div>
-    <div class="pres__grid pres__grid--phones">
-      <figure><img src="../assets/servicios/produccion/wa-1.jpg" alt="" loading="lazy"></figure>
-      <figure><img src="../assets/servicios/produccion/wa-3.jpg" alt="" loading="lazy"></figure>
-      <figure><img src="../assets/servicios/produccion/wa-4.jpg" alt="" loading="lazy"></figure>
-      <figure><img src="../assets/servicios/produccion/wa-2.jpg" alt="" loading="lazy"></figure>
+  <article class="pres__item" id="p-produccion" hidden>
+    <div class="pres__t"><h3>Dirección creativa &amp; producción</h3><p>Desarrollamos el concepto y la dirección visual de cada proyecto y coordinamos su ejecución de principio a fin. Definimos narrativa, estética y lineamientos creativos, y gestionamos la preproducción, equipos, recursos y realización de shootings, campañas, eventos y experiencias.</p></div>
+    <div class="pres__grid">
+      <figure class="c2 r14"><img src="../assets/servicios/produccion/wa-4.jpg" alt="" loading="lazy"></figure>
+      <figure class="c1 r7"><img src="../assets/servicios/produccion/wa-1.jpg" alt="" loading="lazy"></figure>
+      <figure class="c1 r7"><img src="../assets/servicios/produccion/wa-3.jpg" alt="" loading="lazy"></figure>
+      <figure class="c2 r7"><img src="../assets/servicios/produccion/wa-2.jpg" alt="" loading="lazy"></figure>
     </div>
   </article>
 
-  <article class="pres__item" id="p-eventos" data-color="rojo" hidden>
-    <div class="pres__t"><h3><span class="n">07 / 09</span>Cobertura de eventos</h3><p>Foto y video en el momento, contenido listo para publicar el mismo día. Lanzamientos, inauguraciones, activaciones y shows.</p></div>
-    <div class="pres__grid pres__grid--reels pres__grid--big">
-      <figure><video src="../assets/servicios/eventos/recap-evento-2.mp4" poster="../assets/servicios/eventos/recap-evento-2.jpg" muted loop playsinline preload="none"></video><figcaption>Recap</figcaption></figure>
-      <figure><video src="../assets/servicios/eventos/backstage-1.mp4" poster="../assets/servicios/eventos/backstage-1.jpg" muted loop playsinline preload="none"></video><figcaption>Backstage</figcaption></figure>
+  <article class="pres__item" id="p-eventos" hidden>
+    <div class="pres__t"><h3>Cobertura de eventos</h3><p>Registramos cada evento con una mirada visual y narrativa alineada a la marca. Producimos contenido fotográfico y audiovisual en tiempo real, definiendo previamente los momentos clave, formatos y necesidades de comunicación. Generamos material que documente la experiencia y, al mismo tiempo, funcione estratégicamente como contenido para la marca y sus diferentes canales.</p></div>
+    <div class="pres__grid">
+      <figure class="c2 r14"><video src="../assets/servicios/eventos/recap-evento-2.mp4" poster="../assets/servicios/eventos/recap-evento-2.jpg" muted loop playsinline preload="none"></video></figure>
+      <figure class="c2 r14"><video src="../assets/servicios/eventos/backstage-1.mp4" poster="../assets/servicios/eventos/backstage-1.jpg" muted loop playsinline preload="none"></video></figure>
     </div>
   </article>
 
-  <article class="pres__item" id="p-ia" data-color="rosa" hidden>
-    <div class="pres__t"><h3><span class="n">08 / 09</span>Contenido IA</h3><p>Imágenes, video y piezas generadas con inteligencia artificial, con dirección de arte y criterio de marca. Más ideas, más rápido, sin perder la identidad.</p></div>
-    <div class="pres__grid pres__grid--fotos">
-      <figure><img src="../assets/servicios/ia/gpt-1.jpg" alt="" loading="lazy"></figure>
-      <figure><img src="../assets/servicios/ia/gpt-3.jpg" alt="" loading="lazy"></figure>
-      <figure><img src="../assets/servicios/ia/wa-1.jpg" alt="" loading="lazy"></figure>
-      <figure><img src="../assets/servicios/ia/cuadro1.jpg" alt="" loading="lazy"></figure>
-      <figure><img src="../assets/servicios/ia/wa-2.jpg" alt="" loading="lazy"></figure>
-      <figure><img src="../assets/servicios/ia/gpt-2.jpg" alt="" loading="lazy"></figure>
-      <figure><img src="../assets/servicios/ia/gemini.jpg" alt="" loading="lazy"></figure>
-    </div>
-    <div class="pres__grid pres__grid--reels">
-      <figure><video src="../assets/servicios/ia/wa-video-1.mp4" poster="../assets/servicios/ia/wa-video-1.jpg" muted loop playsinline preload="none"></video></figure>
-      <figure><video src="../assets/servicios/ia/wa-video-2.mp4" poster="../assets/servicios/ia/wa-video-2.jpg" muted loop playsinline preload="none"></video></figure>
+  <article class="pres__item" id="p-ia" hidden>
+    <div class="pres__t"><h3>Contenido con IA</h3><p>Exploramos nuevas posibilidades visuales a través de la inteligencia artificial aplicada a la producción de contenido. Conceptualizamos, generamos y refinamos piezas bajo una dirección creativa definida, cuidando que la tecnología esté siempre al servicio de la idea y de la identidad de marca.</p></div>
+    <div class="pres__grid">
+      <figure class="c2 r10"><img src="../assets/servicios/ia/gpt-3.jpg" alt="" loading="lazy"></figure>
+      <figure class="c1 r5"><img src="../assets/servicios/ia/wa-1.jpg" alt="" loading="lazy"></figure>
+      <figure class="c1 r5"><img src="../assets/servicios/ia/wa-2.jpg" alt="" loading="lazy"></figure>
+      <figure class="c2 r5"><img src="../assets/servicios/ia/gpt-1.jpg" alt="" loading="lazy"></figure>
+      <figure class="c1 r7"><video src="../assets/servicios/ia/wa-video-1.mp4" poster="../assets/servicios/ia/wa-video-1.jpg" muted loop playsinline preload="none"></video></figure>
+      <figure class="c1 r7"><video src="../assets/servicios/ia/wa-video-2.mp4" poster="../assets/servicios/ia/wa-video-2.jpg" muted loop playsinline preload="none"></video></figure>
+      <figure class="c2 r7"><img src="../assets/servicios/ia/gpt-2.jpg" alt="" loading="lazy"></figure>
+      <figure class="c2 r6"><img src="../assets/servicios/ia/cuadro1.jpg" alt="" loading="lazy"></figure>
+      <figure class="c2 r6"><img src="../assets/servicios/ia/gemini.jpg" alt="" loading="lazy"></figure>
     </div>
   </article>
 
-  <article class="pres__item" id="p-merch" data-color="verde" hidden>
-    <div class="pres__t"><h3><span class="n">09 / 09</span>Merchandising</h3><p>Diseño y producción de objetos con la marca: remeras, gorras, bolsas, packaging y regalos corporativos que dan ganas de usar.</p></div>
-    <div class="pres__grid pres__grid--fotos">
+  <article class="pres__item" id="p-merch" hidden>
+    <div class="pres__t"><h3>Merchandising</h3><p>Diseñamos y desarrollamos piezas que trasladan el sistema visual de una marca al plano físico. Pensamos objetos, aplicaciones, materiales y terminaciones para que el merchandising funcione como una extensión de su identidad.</p></div>
+    <div class="pres__grid">
       <!-- PLACEHOLDER: todavía no hay fotos de merchandising en la carpeta de Drive. Reemplazar por fotos reales. -->
-      <figure><img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy"><figcaption>Placeholder</figcaption></figure>
-      <figure><img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure><img src="https://images.unsplash.com/photo-1607083206968-13611e3d76db?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure class="c2 r10"><img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy"></figure>
+      <figure class="c1 r5"><img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure class="c1 r5"><img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
+      <figure class="c2 r5"><img src="https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=1200&q=80" alt="" loading="lazy"></figure>
+      <figure class="c4 r6"><img src="https://images.unsplash.com/photo-1607083206968-13611e3d76db?auto=format&fit=crop&w=1800&q=80" alt="" loading="lazy"></figure>
     </div>
   </article>
 
-  <div class="pres__nav"><button class="pres__prev" type="button" data-cur="link">← Anterior</button><button class="pres__next" type="button" data-cur="link">Siguiente →</button></div>
+  <div class="pres__nav"><button class="pres__prev" type="button" aria-label="Servicio anterior" data-cur="link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button><button class="pres__next" type="button" aria-label="Servicio siguiente" data-cur="link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
   </div>
+</div>
+
+<!-- ===== LIGHTBOX (foto o video en grande) ===== -->
+<div class="lb" role="dialog" aria-modal="true" aria-label="Contenido en grande">
+  <div class="lb__m"></div>
+  <button class="lb__x" type="button" aria-label="Cerrar" data-cur="link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <button class="lb__prev" type="button" aria-label="Anterior" data-cur="link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button>
+  <button class="lb__next" type="button" aria-label="Siguiente" data-cur="link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
 </div>
 
 <script src="e-bg.js"></script>
@@ -419,9 +438,7 @@
     addEventListener('pointerover', e => { cur.classList.toggle('is-link', !!e.target.closest('[data-cur]')); });
   }
 
-  /* ---------- nav: se esconde al bajar, vuelve al subir ---------- */
-  let lastY = 0;
-  addEventListener('scroll', () => { const y = scrollY; nav.classList.toggle('hide', y > lastY && y > 120 && !nav.classList.contains('open')); lastY = y; }, { passive: true });
+  /* ---------- nav: queda fija arriba, siempre visible ---------- */
   $('.nav__burger').addEventListener('click', () => nav.classList.toggle('open'));
   $$('.nav ul a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
 
@@ -507,13 +524,26 @@
   $$('.pres video').forEach(v => vio.observe(v));
   const show = (i) => { cur_i = (i + items.length) % items.length; items.forEach((it, j) => it.hidden = j !== cur_i); pres.scrollTop = 0; };
   const open = (id, from) => { const i = items.findIndex(it => it.id === id); if (i < 0) return; opener = from; show(i); pres.classList.add('on'); document.body.classList.add('pres-on');
-    clearTimeout(soloT); soloT = setTimeout(() => document.body.classList.add('pres-solo'), 820); setTimeout(() => $('.pres__close').focus(), 400); };
+    clearTimeout(soloT); soloT = setTimeout(() => document.body.classList.add('pres-solo'), 820); setTimeout(() => $('.pres__back').focus(), 400); };
   const close = () => { clearTimeout(soloT); document.body.classList.remove('pres-solo'); pres.classList.remove('on'); document.body.classList.remove('pres-on'); $$('.pres video').forEach(v => v.pause()); opener?.focus(); };
   openers.forEach(c => c.addEventListener('click', () => open(c.dataset.pres, c)));
-  $('.pres__close').addEventListener('click', close);
+  $('.pres__back').addEventListener('click', close);
   $('.pres__prev').addEventListener('click', () => show(cur_i - 1));
   $('.pres__next').addEventListener('click', () => show(cur_i + 1));
-  addEventListener('keydown', e => { if (!pres.classList.contains('on')) return; if (e.key === 'Escape') close(); if (e.key === 'ArrowRight') show(cur_i + 1); if (e.key === 'ArrowLeft') show(cur_i - 1); });
+  /* ---------- lightbox: tocar una foto o video de la presentación lo abre en grande ---------- */
+  const lb = $('.lb'), lbm = $('.lb__m'); let lbList = [], lbI = 0;
+  const lbShow = (i) => { lbI = (i + lbList.length) % lbList.length; const src = lbList[lbI]; lbm.innerHTML = '';
+    if (src.tagName === 'VIDEO') { const v = document.createElement('video'); v.src = src.getAttribute('src'); v.poster = src.getAttribute('poster'); v.controls = true; v.loop = true; v.playsInline = true; lbm.append(v); v.play().catch(() => { v.muted = true; v.play().catch(() => {}); }); }
+    else { const im = new Image(); im.src = src.getAttribute('src'); im.alt = src.alt || ''; lbm.append(im); } };
+  const lbOpen = (fig) => { const item = fig.closest('.pres__item'); lbList = $$('.pres__grid img, .pres__grid video', item); lb.classList.toggle('solo', lbList.length < 2); lbShow(lbList.indexOf($('img, video', fig))); lb.classList.add('on'); setTimeout(() => $('.lb__x').focus(), 50); };
+  const lbClose = () => { lb.classList.remove('on'); lbm.innerHTML = ''; $('.pres__back').focus(); };
+  $$('.pres__grid figure').forEach(f => { f.tabIndex = 0; f.setAttribute('role', 'button'); f.setAttribute('aria-label', 'Ver en grande'); f.addEventListener('click', () => lbOpen(f)); f.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); lbOpen(f); } }); });
+  $('.lb__x').addEventListener('click', lbClose); $('.lb__prev').addEventListener('click', () => lbShow(lbI - 1)); $('.lb__next').addEventListener('click', () => lbShow(lbI + 1));
+  lb.addEventListener('click', e => { if (e.target === lb || e.target === lbm) lbClose(); });
+
+  addEventListener('keydown', e => {
+    if (lb.classList.contains('on')) { if (e.key === 'Escape') lbClose(); if (e.key === 'ArrowRight') lbShow(lbI + 1); if (e.key === 'ArrowLeft') lbShow(lbI - 1); return; }
+    if (!pres.classList.contains('on')) return; if (e.key === 'Escape') close(); if (e.key === 'ArrowRight') show(cur_i + 1); if (e.key === 'ArrowLeft') show(cur_i - 1); });
 })();
 </script>
 

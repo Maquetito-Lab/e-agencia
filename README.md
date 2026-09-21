@@ -36,9 +36,14 @@ Abrí `index.html` con doble click. Las fuentes y las fotos de muestra necesitan
 Las fotos y videos de cada servicio están en `assets/servicios/<servicio>/`, bajados de la
 carpeta de Drive "Agencia E - web" y achicados para web (imágenes ≤ 1400 px, videos 720p
 sin audio y de hasta 20 s). Para sumar uno: copiarlo ahí y agregar un `<figure>` en `pruebas/e.html`.
+Cada `<figure>` lleva dos clases que dicen cuánto ocupa en la grilla irregular (`c1 r7` = vertical chico,
+`c2 r14` = vertical grande, `c1 r5` = foto, `c2 r10` = foto grande, `c2 r6` = apaisada); el detalle está
+en el comentario de `.pres__grid` dentro del CSS. Tocando una foto o video se abre en grande.
 
 ## Pendientes
 
+- [ ] Foto del equipo en "Quiénes somos" (hoy hay una foto de muestra marcada con `PLACEHOLDER` en `pruebas/e.html`)
+- [ ] Link real de LinkedIn en `pruebas/e.html` (Instagram y TikTok ya están)
 - [ ] Fotos de merchandising (no había en Drive; quedan fotos de muestra marcadas con `PLACEHOLDER`)
 - [ ] Fotos reales en `index.html` (hoy hay fotos de muestra de Unsplash marcadas con `PLACEHOLDER`)
 - [ ] Links reales de Instagram, WhatsApp y correo (buscá `href="#"` en `index.html`)
