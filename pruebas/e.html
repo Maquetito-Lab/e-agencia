@@ -38,7 +38,8 @@
   .cur.is-link .cur__dot { width: 18px; height: 18px; margin: -9px; }
 
   /* ---------- nav ---------- */
-  .nav { position: fixed; inset: 0 0 auto 0; z-index: 70; display: flex; justify-content: space-between; align-items: center; padding: 18px var(--g); transition: transform .5s var(--ease), opacity .5s; }
+  .nav { position: fixed; inset: 0 0 auto 0; z-index: 70; display: flex; justify-content: space-between; align-items: center; padding: 18px var(--g); transition: background .4s, padding .4s, backdrop-filter .4s; }
+  .nav.bg { background: rgb(180 8 28 / .55); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); padding-top: 12px; padding-bottom: 12px; }
   .nav__logo { width: 64px; aspect-ratio: 939/602; background: #fff; -webkit-mask: url("../assets/logo.svg") no-repeat center/contain; mask: url("../assets/logo.svg") no-repeat center/contain; }
   .nav ul { display: flex; align-items: center; gap: 26px; font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
   .nav ul a { opacity: .85; } .nav ul a:hover { opacity: 1; }
@@ -73,11 +74,11 @@
   .card img, .card video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
   /* ---------- quiénes somos: el manifiesto se enciende al scrollear ---------- */
-  .mani { padding: clamp(80px, 12vw, 180px) var(--g); display: grid; grid-template-columns: 1fr 2fr; gap: 40px clamp(32px, 5vw, 80px); border-top: 1px solid var(--linea); align-items: start; }
-  .mani__side { display: grid; gap: 24px; align-content: start; }
+  .mani { padding: clamp(80px, 12vw, 180px) var(--g); display: grid; grid-template-columns: 1fr 2fr; gap: 28px clamp(32px, 5vw, 80px); border-top: 1px solid var(--linea); align-items: start; }
+  .mani > .k { grid-column: 1 / -1; }
   .mani__ph { border-radius: 14px; overflow: hidden; aspect-ratio: 4/5; background: #eadfcf; box-shadow: 0 30px 60px -30px rgb(0 0 0 / .45); }
   .mani__ph img { width: 100%; height: 100%; object-fit: cover; }
-  .mani p { font-size: clamp(1.35rem, 2.5vw, 2.5rem); font-weight: 300; line-height: 1.18; letter-spacing: -.025em; max-width: 34ch; }
+  .mani p { font-size: clamp(1.35rem, 2.5vw, 2.5rem); font-weight: 300; line-height: 1.18; letter-spacing: -.025em; max-width: 34ch; margin-top: -.2em; /* la primera línea queda al ras del borde de arriba de la foto */ }
   .mani .w { opacity: .22; transition: opacity .5s; } .mani .w.on { opacity: 1; }
   .mani .w.em { font-style: italic; font-weight: 500; }
 
@@ -177,7 +178,7 @@
     .nav.open .nav__burger i:nth-child(1) { transform: translateY(7px) rotate(45deg); } .nav.open .nav__burger i:nth-child(2) { opacity: 0; } .nav.open .nav__burger i:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
     .nav.open ul { display: flex; position: fixed; inset: 0; z-index: -1; background: var(--nude); color: var(--tinta); flex-direction: column; justify-content: center; align-items: flex-start; padding: 0 var(--g); gap: 22px; font-size: 1.6rem; letter-spacing: -.01em; text-transform: none; }
     .nav.open .pill { font-size: 1rem; }
-    .mani { grid-template-columns: 1fr; gap: 18px; }
+    .mani { grid-template-columns: 1fr; gap: 18px; } .mani p { margin-top: 8px; }
     .pres__t { grid-template-columns: 1fr; }
     .pres__grid, .pres__grid--5 { grid-template-columns: repeat(2, 1fr); grid-auto-rows: calc((100cqw - var(--gap)) / 8); }
     .lb { padding: 64px 12px; } .lb__prev { left: auto; right: 72px; top: auto; bottom: 8px; margin: 0; } .lb__next { top: auto; bottom: 8px; right: 12px; margin: 0; }
@@ -249,11 +250,9 @@
 
 <!-- ===== QUIÉNES SOMOS (manifiesto) ===== -->
 <section class="mani" id="quienes-somos">
-  <div class="mani__side">
-    <span class="k">Quiénes somos</span>
-    <!-- PLACEHOLDER: foto del equipo. Reemplazar el src por la foto real (por ej. ../assets/equipo.jpg). -->
-    <figure class="mani__ph rv"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80" alt="El equipo de e. agencia" loading="lazy"></figure>
-  </div>
+  <span class="k">Quiénes somos</span>
+  <!-- PLACEHOLDER: foto del equipo (esta es de muestra, no es la de ustedes). Reemplazar el src por la foto real (por ej. ../assets/equipo.jpg). -->
+  <figure class="mani__ph rv"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80" alt="El equipo de e. agencia" loading="lazy"></figure>
   <p id="manip">Somos un equipo creativo que combina distintas miradas, experiencias y disciplinas con una misma forma de entender la comunicación. Creemos en trabajar <i>cerca de cada marca,</i> entender su esencia y transformarla en un universo <i>único, coherente y con personalidad.</i> Combinamos creatividad y <i>pensamiento estratégico</i> para construir marcas que conectan con personas, se diferencian y generan valor en el tiempo.</p>
 </section>
 
@@ -438,7 +437,8 @@
     addEventListener('pointerover', e => { cur.classList.toggle('is-link', !!e.target.closest('[data-cur]')); });
   }
 
-  /* ---------- nav: queda fija arriba, siempre visible ---------- */
+  /* ---------- nav: queda fija arriba, siempre visible; al scrollear toma fondo ---------- */
+  const navBg = () => nav.classList.toggle('bg', scrollY > 40); addEventListener('scroll', navBg, { passive: true }); navBg();
   $('.nav__burger').addEventListener('click', () => nav.classList.toggle('open'));
   $$('.nav ul a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
 
