@@ -1,0 +1,65 @@
+# Baja lo nuevo de la carpeta de Drive "Agencia E - web", lo achica y actualiza la web.
+# Corre todos los días a las 6:00 (hora de Argentina) y también a mano: pestaña Actions > "Sincronizar contenido desde Drive" > Run workflow.
+# Necesita el secreto GDRIVE_SA_KEY (la clave JSON de la cuenta de servicio de Google con acceso de lectura a la carpeta).
+name: Sincronizar contenido desde Drive
+
+on:
+  schedule:
+    - cron: "0 9 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-drive
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Revisar que esté la clave
+        id: clave
+        env:
+          GDRIVE_SA_KEY: ${{ secrets.GDRIVE_SA_KEY }}
+        run: |
+          if [ -z "$GDRIVE_SA_KEY" ]; then
+            echo "::warning::Falta el secreto GDRIVE_SA_KEY. Ver README, sección 'Contenido desde Drive'."
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-python@v5
+        if: steps.clave.outputs.ok == 'true'
+        with:
+          python-version: "3.12"
+
+      - name: Instalar herramientas
+        if: steps.clave.outputs.ok == 'true'
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          pip install -q -r tools/requirements.txt
+
+      - name: Sincronizar
+        if: steps.clave.outputs.ok == 'true'
+        env:
+          GDRIVE_SA_KEY: ${{ secrets.GDRIVE_SA_KEY }}
+        run: python tools/sync_servicios.py
+
+      - name: Publicar cambios
+        if: steps.clave.outputs.ok == 'true'
+        run: |
+          git add -A assets/servicios
+          if git diff --cached --quiet; then
+            echo "Nada nuevo en Drive."
+          else
+            git config user.name "e-agencia-bot"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Contenido actualizado desde Drive"
+            git push
+          fi

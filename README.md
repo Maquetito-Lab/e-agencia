@@ -31,20 +31,31 @@ Si querés tocarlo a mano: los textos están en `index.html` entre etiquetas
 
 Abrí `index.html` con doble click. Las fuentes y las fotos de muestra necesitan internet.
 
-## Contenido de los servicios (prueba E)
+## Contenido desde Drive (prueba E)
 
-Las fotos y videos de cada servicio están en `assets/servicios/<servicio>/`, bajados de la
-carpeta de Drive "Agencia E - web" y achicados para web (imágenes ≤ 1400 px, videos 720p
-sin audio y de hasta 20 s). Para sumar uno: copiarlo ahí y agregar un `<figure>` en `pruebas/e.html`.
-Cada `<figure>` lleva dos clases que dicen cuánto ocupa en la grilla irregular (`c1 r7` = vertical chico,
-`c2 r14` = vertical grande, `c1 r5` = foto, `c2 r10` = foto grande, `c2 r6` = apaisada); el detalle está
-en el comentario de `.pres__grid` dentro del CSS. Tocando una foto o video se abre en grande.
+Las fotos y videos de cada servicio, y la foto de "Quiénes somos", salen de la carpeta de Drive
+**"Agencia E - web"**, una subcarpeta por servicio. Para cambiar el contenido de la web **solo hay que
+subir o borrar archivos en Drive**: todos los días a las 6:00 un robot (GitHub Actions,
+`.github/workflows/sync-drive.yml`) baja lo nuevo, lo achica (fotos de hasta 1400 px, videos 720p sin audio
+y de hasta 20 s), actualiza `assets/servicios/` y Vercel publica solo. Para no esperar: en GitHub, pestaña
+**Actions > Sincronizar contenido desde Drive > Run workflow**.
+
+- Cada servicio muestra hasta 12 piezas, las más nuevas primero.
+- Para elegir el orden, poné un número y un guion al principio del nombre en Drive: `01-lanzamiento.mov`, `02-foto.jpg`.
+- La grilla se arma sola según el formato de cada pieza (vertical, foto, apaisada) y cambia en cada servicio.
+- Los PDF y otros archivos que no son fotos ni videos se ignoran.
+- Los textos de cada servicio siguen en `pruebas/e.html`.
+
+Para correrlo a mano desde una copia local de las carpetas: `python tools/sync_servicios.py --local CARPETA`.
+
+**Configuración (una sola vez):** el robot necesita una cuenta de servicio de Google con acceso de lectura a
+la carpeta, y su clave JSON cargada en GitHub como secreto `GDRIVE_SA_KEY`
+(Settings > Secrets and variables > Actions).
 
 ## Pendientes
 
-- [ ] Foto del equipo en "Quiénes somos" (hoy hay una foto de muestra marcada con `PLACEHOLDER` en `pruebas/e.html`)
 - [ ] Link real de LinkedIn en `pruebas/e.html` (Instagram y TikTok ya están)
-- [ ] Fotos de merchandising (no había en Drive; quedan fotos de muestra marcadas con `PLACEHOLDER`)
+- [ ] Cuenta de servicio de Google y secreto `GDRIVE_SA_KEY` para que la sincronización con Drive corra sola
 - [ ] Fotos reales en `index.html` (hoy hay fotos de muestra de Unsplash marcadas con `PLACEHOLDER`)
 - [ ] Links reales de Instagram, WhatsApp y correo (buscá `href="#"` en `index.html`)
 - [ ] Dominio propio en Vercel

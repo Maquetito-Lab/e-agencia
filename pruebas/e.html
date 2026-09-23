@@ -109,19 +109,15 @@
   .pres__t { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 48px; align-items: start; margin-bottom: clamp(28px, 4vw, 48px); }
   .pres__t h3 { font-size: clamp(2.6rem, 7vw, 7rem); font-weight: 800; line-height: .9; letter-spacing: -.05em; color: var(--rojo-logo); }
   .pres__t p { font-size: clamp(1rem, 1.3vw, 1.15rem); max-width: 48ch; color: var(--topo); padding-top: .3em; }
-  /* Grilla irregular: 4 columnas (5 con --5), y cada figura dice cuánto ocupa con dos clases:
-       c1 / c2 / c4 = columnas de ancho · r4 … r14 = alto en "unidades" (una columna mide 4 unidades de ancho).
-       Así: c1 r7 ≈ vertical 9:16 · c1 r5 ≈ foto 4:5 · c1 r4 = cuadrado · c2 r10 ≈ 4:5 grande · c2 r14 ≈ 9:16 grande · c2 r6 ≈ 4:3 apaisado.
-       Combinando tamaños distintos en cada servicio, la grilla cambia de un servicio a otro. */
+  /* Grilla irregular: la arma el JS (función mosaico) a partir de servicios.json. 4 columnas (5 si casi todo son videos verticales),
+     filas de 1/4 de columna; cada pieza ocupa según su formato y algunas van al doble para que la grilla varíe en cada servicio. */
   .pres__grid { --gap: clamp(8px, 1.2vw, 16px); display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: calc((100cqw - 3 * var(--gap)) / 16); grid-auto-flow: dense; gap: var(--gap); }
   .pres__grid--5 { grid-template-columns: repeat(5, 1fr); grid-auto-rows: calc((100cqw - 4 * var(--gap)) / 20); }
-  .pres__grid figure { position: relative; overflow: hidden; border-radius: 6px; background: #eadfcf; cursor: pointer; grid-row: span 5; }
+  .pres__grid figure { position: relative; overflow: hidden; border-radius: 6px; background: #eadfcf; cursor: pointer; }
   .pres__grid figure::after { content: ""; position: absolute; inset: 0; background: rgb(255 255 255 / 0); transition: background .3s; }
   .pres__grid figure:hover::after { background: rgb(255 255 255 / .12); }
   .pres__grid img, .pres__grid video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .pres__grid .arriba img, .pres__grid .arriba video { object-position: top; }
-  .pres__grid .c2 { grid-column: span 2; } .pres__grid .c4 { grid-column: 1 / -1; }
-  .pres__grid .r4 { grid-row: span 4; } .pres__grid .r5 { grid-row: span 5; } .pres__grid .r6 { grid-row: span 6; } .pres__grid .r7 { grid-row: span 7; } .pres__grid .r8 { grid-row: span 8; } .pres__grid .r9 { grid-row: span 9; } .pres__grid .r10 { grid-row: span 10; } .pres__grid .r12 { grid-row: span 12; } .pres__grid .r14 { grid-row: span 14; }
   @supports not (width: 1cqw) { .pres__grid, .pres__grid--5 { grid-auto-rows: 4.5vw; } }
   .pres__nav { display: flex; justify-content: space-between; gap: 12px; padding: clamp(12px, 2vw, 24px) var(--g) clamp(40px, 6vw, 80px); }
   .pres__nav button { display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; padding: 0; border: 1.5px solid var(--topo); border-radius: 50%; background: transparent; color: var(--topo); transition: background .3s, color .3s; }
@@ -227,51 +223,38 @@
 </section>
 
 <!-- ===== IDEAS: la bajada de la marca, centrada, con trabajos pasando abajo =====
-     Las tarjetas del carrusel salen de assets/servicios/ (fotos y videos). Para cambiar una, cambiá el src. -->
+     Las tarjetas del carrusel se arman solas con contenido de todos los servicios (assets/servicios/servicios.json). -->
 <section class="ideas" id="ideas">
   <h1 class="esc">Ideas con <b>dirección.</b><br>Marcas con <em>identidad.</em></h1>
   <p class="ideas__p wds"><b>Pensamos. Creamos. Hacemos.</b> Desarrollamos ideas y estrategias de comunicación de manera integral, acompañando cada proyecto desde el concepto hasta hacerlo realidad.</p>
   <a class="btn btn--solid rv" href="https://wa.me/5491151254075" target="_blank" rel="noopener" data-cur="link">Elevemos tu marca</a>
-  <div class="carr" aria-hidden="true"><div class="carr__stage">
-    <figure class="card"><img src="../assets/servicios/fotografia/gpt-2.jpg" alt="" loading="lazy"></figure>
-    <figure class="card"><video src="../assets/servicios/contenido/unboxing.mp4" poster="../assets/servicios/contenido/unboxing.jpg" muted loop playsinline preload="none"></video></figure>
-    <figure class="card"><img src="../assets/servicios/community/img-4817.jpg" alt="" loading="lazy"></figure>
-    <figure class="card"><img src="../assets/servicios/fotografia/dsc07842.jpg" alt="" loading="lazy"></figure>
-    <figure class="card"><img src="../assets/servicios/branding/cabra-01.jpg" alt="" loading="lazy" style="object-position: top"></figure>
-    <figure class="card"><video src="../assets/servicios/ugc/tezza-9126.mp4" poster="../assets/servicios/ugc/tezza-9126.jpg" muted loop playsinline preload="none"></video></figure>
-    <figure class="card"><img src="../assets/servicios/ia/gpt-3.jpg" alt="" loading="lazy"></figure>
-    <figure class="card"><img src="../assets/servicios/fotografia/tezza-vintage.jpg" alt="" loading="lazy"></figure>
-    <figure class="card"><img src="../assets/servicios/community/img-4818.jpg" alt="" loading="lazy"></figure>
-    <figure class="card"><video src="../assets/servicios/eventos/recap-evento-2.mp4" poster="../assets/servicios/eventos/recap-evento-2.jpg" muted loop playsinline preload="none"></video></figure>
-    <figure class="card"><img src="../assets/servicios/fotografia/gpt-1.jpg" alt="" loading="lazy"></figure>
-    <figure class="card"><img src="../assets/servicios/ia/cuadro1.jpg" alt="" loading="lazy"></figure>
-  </div></div>
+  <div class="carr" aria-hidden="true"><div class="carr__stage"></div></div>
 </section>
 
 <!-- ===== QUIÉNES SOMOS (manifiesto) ===== -->
 <section class="mani" id="quienes-somos">
   <span class="k">Quiénes somos</span>
-  <!-- PLACEHOLDER: foto del equipo (esta es de muestra, no es la de ustedes). Reemplazar el src por la foto real (por ej. ../assets/equipo.jpg). -->
-  <figure class="mani__ph rv"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80" alt="El equipo de e. agencia" loading="lazy"></figure>
+  <!-- La foto sale de la carpeta "quienes somos" de Drive (la primera; se elige en tools/sync_servicios.py, FIJAR). -->
+  <figure class="mani__ph rv"><img alt="El equipo de e. agencia" loading="lazy"></figure>
   <p id="manip">Somos un equipo creativo que combina distintas miradas, experiencias y disciplinas con una misma forma de entender la comunicación. Creemos en trabajar <i>cerca de cada marca,</i> entender su esencia y transformarla en un universo <i>único, coherente y con personalidad.</i> Combinamos creatividad y <i>pensamiento estratégico</i> para construir marcas que conectan con personas, se diferencian y generan valor en el tiempo.</p>
 </section>
 
 <!-- ===== SERVICIOS =====
      Cada tarjeta abre la presentación del servicio (más abajo, en <div class="pres">).
-     El data-pres tiene que coincidir con el id del <article>. Las miniaturas van en la tira (se repiten dos veces para el loop).
+     El data-pres tiene que coincidir con el id del <article>. Las miniaturas de la tira se arman solas desde servicios.json.
      --sp: velocidad de la tira. -->
 <section class="servicios" id="servicios">
   <h2 class="esc">Servicios.</h2>
   <ul class="scards">
-    <li><button class="scard" type="button" data-pres="p-contenido" data-cur="link" style="--sp:20s"><span class="scard__t">Creación de contenido</span><span class="scard__strip"><span class="scard__in"><img src="../assets/servicios/contenido/unboxing.jpg" alt=""><img src="../assets/servicios/contenido/video-1.jpg" alt=""><img src="../assets/servicios/contenido/nov-5.jpg" alt=""><img src="../assets/servicios/contenido/captions.jpg" alt=""><img src="../assets/servicios/contenido/unboxing.jpg" alt=""><img src="../assets/servicios/contenido/video-1.jpg" alt=""><img src="../assets/servicios/contenido/nov-5.jpg" alt=""><img src="../assets/servicios/contenido/captions.jpg" alt=""></span></span></button></li>
-    <li><button class="scard" type="button" data-pres="p-fotografia" data-cur="link" style="--sp:26s"><span class="scard__t">Fotografía</span><span class="scard__strip"><span class="scard__in"><img src="../assets/servicios/fotografia/gpt-2.jpg" alt=""><img src="../assets/servicios/fotografia/dsc07842.jpg" alt=""><img src="../assets/servicios/fotografia/tezza-vintage.jpg" alt=""><img src="../assets/servicios/fotografia/gpt-1.jpg" alt=""><img src="../assets/servicios/fotografia/gpt-2.jpg" alt=""><img src="../assets/servicios/fotografia/dsc07842.jpg" alt=""><img src="../assets/servicios/fotografia/tezza-vintage.jpg" alt=""><img src="../assets/servicios/fotografia/gpt-1.jpg" alt=""></span></span></button></li>
-    <li><button class="scard" type="button" data-pres="p-branding" data-cur="link" style="--sp:30s"><span class="scard__t">Branding</span><span class="scard__strip"><span class="scard__in"><img src="../assets/servicios/branding/cabra-01.jpg" alt=""><img src="../assets/servicios/branding/pricobowls.jpg" alt=""><img src="../assets/servicios/branding/presentacion-logo.jpg" alt=""><img src="../assets/servicios/branding/video-1.jpg" alt=""><img src="../assets/servicios/branding/cabra-01.jpg" alt=""><img src="../assets/servicios/branding/pricobowls.jpg" alt=""><img src="../assets/servicios/branding/presentacion-logo.jpg" alt=""><img src="../assets/servicios/branding/video-1.jpg" alt=""></span></span></button></li>
-    <li><button class="scard" type="button" data-pres="p-ugc" data-cur="link" style="--sp:18s"><span class="scard__t">UGC</span><span class="scard__strip"><span class="scard__in"><img src="../assets/servicios/ugc/tezza-9126.jpg" alt=""><img src="../assets/servicios/ugc/video-3.jpg" alt=""><img src="../assets/servicios/ugc/video-5.jpg" alt=""><img src="../assets/servicios/ugc/video-copy.jpg" alt=""><img src="../assets/servicios/ugc/tezza-9126.jpg" alt=""><img src="../assets/servicios/ugc/video-3.jpg" alt=""><img src="../assets/servicios/ugc/video-5.jpg" alt=""><img src="../assets/servicios/ugc/video-copy.jpg" alt=""></span></span></button></li>
-    <li><button class="scard" type="button" data-pres="p-community" data-cur="link" style="--sp:24s"><span class="scard__t">Community management</span><span class="scard__strip"><span class="scard__in"><img src="../assets/servicios/community/img-4817.jpg" alt=""><img src="../assets/servicios/community/mba-despues.jpg" alt=""><img src="../assets/servicios/community/img-4818.jpg" alt=""><img src="../assets/servicios/community/img-4819.jpg" alt=""><img src="../assets/servicios/community/img-4817.jpg" alt=""><img src="../assets/servicios/community/mba-despues.jpg" alt=""><img src="../assets/servicios/community/img-4818.jpg" alt=""><img src="../assets/servicios/community/img-4819.jpg" alt=""></span></span></button></li>
-    <li><button class="scard" type="button" data-pres="p-produccion" data-cur="link" style="--sp:28s"><span class="scard__t">Dirección creativa &amp; producción</span><span class="scard__strip"><span class="scard__in"><img src="../assets/servicios/produccion/wa-1.jpg" alt=""><img src="../assets/servicios/produccion/wa-3.jpg" alt=""><img src="../assets/servicios/produccion/wa-2.jpg" alt=""><img src="../assets/servicios/produccion/wa-4.jpg" alt=""><img src="../assets/servicios/produccion/wa-1.jpg" alt=""><img src="../assets/servicios/produccion/wa-3.jpg" alt=""><img src="../assets/servicios/produccion/wa-2.jpg" alt=""><img src="../assets/servicios/produccion/wa-4.jpg" alt=""></span></span></button></li>
-    <li><button class="scard" type="button" data-pres="p-eventos" data-cur="link" style="--sp:16s"><span class="scard__t">Cobertura de eventos</span><span class="scard__strip"><span class="scard__in"><img src="../assets/servicios/eventos/recap-evento-2.jpg" alt=""><img src="../assets/servicios/eventos/backstage-1.jpg" alt=""><img src="../assets/servicios/eventos/recap-evento-2.jpg" alt=""><img src="../assets/servicios/eventos/backstage-1.jpg" alt=""></span></span></button></li>
-    <li><button class="scard" type="button" data-pres="p-ia" data-cur="link" style="--sp:25s"><span class="scard__t">Contenido con IA</span><span class="scard__strip"><span class="scard__in"><img src="../assets/servicios/ia/gpt-1.jpg" alt=""><img src="../assets/servicios/ia/gpt-3.jpg" alt=""><img src="../assets/servicios/ia/cuadro1.jpg" alt=""><img src="../assets/servicios/ia/wa-1.jpg" alt=""><img src="../assets/servicios/ia/gpt-1.jpg" alt=""><img src="../assets/servicios/ia/gpt-3.jpg" alt=""><img src="../assets/servicios/ia/cuadro1.jpg" alt=""><img src="../assets/servicios/ia/wa-1.jpg" alt=""></span></span></button></li>
-    <li><button class="scard" type="button" data-pres="p-merch" data-cur="link" style="--sp:22s"><span class="scard__t">Merchandising</span><span class="scard__strip"><span class="scard__in"><!-- PLACEHOLDER: sin fotos de merch todavía --><img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=300&q=70" alt=""><img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=300&q=70" alt=""><img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=300&q=70" alt=""><img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=300&q=70" alt=""><img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=300&q=70" alt=""><img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=300&q=70" alt=""></span></span></button></li>
+    <li><button class="scard" type="button" data-pres="p-contenido" data-cur="link" style="--sp:20s"><span class="scard__t">Creación de contenido</span><span class="scard__strip"><span class="scard__in" data-srv="contenido"></span></span></button></li>
+    <li><button class="scard" type="button" data-pres="p-fotografia" data-cur="link" style="--sp:26s"><span class="scard__t">Fotografía</span><span class="scard__strip"><span class="scard__in" data-srv="fotografia"></span></span></button></li>
+    <li><button class="scard" type="button" data-pres="p-branding" data-cur="link" style="--sp:30s"><span class="scard__t">Branding</span><span class="scard__strip"><span class="scard__in" data-srv="branding"></span></span></button></li>
+    <li><button class="scard" type="button" data-pres="p-ugc" data-cur="link" style="--sp:18s"><span class="scard__t">UGC</span><span class="scard__strip"><span class="scard__in" data-srv="ugc"></span></span></button></li>
+    <li><button class="scard" type="button" data-pres="p-community" data-cur="link" style="--sp:24s"><span class="scard__t">Community management</span><span class="scard__strip"><span class="scard__in" data-srv="community"></span></span></button></li>
+    <li><button class="scard" type="button" data-pres="p-produccion" data-cur="link" style="--sp:28s"><span class="scard__t">Dirección creativa &amp; producción</span><span class="scard__strip"><span class="scard__in" data-srv="produccion"></span></span></button></li>
+    <li><button class="scard" type="button" data-pres="p-eventos" data-cur="link" style="--sp:16s"><span class="scard__t">Cobertura de eventos</span><span class="scard__strip"><span class="scard__in" data-srv="eventos"></span></span></button></li>
+    <li><button class="scard" type="button" data-pres="p-ia" data-cur="link" style="--sp:25s"><span class="scard__t">Contenido con IA</span><span class="scard__strip"><span class="scard__in" data-srv="ia"></span></span></button></li>
+    <li><button class="scard" type="button" data-pres="p-merch" data-cur="link" style="--sp:22s"><span class="scard__t">Merchandising</span><span class="scard__strip"><span class="scard__in" data-srv="merch"></span></span></button></li>
   </ul>
 </section>
 
@@ -299,115 +282,58 @@
 </main>
 
 <!-- ===== PRESENTACIONES DE SERVICIOS (se abren desde las tarjetas de Servicios) =====
-     Las fotos y videos están en assets/servicios/<servicio>/ (vienen de la carpeta de Drive "Agencia E - web").
-     Para agregar uno: copiar el archivo a esa carpeta y sumar un <figure> igual a los de al lado.
-     Cada <figure> lleva su tamaño en la grilla (ver el comentario de .pres__grid en el CSS): c1 r7 = vertical chico,
-     c2 r14 = vertical grande, c1 r5 = foto, c2 r10 = foto grande, c2 r6 = apaisada… "arriba" ancla la imagen por su borde superior.
-     Tocando una foto o video se abre en grande. -->
+     Las fotos y videos NO se cargan acá: salen de la carpeta de Drive "Agencia E - web" (una subcarpeta por servicio).
+     Un robot (GitHub Actions, .github/workflows/sync-drive.yml) corre todos los días, baja lo nuevo, lo achica y escribe
+     assets/servicios/servicios.json. La página lee ese archivo y arma sola cada grilla: el tamaño de cada pieza sale de su
+     formato (vertical, foto, apaisada…) y algunas van en grande para que la grilla sea irregular y distinta en cada servicio.
+     Acá solo se editan los títulos y los textos. Tocando una foto o video se abre en grande. -->
 <div class="pres" role="dialog" aria-modal="true" aria-label="Servicio">
   <div class="pres__panel">
   <div class="pres__bar"><button class="pres__back" type="button" data-cur="link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Servicios</button></div>
 
   <article class="pres__item" id="p-contenido" hidden>
     <div class="pres__t"><h3>Creación de contenido</h3><p>Desarrollamos piezas a partir de una estrategia, una dirección creativa y una identidad sólida. Pensamos cada contenido desde su concepto y objetivo, cuidando que lo visual y lo comunicacional respondan a un mismo universo de marca, adaptándose a los distintos formatos y canales manteniendo la coherencia.</p></div>
-    <div class="pres__grid pres__grid--5">
-      <figure class="c2 r14"><video src="../assets/servicios/contenido/unboxing.mp4" poster="../assets/servicios/contenido/unboxing.jpg" muted loop playsinline preload="none"></video></figure>
-      <figure class="c1 r7"><video src="../assets/servicios/contenido/video-1.mp4" poster="../assets/servicios/contenido/video-1.jpg" muted loop playsinline preload="none"></video></figure>
-      <figure class="c1 r7"><video src="../assets/servicios/contenido/nov-5.mp4" poster="../assets/servicios/contenido/nov-5.jpg" muted loop playsinline preload="none"></video></figure>
-      <figure class="c1 r7"><video src="../assets/servicios/contenido/captions.mp4" poster="../assets/servicios/contenido/captions.jpg" muted loop playsinline preload="none"></video></figure>
-      <figure class="c1 r7"><video src="../assets/servicios/contenido/video-copy.mp4" poster="../assets/servicios/contenido/video-copy.jpg" muted loop playsinline preload="none"></video></figure>
-      <figure class="c1 r7"><video src="../assets/servicios/contenido/video-2.mp4" poster="../assets/servicios/contenido/video-2.jpg" muted loop playsinline preload="none"></video></figure>
-      <figure class="c1 r7"><video src="../assets/servicios/contenido/video-4.mp4" poster="../assets/servicios/contenido/video-4.jpg" muted loop playsinline preload="none"></video></figure>
-    </div>
+    <div class="pres__grid" data-srv="contenido"></div>
   </article>
 
   <article class="pres__item" id="p-fotografia" hidden>
     <div class="pres__t"><h3>Fotografía</h3><p>Diseñamos producciones fotográficas definiendo concepto, estética, composición, iluminación y puesta en escena según las necesidades de cada proyecto u ocasión. Trabajamos fotografía de producto, gastronomía, lifestyle, campañas, ecommerce y contenido digital.</p></div>
-    <div class="pres__grid">
-      <figure class="c2 r10"><img src="../assets/servicios/fotografia/dsc07842.jpg" alt="" loading="lazy"></figure>
-      <figure class="c1 r5"><img src="../assets/servicios/fotografia/gpt-3.jpg" alt="" loading="lazy"></figure>
-      <figure class="c1 r5"><img src="../assets/servicios/fotografia/gpt-4.jpg" alt="" loading="lazy"></figure>
-      <figure class="c2 r5"><img src="../assets/servicios/fotografia/gpt-2.jpg" alt="" loading="lazy"></figure>
-      <figure class="c2 r12"><img src="../assets/servicios/fotografia/tezza-vintage.jpg" alt="" loading="lazy"></figure>
-      <figure class="c2 r12"><img src="../assets/servicios/fotografia/gpt-1.jpg" alt="" loading="lazy"></figure>
-    </div>
+    <div class="pres__grid" data-srv="fotografia"></div>
   </article>
 
   <article class="pres__item" id="p-branding" hidden>
     <div class="pres__t"><h3>Branding</h3><p>Construimos sistemas de identidad capaces de darle criterio, consistencia y reconocimiento a las marcas. Desde el concepto y posicionamiento hasta el lenguaje visual. Desarrollamos los recursos necesarios para que pueda adaptarlos a todos los puntos de contacto.</p></div>
-    <div class="pres__grid">
-      <figure class="c1 r14 arriba"><img src="../assets/servicios/branding/presentacion-logo.jpg" alt="Stampit" loading="lazy"></figure>
-      <figure class="c1 r7"><video src="../assets/servicios/branding/video-1.mp4" poster="../assets/servicios/branding/video-1.jpg" muted loop playsinline preload="none"></video></figure>
-      <figure class="c1 r9 arriba"><img src="../assets/servicios/branding/cabra-01.jpg" alt="Cabra Café" loading="lazy"></figure>
-      <figure class="c1 r10 arriba"><img src="../assets/servicios/branding/pricobowls.jpg" alt="Prico Bowls" loading="lazy"></figure>
-    </div>
+    <div class="pres__grid" data-srv="branding"></div>
   </article>
 
   <article class="pres__item" id="p-ugc" hidden>
     <div class="pres__t"><h3>UGC</h3><p>Seleccionamos y gestionamos creadores afines a cada marca, desde el research y propuesta de perfiles hasta la coordinación, seguimiento y entrega del contenido. Desarrollamos briefs y lineamientos para lograr piezas naturales, relevantes y alineadas con la identidad de marca y los códigos de cada plataforma.</p></div>
-    <div class="pres__grid">
-      <figure class="c1 r7"><video src="../assets/servicios/ugc/video-3.mp4" poster="../assets/servicios/ugc/video-3.jpg" muted loop playsinline preload="none"></video></figure>
-      <figure class="c2 r14"><video src="../assets/servicios/ugc/tezza-9126.mp4" poster="../assets/servicios/ugc/tezza-9126.jpg" muted loop playsinline preload="none"></video></figure>
-      <figure class="c1 r7"><video src="../assets/servicios/ugc/video-5.mp4" poster="../assets/servicios/ugc/video-5.jpg" muted loop playsinline preload="none"></video></figure>
-      <figure class="c1 r7"><video src="../assets/servicios/ugc/video-copy.mp4" poster="../assets/servicios/ugc/video-copy.jpg" muted loop playsinline preload="none"></video></figure>
-      <figure class="c1 r7"><video src="../assets/servicios/ugc/video-4e85.mp4" poster="../assets/servicios/ugc/video-4e85.jpg" muted loop playsinline preload="none"></video></figure>
-    </div>
+    <div class="pres__grid" data-srv="ugc"></div>
   </article>
 
   <article class="pres__item" id="p-community" hidden>
     <div class="pres__t"><h3>Community Management</h3><p>Planificamos y gestionamos la comunicación diaria de las marcas en redes sociales. Definimos pilares de comunicación, calendarios editoriales, formatos, frecuencia y tono, articulando contenido y gestión de comunidad para sostener una presencia digital consistente.</p></div>
-    <div class="pres__grid">
-      <figure class="c1 r7 arriba"><img src="../assets/servicios/community/mba-antes.jpg" alt="Antes" loading="lazy"></figure>
-      <figure class="c1 r7 arriba"><img src="../assets/servicios/community/mba-despues.jpg" alt="Después" loading="lazy"></figure>
-      <figure class="c2 r14 arriba"><img src="../assets/servicios/community/img-4817.jpg" alt="Prico Bowls" loading="lazy"></figure>
-      <figure class="c1 r7 arriba"><img src="../assets/servicios/community/img-4818.jpg" alt="Ortuzar" loading="lazy"></figure>
-      <figure class="c1 r7 arriba"><img src="../assets/servicios/community/img-4819.jpg" alt="Flash Box" loading="lazy"></figure>
-    </div>
+    <div class="pres__grid" data-srv="community"></div>
   </article>
 
   <article class="pres__item" id="p-produccion" hidden>
     <div class="pres__t"><h3>Dirección creativa &amp; producción</h3><p>Desarrollamos el concepto y la dirección visual de cada proyecto y coordinamos su ejecución de principio a fin. Definimos narrativa, estética y lineamientos creativos, y gestionamos la preproducción, equipos, recursos y realización de shootings, campañas, eventos y experiencias.</p></div>
-    <div class="pres__grid">
-      <figure class="c2 r14"><img src="../assets/servicios/produccion/wa-4.jpg" alt="" loading="lazy"></figure>
-      <figure class="c1 r7"><img src="../assets/servicios/produccion/wa-1.jpg" alt="" loading="lazy"></figure>
-      <figure class="c1 r7"><img src="../assets/servicios/produccion/wa-3.jpg" alt="" loading="lazy"></figure>
-      <figure class="c2 r7"><img src="../assets/servicios/produccion/wa-2.jpg" alt="" loading="lazy"></figure>
-    </div>
+    <div class="pres__grid" data-srv="produccion"></div>
   </article>
 
   <article class="pres__item" id="p-eventos" hidden>
     <div class="pres__t"><h3>Cobertura de eventos</h3><p>Registramos cada evento con una mirada visual y narrativa alineada a la marca. Producimos contenido fotográfico y audiovisual en tiempo real, definiendo previamente los momentos clave, formatos y necesidades de comunicación. Generamos material que documente la experiencia y, al mismo tiempo, funcione estratégicamente como contenido para la marca y sus diferentes canales.</p></div>
-    <div class="pres__grid">
-      <figure class="c2 r14"><video src="../assets/servicios/eventos/recap-evento-2.mp4" poster="../assets/servicios/eventos/recap-evento-2.jpg" muted loop playsinline preload="none"></video></figure>
-      <figure class="c2 r14"><video src="../assets/servicios/eventos/backstage-1.mp4" poster="../assets/servicios/eventos/backstage-1.jpg" muted loop playsinline preload="none"></video></figure>
-    </div>
+    <div class="pres__grid" data-srv="eventos"></div>
   </article>
 
   <article class="pres__item" id="p-ia" hidden>
     <div class="pres__t"><h3>Contenido con IA</h3><p>Exploramos nuevas posibilidades visuales a través de la inteligencia artificial aplicada a la producción de contenido. Conceptualizamos, generamos y refinamos piezas bajo una dirección creativa definida, cuidando que la tecnología esté siempre al servicio de la idea y de la identidad de marca.</p></div>
-    <div class="pres__grid">
-      <figure class="c2 r10"><img src="../assets/servicios/ia/gpt-3.jpg" alt="" loading="lazy"></figure>
-      <figure class="c1 r5"><img src="../assets/servicios/ia/wa-1.jpg" alt="" loading="lazy"></figure>
-      <figure class="c1 r5"><img src="../assets/servicios/ia/wa-2.jpg" alt="" loading="lazy"></figure>
-      <figure class="c2 r5"><img src="../assets/servicios/ia/gpt-1.jpg" alt="" loading="lazy"></figure>
-      <figure class="c1 r7"><video src="../assets/servicios/ia/wa-video-1.mp4" poster="../assets/servicios/ia/wa-video-1.jpg" muted loop playsinline preload="none"></video></figure>
-      <figure class="c1 r7"><video src="../assets/servicios/ia/wa-video-2.mp4" poster="../assets/servicios/ia/wa-video-2.jpg" muted loop playsinline preload="none"></video></figure>
-      <figure class="c2 r7"><img src="../assets/servicios/ia/gpt-2.jpg" alt="" loading="lazy"></figure>
-      <figure class="c2 r6"><img src="../assets/servicios/ia/cuadro1.jpg" alt="" loading="lazy"></figure>
-      <figure class="c2 r6"><img src="../assets/servicios/ia/gemini.jpg" alt="" loading="lazy"></figure>
-    </div>
+    <div class="pres__grid" data-srv="ia"></div>
   </article>
 
   <article class="pres__item" id="p-merch" hidden>
     <div class="pres__t"><h3>Merchandising</h3><p>Diseñamos y desarrollamos piezas que trasladan el sistema visual de una marca al plano físico. Pensamos objetos, aplicaciones, materiales y terminaciones para que el merchandising funcione como una extensión de su identidad.</p></div>
-    <div class="pres__grid">
-      <!-- PLACEHOLDER: todavía no hay fotos de merchandising en la carpeta de Drive. Reemplazar por fotos reales. -->
-      <figure class="c2 r10"><img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy"></figure>
-      <figure class="c1 r5"><img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure class="c1 r5"><img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy"></figure>
-      <figure class="c2 r5"><img src="https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=1200&q=80" alt="" loading="lazy"></figure>
-      <figure class="c4 r6"><img src="https://images.unsplash.com/photo-1607083206968-13611e3d76db?auto=format&fit=crop&w=1800&q=80" alt="" loading="lazy"></figure>
-    </div>
+    <div class="pres__grid" data-srv="merch"></div>
   </article>
 
   <div class="pres__nav"><button class="pres__prev" type="button" aria-label="Servicio anterior" data-cur="link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button><button class="pres__next" type="button" aria-label="Servicio siguiente" data-cur="link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
@@ -424,10 +350,75 @@
 
 <script src="e-bg.js"></script>
 <script>
-(() => {
+(async () => {
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches, fine = matchMedia('(pointer: fine)').matches;
   const nav = $('.nav');
+
+  /* ---------- contenido desde Drive: assets/servicios/servicios.json (lo escribe tools/sync_servicios.py) ---------- */
+  const BASE = '../';
+  const M = await fetch(BASE + 'assets/servicios/servicios.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : null).catch(() => null);
+  const S = M?.servicios || {};
+  const media = (it, extra = '') => it.tipo === 'video'
+    ? `<video src="${BASE}${it.src}" poster="${BASE}${it.poster}" muted loop playsinline preload="none"${extra}></video>`
+    : `<img src="${BASE}${it.src}" alt="" loading="lazy"${extra}>`;
+  const hash = (t) => [...t].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
+  // tamaño en la grilla según el formato: c = columnas, r = alto en unidades (una columna = 4 unidades)
+  const tam = (ar) => ar < .4 ? ['c1', 'r14', 1] : ar < .5 ? ['c1', 'r8', 1] : ar < .62 ? ['c1', 'r7'] : ar < .9 ? ['c1', 'r5'] : ar < 1.15 ? ['c1', 'r4'] : ar < 1.6 ? ['c2', 'r6'] : ar < 2.2 ? ['c2', 'r5'] : ['c4', 'r6'];
+  const grande = { r7: 'r14', r5: 'r10', r4: 'r8', r8: 'r16' };
+  // Mosaico: cada pieza va a la columna más baja; si le queda un hueco arriba, se estira la pieza de arriba (se recorta un poco, nunca se deforma).
+  // Se prueban varias combinaciones de qué piezas van al doble de tamaño y se usa la que deja menos huecos.
+  const simular = (dims, C) => {
+    const alto = Array(C).fill(0), ult = Array(C).fill(null), P = dims.map(() => ({}));
+    const estirar = (col, hasta) => { const i = ult[col]; if (i === null || alto[col] >= hasta) return; const q = P[i];
+      if (!q.cols.every(k => ult[k] === i && alto[k] === alto[col]) || hasta - q.y > q.h0 * 1.6) return;
+      q.h = hasta - q.y; q.cols.forEach(k => alto[k] = hasta); };
+    dims.forEach(([c0, r], i) => {
+      const c = Math.min(C, c0); let s = 0, y = Infinity;
+      for (let j = 0; j + c <= C; j++) { const m = Math.max(...alto.slice(j, j + c)); if (m < y) { y = m; s = j; } }
+      const cols = [...Array(c)].map((_, k) => s + k); cols.forEach(k => estirar(k, y));
+      Object.assign(P[i], { y, h: r, h0: r, cols }); cols.forEach(k => { alto[k] = y + r; ult[k] = i; });
+    });
+    const fin = Math.max(...alto); for (let k = 0; k < C; k++) estirar(k, fin);
+    const usado = P.reduce((t, q) => t + q.h * q.cols.length, 0);
+    return { P, vacio: Math.max(...alto) * C - usado };
+  };
+  const mosaico = (g) => {
+    const C = getComputedStyle(g).gridTemplateColumns.split(' ').length, figs = [...g.children], n = figs.length, h = hash(g.dataset.srv);
+    const base = figs.map(f => [+f.dataset.c, +f.dataset.r]), big = figs.map(f => f.dataset.g ? [2, +f.dataset.g] : null);
+    const eleg = big.map((b, i) => b ? i : -1).filter(i => i >= 0);
+    const cands = [[]]; if (n <= 2) cands.push(eleg);
+    for (const paso of [2, 3, 4, 5, 6]) for (let o = 0; o < paso; o++) { const set = eleg.filter((_, k) => k % paso === o); for (let k = 1; k <= set.length; k++) cands.push(set.slice(0, k)); }
+    let mejor = null;
+    cands.forEach((set, ci) => {
+      const dims = base.map((d, i) => set.includes(i) ? big[i] : d), r = simular(dims, C);
+      const pena = r.vacio * 10 + (set.length ? 0 : (eleg.length && n > 3 ? 40 : 0)) + ((ci + h) % 7); // sin ninguna grande queda muy parejo
+      if (!mejor || pena < mejor.pena) mejor = { pena, r };
+    });
+    mejor.r.P.forEach((q, i) => { figs[i].style.gridColumn = `${q.cols[0] + 1} / span ${q.cols.length}`; figs[i].style.gridRow = `${q.y + 1} / span ${q.h}`; });
+  };
+  $$('.pres__grid[data-srv]').forEach(g => {
+    const its = S[g.dataset.srv] || [];
+    const verticales = its.filter(it => it.tipo === 'video' && it.w / it.h < .62).length;
+    if (its.length >= 8 && verticales / its.length >= .75) g.classList.add('pres__grid--5');
+    g.innerHTML = its.map(it => {
+      const [c, r, arriba] = tam(it.w / it.h), gr = c === 'c1' && grande[r];
+      return `<figure data-c="${c.slice(1)}" data-r="${r.slice(1)}"${gr ? ` data-g="${gr.slice(1)}"` : ''}${arriba ? ' class="arriba"' : ''}>${media(it)}</figure>`;
+    }).join('');
+  });
+  const remosaico = () => $$('.pres__grid[data-srv]').forEach(g => { if (g.offsetParent) mosaico(g); });
+  matchMedia('(max-width: 900px)').addEventListener('change', remosaico);
+  $$('.scard__in[data-srv]').forEach(t => {
+    let its = (S[t.dataset.srv] || []).slice(0, 4); if (!its.length) return;
+    while (its.length < 4) its = its.concat(its); its = its.slice(0, 4);
+    t.innerHTML = its.concat(its).map(it => `<img src="${BASE}${it.poster || it.src}" alt="" loading="lazy">`).join('');
+  });
+  { // carrusel: de a una pieza por servicio, dando vueltas, hasta 12
+    const listas = ['fotografia', 'contenido', 'branding', 'ugc', 'ia', 'community', 'eventos', 'produccion', 'merch'].map(k => (S[k] || []).filter(it => it.w / it.h >= .5 || it.tipo === 'video'));
+    const out = []; for (let i = 0; out.length < 12 && i < 12; i++) for (const l of listas) if (l[i] && out.length < 12) out.push(l[i]);
+    $('.carr__stage').innerHTML = out.map(it => `<figure class="card">${media(it)}</figure>`).join('');
+  }
+  { const eq = (S.equipo || [])[0], ph = $('.mani__ph'); if (eq) ph.querySelector('img').src = BASE + eq.src; else ph.remove(); }
 
   /* ---------- cursor ---------- */
   const cur = $('.cur');
@@ -490,8 +481,8 @@
   addEventListener('scroll', maniScroll, { passive: true }); addEventListener('resize', maniScroll); maniScroll();
 
   /* ---------- carrusel 3D de trabajos: pasa constantemente, las tarjetas giran según dónde están ---------- */
-  {
-    const carr = $('.carr'), cards = $$('.card', carr); let vis = false, raf = null, t0 = performance.now();
+  carrusel: {
+    const carr = $('.carr'), cards = $$('.card', carr); if (!cards.length) { carr.remove(); break carrusel; } let vis = false, raf = null, t0 = performance.now();
     const SPEED = reduced ? 0 : 42; // px por segundo
     // scroll lateral: arrastrando con el mouse/dedo o con la rueda en horizontal (trackpad). Suma un desplazamiento al paso automático.
     let extra = 0, vel = 0, dragging = false, lastX = 0, lastT = 0;
@@ -522,7 +513,7 @@
   let cur_i = -1, opener = null, soloT = null;
   const vio = new IntersectionObserver(es => es.forEach(e => { const v = e.target; if (e.isIntersecting) v.play().catch(() => {}); else v.pause(); }), { root: pres, threshold: .2 });
   $$('.pres video').forEach(v => vio.observe(v));
-  const show = (i) => { cur_i = (i + items.length) % items.length; items.forEach((it, j) => it.hidden = j !== cur_i); pres.scrollTop = 0; };
+  const show = (i) => { cur_i = (i + items.length) % items.length; items.forEach((it, j) => it.hidden = j !== cur_i); pres.scrollTop = 0; const g = $('.pres__grid', items[cur_i]); if (g) mosaico(g); };
   const open = (id, from) => { const i = items.findIndex(it => it.id === id); if (i < 0) return; opener = from; show(i); pres.classList.add('on'); document.body.classList.add('pres-on');
     clearTimeout(soloT); soloT = setTimeout(() => document.body.classList.add('pres-solo'), 820); setTimeout(() => $('.pres__back').focus(), 400); };
   const close = () => { clearTimeout(soloT); document.body.classList.remove('pres-solo'); pres.classList.remove('on'); document.body.classList.remove('pres-on'); $$('.pres video').forEach(v => v.pause()); opener?.focus(); };

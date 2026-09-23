@@ -1,0 +1,955 @@
+{
+ "generado": "2026-09-23T14:13:02+00:00",
+ "servicios": {
+  "branding": [
+   {
+    "tipo": "img",
+    "src": "assets/servicios/branding/presentacion-logo.jpg",
+    "w": 294,
+    "h": 1400
+   },
+   {
+    "tipo": "video",
+    "src": "assets/servicios/branding/copy-db26bc19-1408-4931-9f70-417fdbe7ffb.mp4",
+    "poster": "assets/servicios/branding/copy-db26bc19-1408-4931-9f70-417fdbe7ffb.jpg",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/branding/banner-hotsale2-vertical.jpg",
+    "w": 955,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/branding/landing-principal.jpg",
+    "w": 623,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/branding/back-in-stock-600-x-880-px.jpg",
+    "w": 600,
+    "h": 880
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/branding/sunglasses-1920x720.jpg",
+    "w": 1400,
+    "h": 525
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/branding/pricobowls.jpg",
+    "w": 541,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/branding/cabra-01.jpg",
+    "w": 620,
+    "h": 1400
+   }
+  ],
+  "community": [
+   {
+    "tipo": "img",
+    "src": "assets/servicios/community/img-5420.jpg",
+    "w": 682,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/community/img-5424.jpg",
+    "w": 687,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/community/img-5427.jpg",
+    "w": 680,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/community/img-5421.jpg",
+    "w": 689,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/community/img-5425.jpg",
+    "w": 689,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/community/img-5422.jpg",
+    "w": 679,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/community/img-5426.jpg",
+    "w": 683,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/community/img-5423.jpg",
+    "w": 683,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/community/mba-despues.jpg",
+    "w": 646,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/community/mba-antes.jpg",
+    "w": 646,
+    "h": 1400
+   }
+  ],
+  "contenido": [
+   {
+    "tipo": "video",
+    "src": "assets/servicios/contenido/copy-5962b46f-86c3-41d6-8160-6349712d8ca.mp4",
+    "poster": "assets/servicios/contenido/copy-5962b46f-86c3-41d6-8160-6349712d8ca.jpg",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "tipo": "video",
+    "src": "assets/servicios/contenido/1.mp4",
+    "poster": "assets/servicios/contenido/1.jpg",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "tipo": "video",
+    "src": "assets/servicios/contenido/captions-beb7b7.mp4",
+    "poster": "assets/servicios/contenido/captions-beb7b7.jpg",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "tipo": "video",
+    "src": "assets/servicios/contenido/f638b7e1-c44c-4d85-9594-651d43bf1aa8.mp4",
+    "poster": "assets/servicios/contenido/f638b7e1-c44c-4d85-9594-651d43bf1aa8.jpg",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "tipo": "video",
+    "src": "assets/servicios/contenido/elegitumodelo.mp4",
+    "poster": "assets/servicios/contenido/elegitumodelo.jpg",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "tipo": "video",
+    "src": "assets/servicios/contenido/borneo-nivela.mp4",
+    "poster": "assets/servicios/contenido/borneo-nivela.jpg",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "tipo": "video",
+    "src": "assets/servicios/contenido/5-1.mp4",
+    "poster": "assets/servicios/contenido/5-1.jpg",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "tipo": "video",
+    "src": "assets/servicios/contenido/5.mp4",
+    "poster": "assets/servicios/contenido/5.jpg",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "tipo": "video",
+    "src": "assets/servicios/contenido/video-cartel.mp4",
+    "poster": "assets/servicios/contenido/video-cartel.jpg",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "tipo": "video",
+    "src": "assets/servicios/contenido/4.mp4",
+    "poster": "assets/servicios/contenido/4.jpg",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "tipo": "video",
+    "src": "assets/servicios/contenido/captions-50159d.mp4",
+    "poster": "assets/servicios/contenido/captions-50159d.jpg",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "tipo": "video",
+    "src": "assets/servicios/contenido/2-2.mp4",
+    "poster": "assets/servicios/contenido/2-2.jpg",
+    "w": 720,
+    "h": 1280
+   }
+  ],
+  "equipo": [
+   {
+    "tipo": "img",
+    "src": "assets/servicios/equipo/316cc8d9-ec70-4c71-b2cb-0af473cda1a6.jpg",
+    "w": 788,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/equipo/96f787fa-5b7d-49c1-a157-c3135d9af0fe.jpg",
+    "w": 788,
+    "h": 1400
+   }
+  ],
+  "eventos": [
+   {
+    "tipo": "video",
+    "src": "assets/servicios/eventos/whatsapp-video-2026-09-21-at-23-26-59.mp4",
+    "poster": "assets/servicios/eventos/whatsapp-video-2026-09-21-at-23-26-59.jpg",
+    "w": 480,
+    "h": 848
+   },
+   {
+    "tipo": "video",
+    "src": "assets/servicios/eventos/whatsapp-video-2026-09-21-at-23-25-19.mp4",
+    "poster": "assets/servicios/eventos/whatsapp-video-2026-09-21-at-23-25-19.jpg",
+    "w": 480,
+    "h": 848
+   },
+   {
+    "tipo": "video",
+    "src": "assets/servicios/eventos/backstage-1.mp4",
+    "poster": "assets/servicios/eventos/backstage-1.jpg",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "tipo": "video",
+    "src": "assets/servicios/eventos/recap-evento-2.mp4",
+    "poster": "assets/servicios/eventos/recap-evento-2.jpg",
+    "w": 720,
+    "h": 1280
+   }
+  ],
+  "fotografia": [
+   {
+    "tipo": "img",
+    "src": "assets/servicios/fotografia/tezza-3692.jpg",
+    "w": 933,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/fotografia/tezza-9262.jpg",
+    "w": 1400,
+    "h": 933
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/fotografia/chatgpt-image-21-sept-2026-16-09-55.jpg",
+    "w": 933,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/fotografia/1-1.jpg",
+    "w": 933,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/fotografia/chatgpt-image-21-sept-2026-15-58-22.jpg",
+    "w": 1050,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/fotografia/chatgpt-image-21-sept-2026-15-57-07.jpg",
+    "w": 1050,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/fotografia/chatgpt-image-21-sept-2026-15-54-55.jpg",
+    "w": 1050,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/fotografia/chatgpt-image-21-sept-2026-15-51-41.jpg",
+    "w": 1141,
+    "h": 1379
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/fotografia/chatgpt-image-21-sept-2026-15-50-27.jpg",
+    "w": 933,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/fotografia/edited-in-tezza-with-vintage.jpg",
+    "w": 972,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/fotografia/dsc07842-2-1-1.jpg",
+    "w": 933,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/fotografia/chatgpt-image-15-sept-2026-16-02-46.jpg",
+    "w": 1400,
+    "h": 933
+   }
+  ],
+  "ia": [
+   {
+    "tipo": "img",
+    "src": "assets/servicios/ia/whatsapp-image-2026-07-17-at-15-17-23.jpg",
+    "w": 1050,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/ia/whatsapp-image-2026-07-17-at-15-17-24-2.jpg",
+    "w": 1050,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/ia/chatgpt-image-14-ago-2026-04-50-53-p-m.jpg",
+    "w": 1050,
+    "h": 1400
+   },
+   {
+    "tipo": "video",
+    "src": "assets/servicios/ia/whatsapp-video-2026-09-04-at-13-02-14.mp4",
+    "poster": "assets/servicios/ia/whatsapp-video-2026-09-04-at-13-02-14.jpg",
+    "w": 576,
+    "h": 1024
+   },
+   {
+    "tipo": "video",
+    "src": "assets/servicios/ia/whatsapp-video-2026-09-04-at-13-10-32.mp4",
+    "poster": "assets/servicios/ia/whatsapp-video-2026-09-04-at-13-10-32.jpg",
+    "w": 576,
+    "h": 1024
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/ia/chatgpt-image-14-ago-2026-04-44-39-p-m-1.jpg",
+    "w": 1400,
+    "h": 1120
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/ia/gemini-generated-image-fad65bfad65bfad6.jpg",
+    "w": 1361,
+    "h": 784
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/ia/chatgpt-image-14-ago-2026-04-24-23-p-m-1.jpg",
+    "w": 1400,
+    "h": 1120
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/ia/cuadro1.jpg",
+    "w": 1400,
+    "h": 1400
+   }
+  ],
+  "merch": [
+   {
+    "tipo": "img",
+    "src": "assets/servicios/merch/merch-stampit-02.jpg",
+    "w": 1051,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/merch/tote3.jpg",
+    "w": 933,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/merch/yip-stickers-06.jpg",
+    "w": 1023,
+    "h": 1228
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/merch/yip-stickers-07.jpg",
+    "w": 403,
+    "h": 399
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/merch/yip-stickers-08.jpg",
+    "w": 489,
+    "h": 452
+   }
+  ],
+  "produccion": [
+   {
+    "tipo": "img",
+    "src": "assets/servicios/produccion/whatsapp-image-2026-09-15-at-18-59-41-1.jpg",
+    "w": 819,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/produccion/whatsapp-image-2026-09-15-at-18-59-41.jpg",
+    "w": 821,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/produccion/whatsapp-image-2026-09-15-at-18-59-40-1.jpg",
+    "w": 819,
+    "h": 1400
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/produccion/whatsapp-image-2026-09-15-at-18-59-40.jpg",
+    "w": 1206,
+    "h": 1369
+   }
+  ],
+  "ugc": [
+   {
+    "tipo": "video",
+    "src": "assets/servicios/ugc/tezza-5791.mp4",
+    "poster": "assets/servicios/ugc/tezza-5791.jpg",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "tipo": "video",
+    "src": "assets/servicios/ugc/carritosuper.mp4",
+    "poster": "assets/servicios/ugc/carritosuper.jpg",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "tipo": "video",
+    "src": "assets/servicios/ugc/5.mp4",
+    "poster": "assets/servicios/ugc/5.jpg",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "tipo": "video",
+    "src": "assets/servicios/ugc/3-1.mp4",
+    "poster": "assets/servicios/ugc/3-1.jpg",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "tipo": "video",
+    "src": "assets/servicios/ugc/tezza-9126.mp4",
+    "poster": "assets/servicios/ugc/tezza-9126.jpg",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "tipo": "video",
+    "src": "assets/servicios/ugc/copy-f3bf1ad4-b7e9-44e1-9c69-cecf2f8d0e3.mp4",
+    "poster": "assets/servicios/ugc/copy-f3bf1ad4-b7e9-44e1-9c69-cecf2f8d0e3.jpg",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "tipo": "video",
+    "src": "assets/servicios/ugc/4e85faa17b454a99adbd10a0441292bc.mp4",
+    "poster": "assets/servicios/ugc/4e85faa17b454a99adbd10a0441292bc.jpg",
+    "w": 720,
+    "h": 1280
+   }
+  ]
+ },
+ "_cache": {
+  "3791790|img": {
+   "tipo": "img",
+   "src": "assets/servicios/branding/presentacion-logo.jpg",
+   "w": 294,
+   "h": 1400
+  },
+  "2531121|video": {
+   "tipo": "video",
+   "src": "assets/servicios/branding/copy-db26bc19-1408-4931-9f70-417fdbe7ffb.mp4",
+   "poster": "assets/servicios/branding/copy-db26bc19-1408-4931-9f70-417fdbe7ffb.jpg",
+   "w": 720,
+   "h": 1280
+  },
+  "1128472|img": {
+   "tipo": "img",
+   "src": "assets/servicios/branding/banner-hotsale2-vertical.jpg",
+   "w": 955,
+   "h": 1400
+  },
+  "6857497|img": {
+   "tipo": "img",
+   "src": "assets/servicios/branding/landing-principal.jpg",
+   "w": 623,
+   "h": 1400
+  },
+  "725700|img": {
+   "tipo": "img",
+   "src": "assets/servicios/branding/back-in-stock-600-x-880-px.jpg",
+   "w": 600,
+   "h": 880
+  },
+  "1533922|img": {
+   "tipo": "img",
+   "src": "assets/servicios/branding/sunglasses-1920x720.jpg",
+   "w": 1400,
+   "h": 525
+  },
+  "3452521|img": {
+   "tipo": "img",
+   "src": "assets/servicios/branding/pricobowls.jpg",
+   "w": 541,
+   "h": 1400
+  },
+  "6880071|img": {
+   "tipo": "img",
+   "src": "assets/servicios/branding/cabra-01.jpg",
+   "w": 620,
+   "h": 1400
+  },
+  "579169|img": {
+   "tipo": "img",
+   "src": "assets/servicios/community/img-5420.jpg",
+   "w": 682,
+   "h": 1400
+  },
+  "637758|img": {
+   "tipo": "img",
+   "src": "assets/servicios/community/img-5424.jpg",
+   "w": 687,
+   "h": 1400
+  },
+  "552609|img": {
+   "tipo": "img",
+   "src": "assets/servicios/community/img-5427.jpg",
+   "w": 680,
+   "h": 1400
+  },
+  "573373|img": {
+   "tipo": "img",
+   "src": "assets/servicios/community/img-5421.jpg",
+   "w": 689,
+   "h": 1400
+  },
+  "581741|img": {
+   "tipo": "img",
+   "src": "assets/servicios/community/img-5425.jpg",
+   "w": 689,
+   "h": 1400
+  },
+  "623262|img": {
+   "tipo": "img",
+   "src": "assets/servicios/community/img-5422.jpg",
+   "w": 679,
+   "h": 1400
+  },
+  "516002|img": {
+   "tipo": "img",
+   "src": "assets/servicios/community/img-5426.jpg",
+   "w": 683,
+   "h": 1400
+  },
+  "411314|img": {
+   "tipo": "img",
+   "src": "assets/servicios/community/img-5423.jpg",
+   "w": 683,
+   "h": 1400
+  },
+  "6927575|img": {
+   "tipo": "img",
+   "src": "assets/servicios/community/mba-despues.jpg",
+   "w": 646,
+   "h": 1400
+  },
+  "3706088|img": {
+   "tipo": "img",
+   "src": "assets/servicios/community/mba-antes.jpg",
+   "w": 646,
+   "h": 1400
+  },
+  "30301114|video": {
+   "tipo": "video",
+   "src": "assets/servicios/contenido/copy-5962b46f-86c3-41d6-8160-6349712d8ca.mp4",
+   "poster": "assets/servicios/contenido/copy-5962b46f-86c3-41d6-8160-6349712d8ca.jpg",
+   "w": 720,
+   "h": 1280
+  },
+  "2382543|video": {
+   "tipo": "video",
+   "src": "assets/servicios/contenido/1.mp4",
+   "poster": "assets/servicios/contenido/1.jpg",
+   "w": 720,
+   "h": 1280
+  },
+  "48945658|video": {
+   "tipo": "video",
+   "src": "assets/servicios/contenido/captions-beb7b7.mp4",
+   "poster": "assets/servicios/contenido/captions-beb7b7.jpg",
+   "w": 720,
+   "h": 1280
+  },
+  "7508439|video": {
+   "tipo": "video",
+   "src": "assets/servicios/contenido/f638b7e1-c44c-4d85-9594-651d43bf1aa8.mp4",
+   "poster": "assets/servicios/contenido/f638b7e1-c44c-4d85-9594-651d43bf1aa8.jpg",
+   "w": 720,
+   "h": 1280
+  },
+  "20174765|video": {
+   "tipo": "video",
+   "src": "assets/servicios/contenido/elegitumodelo.mp4",
+   "poster": "assets/servicios/contenido/elegitumodelo.jpg",
+   "w": 720,
+   "h": 1280
+  },
+  "12740002|video": {
+   "tipo": "video",
+   "src": "assets/servicios/contenido/borneo-nivela.mp4",
+   "poster": "assets/servicios/contenido/borneo-nivela.jpg",
+   "w": 720,
+   "h": 1280
+  },
+  "1813358|video": {
+   "tipo": "video",
+   "src": "assets/servicios/contenido/5-1.mp4",
+   "poster": "assets/servicios/contenido/5-1.jpg",
+   "w": 720,
+   "h": 1280
+  },
+  "6780303|video": {
+   "tipo": "video",
+   "src": "assets/servicios/contenido/5.mp4",
+   "poster": "assets/servicios/contenido/5.jpg",
+   "w": 720,
+   "h": 1280
+  },
+  "13859360|video": {
+   "tipo": "video",
+   "src": "assets/servicios/contenido/video-cartel.mp4",
+   "poster": "assets/servicios/contenido/video-cartel.jpg",
+   "w": 720,
+   "h": 1280
+  },
+  "10943011|video": {
+   "tipo": "video",
+   "src": "assets/servicios/contenido/4.mp4",
+   "poster": "assets/servicios/contenido/4.jpg",
+   "w": 720,
+   "h": 1280
+  },
+  "50219245|video": {
+   "tipo": "video",
+   "src": "assets/servicios/contenido/captions-50159d.mp4",
+   "poster": "assets/servicios/contenido/captions-50159d.jpg",
+   "w": 720,
+   "h": 1280
+  },
+  "1106572|video": {
+   "tipo": "video",
+   "src": "assets/servicios/contenido/2-2.mp4",
+   "poster": "assets/servicios/contenido/2-2.jpg",
+   "w": 720,
+   "h": 1280
+  },
+  "2733742|img": {
+   "tipo": "img",
+   "src": "assets/servicios/equipo/316cc8d9-ec70-4c71-b2cb-0af473cda1a6.jpg",
+   "w": 788,
+   "h": 1400
+  },
+  "254132|img": {
+   "tipo": "img",
+   "src": "assets/servicios/equipo/96f787fa-5b7d-49c1-a157-c3135d9af0fe.jpg",
+   "w": 788,
+   "h": 1400
+  },
+  "3140211|video": {
+   "tipo": "video",
+   "src": "assets/servicios/eventos/whatsapp-video-2026-09-21-at-23-26-59.mp4",
+   "poster": "assets/servicios/eventos/whatsapp-video-2026-09-21-at-23-26-59.jpg",
+   "w": 480,
+   "h": 848
+  },
+  "2283189|video": {
+   "tipo": "video",
+   "src": "assets/servicios/eventos/whatsapp-video-2026-09-21-at-23-25-19.mp4",
+   "poster": "assets/servicios/eventos/whatsapp-video-2026-09-21-at-23-25-19.jpg",
+   "w": 480,
+   "h": 848
+  },
+  "27041125|video": {
+   "tipo": "video",
+   "src": "assets/servicios/eventos/backstage-1.mp4",
+   "poster": "assets/servicios/eventos/backstage-1.jpg",
+   "w": 720,
+   "h": 1280
+  },
+  "16138862|video": {
+   "tipo": "video",
+   "src": "assets/servicios/eventos/recap-evento-2.mp4",
+   "poster": "assets/servicios/eventos/recap-evento-2.jpg",
+   "w": 720,
+   "h": 1280
+  },
+  "17321989|img": {
+   "tipo": "img",
+   "src": "assets/servicios/fotografia/tezza-3692.jpg",
+   "w": 933,
+   "h": 1400
+  },
+  "18878080|img": {
+   "tipo": "img",
+   "src": "assets/servicios/fotografia/tezza-9262.jpg",
+   "w": 1400,
+   "h": 933
+  },
+  "2423530|img": {
+   "tipo": "img",
+   "src": "assets/servicios/fotografia/chatgpt-image-21-sept-2026-16-09-55.jpg",
+   "w": 933,
+   "h": 1400
+  },
+  "5354557|img": {
+   "tipo": "img",
+   "src": "assets/servicios/fotografia/1-1.jpg",
+   "w": 933,
+   "h": 1400
+  },
+  "2029909|img": {
+   "tipo": "img",
+   "src": "assets/servicios/fotografia/chatgpt-image-21-sept-2026-15-58-22.jpg",
+   "w": 1050,
+   "h": 1400
+  },
+  "2608157|img": {
+   "tipo": "img",
+   "src": "assets/servicios/fotografia/chatgpt-image-21-sept-2026-15-57-07.jpg",
+   "w": 1050,
+   "h": 1400
+  },
+  "2110210|img": {
+   "tipo": "img",
+   "src": "assets/servicios/fotografia/chatgpt-image-21-sept-2026-15-54-55.jpg",
+   "w": 1050,
+   "h": 1400
+  },
+  "2057623|img": {
+   "tipo": "img",
+   "src": "assets/servicios/fotografia/chatgpt-image-21-sept-2026-15-51-41.jpg",
+   "w": 1141,
+   "h": 1379
+  },
+  "2417722|img": {
+   "tipo": "img",
+   "src": "assets/servicios/fotografia/chatgpt-image-21-sept-2026-15-50-27.jpg",
+   "w": 933,
+   "h": 1400
+  },
+  "3753693|img": {
+   "tipo": "img",
+   "src": "assets/servicios/fotografia/edited-in-tezza-with-vintage.jpg",
+   "w": 972,
+   "h": 1400
+  },
+  "18307064|img": {
+   "tipo": "img",
+   "src": "assets/servicios/fotografia/dsc07842-2-1-1.jpg",
+   "w": 933,
+   "h": 1400
+  },
+  "2136492|img": {
+   "tipo": "img",
+   "src": "assets/servicios/fotografia/chatgpt-image-15-sept-2026-16-02-46.jpg",
+   "w": 1400,
+   "h": 933
+  },
+  "177343|img": {
+   "tipo": "img",
+   "src": "assets/servicios/ia/whatsapp-image-2026-07-17-at-15-17-23.jpg",
+   "w": 1050,
+   "h": 1400
+  },
+  "253343|img": {
+   "tipo": "img",
+   "src": "assets/servicios/ia/whatsapp-image-2026-07-17-at-15-17-24-2.jpg",
+   "w": 1050,
+   "h": 1400
+  },
+  "1875090|img": {
+   "tipo": "img",
+   "src": "assets/servicios/ia/chatgpt-image-14-ago-2026-04-50-53-p-m.jpg",
+   "w": 1050,
+   "h": 1400
+  },
+  "2394343|video": {
+   "tipo": "video",
+   "src": "assets/servicios/ia/whatsapp-video-2026-09-04-at-13-02-14.mp4",
+   "poster": "assets/servicios/ia/whatsapp-video-2026-09-04-at-13-02-14.jpg",
+   "w": 576,
+   "h": 1024
+  },
+  "5808499|video": {
+   "tipo": "video",
+   "src": "assets/servicios/ia/whatsapp-video-2026-09-04-at-13-10-32.mp4",
+   "poster": "assets/servicios/ia/whatsapp-video-2026-09-04-at-13-10-32.jpg",
+   "w": 576,
+   "h": 1024
+  },
+  "2013549|img": {
+   "tipo": "img",
+   "src": "assets/servicios/ia/chatgpt-image-14-ago-2026-04-44-39-p-m-1.jpg",
+   "w": 1400,
+   "h": 1120
+  },
+  "572351|img": {
+   "tipo": "img",
+   "src": "assets/servicios/ia/gemini-generated-image-fad65bfad65bfad6.jpg",
+   "w": 1361,
+   "h": 784
+  },
+  "2009536|img": {
+   "tipo": "img",
+   "src": "assets/servicios/ia/chatgpt-image-14-ago-2026-04-24-23-p-m-1.jpg",
+   "w": 1400,
+   "h": 1120
+  },
+  "1953926|img": {
+   "tipo": "img",
+   "src": "assets/servicios/ia/cuadro1.jpg",
+   "w": 1400,
+   "h": 1400
+  },
+  "2601582|img": {
+   "tipo": "img",
+   "src": "assets/servicios/merch/merch-stampit-02.jpg",
+   "w": 1051,
+   "h": 1400
+  },
+  "802591|img": {
+   "tipo": "img",
+   "src": "assets/servicios/merch/tote3.jpg",
+   "w": 933,
+   "h": 1400
+  },
+  "118542|img": {
+   "tipo": "img",
+   "src": "assets/servicios/merch/yip-stickers-06.jpg",
+   "w": 1023,
+   "h": 1228
+  },
+  "19980|img": {
+   "tipo": "img",
+   "src": "assets/servicios/merch/yip-stickers-07.jpg",
+   "w": 403,
+   "h": 399
+  },
+  "22336|img": {
+   "tipo": "img",
+   "src": "assets/servicios/merch/yip-stickers-08.jpg",
+   "w": 489,
+   "h": 452
+  },
+  "202024|img": {
+   "tipo": "img",
+   "src": "assets/servicios/produccion/whatsapp-image-2026-09-15-at-18-59-41-1.jpg",
+   "w": 819,
+   "h": 1400
+  },
+  "218945|img": {
+   "tipo": "img",
+   "src": "assets/servicios/produccion/whatsapp-image-2026-09-15-at-18-59-41.jpg",
+   "w": 821,
+   "h": 1400
+  },
+  "131686|img": {
+   "tipo": "img",
+   "src": "assets/servicios/produccion/whatsapp-image-2026-09-15-at-18-59-40-1.jpg",
+   "w": 819,
+   "h": 1400
+  },
+  "171539|img": {
+   "tipo": "img",
+   "src": "assets/servicios/produccion/whatsapp-image-2026-09-15-at-18-59-40.jpg",
+   "w": 1206,
+   "h": 1369
+  },
+  "27011436|video": {
+   "tipo": "video",
+   "src": "assets/servicios/ugc/tezza-5791.mp4",
+   "poster": "assets/servicios/ugc/tezza-5791.jpg",
+   "w": 720,
+   "h": 1280
+  },
+  "28447412|video": {
+   "tipo": "video",
+   "src": "assets/servicios/ugc/carritosuper.mp4",
+   "poster": "assets/servicios/ugc/carritosuper.jpg",
+   "w": 720,
+   "h": 1280
+  },
+  "27837299|video": {
+   "tipo": "video",
+   "src": "assets/servicios/ugc/5.mp4",
+   "poster": "assets/servicios/ugc/5.jpg",
+   "w": 720,
+   "h": 1280
+  },
+  "11178416|video": {
+   "tipo": "video",
+   "src": "assets/servicios/ugc/3-1.mp4",
+   "poster": "assets/servicios/ugc/3-1.jpg",
+   "w": 720,
+   "h": 1280
+  },
+  "43397268|video": {
+   "tipo": "video",
+   "src": "assets/servicios/ugc/tezza-9126.mp4",
+   "poster": "assets/servicios/ugc/tezza-9126.jpg",
+   "w": 720,
+   "h": 1280
+  },
+  "38708205|video": {
+   "tipo": "video",
+   "src": "assets/servicios/ugc/copy-f3bf1ad4-b7e9-44e1-9c69-cecf2f8d0e3.mp4",
+   "poster": "assets/servicios/ugc/copy-f3bf1ad4-b7e9-44e1-9c69-cecf2f8d0e3.jpg",
+   "w": 720,
+   "h": 1280
+  },
+  "141867114|video": {
+   "tipo": "video",
+   "src": "assets/servicios/ugc/4e85faa17b454a99adbd10a0441292bc.mp4",
+   "poster": "assets/servicios/ugc/4e85faa17b454a99adbd10a0441292bc.jpg",
+   "w": 720,
+   "h": 1280
+  }
+ }
+}
