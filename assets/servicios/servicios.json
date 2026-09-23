@@ -1,5 +1,5 @@
 {
- "generado": "2026-09-23T14:13:02+00:00",
+ "generado": "2026-09-23T14:47:25+00:00",
  "servicios": {
   "branding": [
    {
@@ -100,18 +100,6 @@
     "src": "assets/servicios/community/img-5423.jpg",
     "w": 683,
     "h": 1400
-   },
-   {
-    "tipo": "img",
-    "src": "assets/servicios/community/mba-despues.jpg",
-    "w": 646,
-    "h": 1400
-   },
-   {
-    "tipo": "img",
-    "src": "assets/servicios/community/mba-antes.jpg",
-    "w": 646,
-    "h": 1400
    }
   ],
   "contenido": [
@@ -119,13 +107,6 @@
     "tipo": "video",
     "src": "assets/servicios/contenido/copy-5962b46f-86c3-41d6-8160-6349712d8ca.mp4",
     "poster": "assets/servicios/contenido/copy-5962b46f-86c3-41d6-8160-6349712d8ca.jpg",
-    "w": 720,
-    "h": 1280
-   },
-   {
-    "tipo": "video",
-    "src": "assets/servicios/contenido/1.mp4",
-    "poster": "assets/servicios/contenido/1.jpg",
     "w": 720,
     "h": 1280
    },
@@ -196,6 +177,13 @@
     "tipo": "video",
     "src": "assets/servicios/contenido/2-2.mp4",
     "poster": "assets/servicios/contenido/2-2.jpg",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "tipo": "video",
+    "src": "assets/servicios/contenido/unboxing.mp4",
+    "poster": "assets/servicios/contenido/unboxing.jpg",
     "w": 720,
     "h": 1280
    }
@@ -397,15 +385,15 @@
    },
    {
     "tipo": "img",
-    "src": "assets/servicios/merch/yip-stickers-07.jpg",
-    "w": 403,
-    "h": 399
-   },
-   {
-    "tipo": "img",
     "src": "assets/servicios/merch/yip-stickers-08.jpg",
     "w": 489,
     "h": 452
+   },
+   {
+    "tipo": "img",
+    "src": "assets/servicios/merch/yip-stickers-07.jpg",
+    "w": 403,
+    "h": 399
    }
   ],
   "produccion": [
@@ -584,29 +572,10 @@
    "w": 683,
    "h": 1400
   },
-  "6927575|img": {
-   "tipo": "img",
-   "src": "assets/servicios/community/mba-despues.jpg",
-   "w": 646,
-   "h": 1400
-  },
-  "3706088|img": {
-   "tipo": "img",
-   "src": "assets/servicios/community/mba-antes.jpg",
-   "w": 646,
-   "h": 1400
-  },
   "30301114|video": {
    "tipo": "video",
    "src": "assets/servicios/contenido/copy-5962b46f-86c3-41d6-8160-6349712d8ca.mp4",
    "poster": "assets/servicios/contenido/copy-5962b46f-86c3-41d6-8160-6349712d8ca.jpg",
-   "w": 720,
-   "h": 1280
-  },
-  "2382543|video": {
-   "tipo": "video",
-   "src": "assets/servicios/contenido/1.mp4",
-   "poster": "assets/servicios/contenido/1.jpg",
    "w": 720,
    "h": 1280
   },
@@ -677,6 +646,13 @@
    "tipo": "video",
    "src": "assets/servicios/contenido/2-2.mp4",
    "poster": "assets/servicios/contenido/2-2.jpg",
+   "w": 720,
+   "h": 1280
+  },
+  "24899348|video": {
+   "tipo": "video",
+   "src": "assets/servicios/contenido/unboxing.mp4",
+   "poster": "assets/servicios/contenido/unboxing.jpg",
    "w": 720,
    "h": 1280
   },
@@ -866,17 +842,17 @@
    "w": 1023,
    "h": 1228
   },
-  "19980|img": {
-   "tipo": "img",
-   "src": "assets/servicios/merch/yip-stickers-07.jpg",
-   "w": 403,
-   "h": 399
-  },
   "22336|img": {
    "tipo": "img",
    "src": "assets/servicios/merch/yip-stickers-08.jpg",
    "w": 489,
    "h": 452
+  },
+  "19980|img": {
+   "tipo": "img",
+   "src": "assets/servicios/merch/yip-stickers-07.jpg",
+   "w": 403,
+   "h": 399
   },
   "202024|img": {
    "tipo": "img",
