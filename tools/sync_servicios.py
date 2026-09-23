@@ -102,15 +102,28 @@ def fuente_drive():
         tok = None
         while True:
             r = api.files().list(q=f"'{pid}' in parents and trashed=false", pageSize=1000, pageToken=tok,
-                                 fields="nextPageToken, files(id,name,mimeType,size,modifiedTime)",
+                                 fields="nextPageToken, files(id,name,mimeType,size,modifiedTime,shortcutDetails)",
                                  supportsAllDrives=True, includeItemsFromAllDrives=True).execute()
             yield from r.get("files", [])
             tok = r.get("nextPageToken")
             if not tok: break
 
-    def recorrer(pid):
+    def resolver(f):  # los accesos directos apuntan a otra carpeta o archivo
+        if f["mimeType"] != "application/vnd.google-apps.shortcut": return f
+        sd = f.get("shortcutDetails", {})
+        try:
+            return api.files().get(fileId=sd["targetId"], fields="id,name,mimeType,size,modifiedTime", supportsAllDrives=True).execute()
+        except Exception as e:
+            print(f"  (no pude abrir el acceso directo {f['name']!r}: {e})"); return None
+
+    def recorrer(pid, vistas=None):
+        vistas = vistas if vistas is not None else set()
+        if pid in vistas: return
+        vistas.add(pid)
         for f in hijos(pid):
-            if f["mimeType"] == "application/vnd.google-apps.folder": yield from recorrer(f["id"])
+            f = resolver(f)
+            if not f: continue
+            if f["mimeType"] == "application/vnd.google-apps.folder": yield from recorrer(f["id"], vistas)
             elif not f["mimeType"].startswith("application/vnd.google-apps"): yield f
 
     def bajador(fid):
@@ -122,11 +135,13 @@ def fuente_drive():
         return bajar
 
     for sub in hijos(CARPETA_DRIVE):
+        sub = resolver(sub)
+        if not sub: continue
         if sub["mimeType"] != "application/vnd.google-apps.folder": continue
         srv = servicio_de(sub["name"])
         if not srv: print(f"  (salteo carpeta {sub['name']!r})"); continue
         for f in recorrer(sub["id"]):
-            yield srv, {"nombre": f["name"], "tam": int(f.get("size", 0)), "modificado": f["modifiedTime"], "bajar": bajador(f["id"])}
+            yield srv, {"nombre": f["name"], "tam": int(f.get("size", 0)), "modificado": f["modifiedTime"], "mime": f["mimeType"], "bajar": bajador(f["id"])}
 
 
 # ---------------- procesamiento ----------------
@@ -164,9 +179,11 @@ def main():
     print("Listando", "carpeta local" if a.local else "Drive", "…")
     por_srv = {}
     for srv, arch in (fuente_local(a.local) if a.local else fuente_drive()):
-        ext = Path(arch["nombre"]).suffix.lower()
-        if ext in IMG_EXT: arch["tipo"] = "img"
-        elif ext in VID_EXT: arch["tipo"] = "video"
+        ext, mime = Path(arch["nombre"]).suffix.lower(), arch.get("mime", "")
+        if ext in IMG_EXT or (not ext and mime.startswith("image/")): arch["tipo"] = "img"
+        elif ext in VID_EXT or (not ext and mime.startswith("video/")): arch["tipo"] = "video"
+        elif mime.startswith("image/") and mime != "image/svg+xml": arch["tipo"] = "img"
+        elif mime.startswith("video/"): arch["tipo"] = "video"
         else: continue
         arch["clave"] = f"{arch['tam']}|{arch['tipo']}"
         por_srv.setdefault(srv, []).append(arch)
@@ -194,7 +211,7 @@ def main():
                 while n in nombres: n = f"{base}-{k}"; k += 1
                 print(f"  {srv}: {x['nombre']}")
                 with tempfile.TemporaryDirectory() as td:
-                    tmp = Path(td) / ("in" + Path(x["nombre"]).suffix.lower()); x["bajar"](tmp)
+                    tmp = Path(td) / ("in" + (Path(x["nombre"]).suffix.lower() or (".mp4" if x["tipo"] == "video" else ".img"))); x["bajar"](tmp)
                     if x["tipo"] == "img":
                         w, h = hacer_imagen(tmp, carpeta / f"{n}.jpg")
                         item = {"tipo": "img", "src": f"assets/servicios/{srv}/{n}.jpg", "w": w, "h": h}
