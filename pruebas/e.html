@@ -173,8 +173,13 @@
     .nav__burger { display: grid; gap: 5px; width: 44px; height: 44px; padding: 0 9px; border: 0; background: transparent; color: inherit; align-content: center; }
     .nav__burger i { display: block; height: 2px; background: currentColor; border-radius: 2px; transition: transform .4s var(--ease), opacity .3s; }
     .nav.open .nav__burger i:nth-child(1) { transform: translateY(7px) rotate(45deg); } .nav.open .nav__burger i:nth-child(2) { opacity: 0; } .nav.open .nav__burger i:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .nav.open ul { display: flex; position: fixed; inset: 0; z-index: -1; background: var(--nude); color: var(--tinta); flex-direction: column; justify-content: center; align-items: flex-start; padding: 0 var(--g); gap: 22px; font-size: 1.6rem; letter-spacing: -.01em; text-transform: none; }
-    .nav.open .pill { font-size: 1rem; }
+    /* abierto: sin fondo ni blur en la barra (el backdrop-filter encierra al menú fijo dentro de la barra y lo corta) */
+    .nav.open { background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+    .nav.open .nav__logo { background: var(--rojo-logo); } .nav.open .nav__burger { color: var(--tinta); }
+    .nav.open ul { display: flex; position: fixed; inset: 0; height: 100vh; height: 100dvh; overflow-y: auto; z-index: -1; background: var(--nude); color: var(--tinta); flex-direction: column; justify-content: center; align-items: flex-start; padding: 96px var(--g) 48px; gap: 22px; font-size: 1.6rem; letter-spacing: -.01em; text-transform: none; }
+    .nav.open ul a { opacity: 1; }
+    .nav.open .pill { margin-top: 8px; font-size: 1rem; background: var(--rojo-logo); border-color: var(--rojo-logo); color: #fff; }
+    body.menu-on { overflow: hidden; }
     .mani { grid-template-columns: 1fr; gap: 18px; } .mani p { margin-top: 8px; }
     .ideas__p { width: auto; }
     .pres__t { grid-template-columns: 1fr; }
@@ -434,8 +439,10 @@
 
   /* ---------- nav: queda fija arriba, siempre visible; al scrollear toma fondo ---------- */
   const navBg = () => nav.classList.toggle('bg', scrollY > 40); addEventListener('scroll', navBg, { passive: true }); navBg();
-  $('.nav__burger').addEventListener('click', () => nav.classList.toggle('open'));
-  $$('.nav ul a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+  const menu = on => { nav.classList.toggle('open', on); document.body.classList.toggle('menu-on', on); $('.nav__burger').setAttribute('aria-expanded', on); };
+  $('.nav__burger').addEventListener('click', () => menu(!nav.classList.contains('open')));
+  $$('.nav ul a').forEach(a => a.addEventListener('click', () => menu(false)));
+  addEventListener('keydown', e => { if (e.key === 'Escape') menu(false); });
 
   /* ---------- textos animados ---------- */
   const escribir = (el) => { // títulos: cada palabra en un <span class="wd">, cada letra en un <span class="ch">; el "." final pasa a ser el punto del logo
