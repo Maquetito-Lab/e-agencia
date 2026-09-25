@@ -3,186 +3,597 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>e. agencia · Comunicación visual y redes</title>
-<meta name="description" content="e. agencia: comunicación visual y redes sociales. Ideas con dirección, marcas con identidad.">
-<meta property="og:title" content="e. agencia">
-<meta property="og:description" content="Elevamos tu marca. Comunicación visual y RR.SS.">
-<link rel="icon" href="assets/favicon.png" type="image/png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<title>e. agencia · identidad, contenido & experiencias</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<style>
+  :root {
+    /* paleta de "colores marca.jpeg". --rojo es un rojo un poco más suave que el del logo, para botones */
+    --rojo-logo: #e30613; --rojo: #de4f57; --rosa: #e8bfc5; --rosa-txt: #e2808f; --oliva: #5a5b2f; --lima: #c1e700; --nude: #fffaf1;
+    --vino: #8a0a1c; --topo: #8a8178; /* gris topo: texto chico y botones de las presentaciones */ --tinta: #4a4b25; /* oliva oscuro de la marca: es el color de todo el texto (nada de negro) */ --hueso: oklch(97% 0.01 80);
+    --linea: rgb(255 255 255 / .35); --borde: rgb(255 255 255 / .7);
+    --ease: cubic-bezier(.22,1,.36,1); --g: clamp(20px, 5vw, 80px);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: auto; }
+  body { margin: 0; font-family: Helvetica, Arial, sans-serif; background: #e8bfc5; color: #fff; /* fondo líquido rojo/rosa (e-bg.js, paleta "rojo") y texto blanco; --tinta queda para los paneles claros */ line-height: 1.4; overflow-x: hidden; }
+  body.pres-on { overflow: hidden; }
+  body.pres-solo main, body.pres-solo .nav { visibility: hidden; } /* con la presentación abierta, debajo queda solo el fondo animado (el marco) */
+  @media (pointer: fine) { body, a, button { cursor: none; } }
+  h1,h2,h3,p,ul,figure,blockquote { margin: 0; } ul { padding: 0; list-style: none; } a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; }
+  img { display: block; max-width: 100%; }
+  .k { font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+  .pres .k { color: var(--rojo-logo); }
+
+  /* ---------- fondo líquido (e-bg.js, paleta "rojo": rojo y rosa del logo, saturados, en movimiento) + grano ---------- */
+  .hero { position: fixed; inset: 0; z-index: -1; background: linear-gradient(100deg, #f1b8c2 0%, #f04a3b 35%, #e30613 75%, #fcede8 100%); /* respaldo si no hay WebGL */ }
+  .hero__gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .grain { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .09; mix-blend-mode: multiply; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); background-size: 220px; }
+  main > *, footer { position: relative; z-index: 1; }
+
+  /* ---------- cursor ---------- */
+  .cur { position: fixed; left: 0; top: 0; z-index: 99; pointer-events: none; display: none; }
+  @media (pointer: fine) { .cur { display: block; } }
+  .cur__dot { position: absolute; width: 10px; height: 10px; margin: -5px; border-radius: 50%; background: var(--rojo-logo); transition: width .3s var(--ease), height .3s var(--ease), margin .3s var(--ease); }
+  .cur.is-link .cur__dot { width: 18px; height: 18px; margin: -9px; }
+
+  /* ---------- nav ---------- */
+  .nav { position: fixed; inset: 0 0 auto 0; z-index: 70; display: flex; justify-content: space-between; align-items: center; padding: 18px var(--g); transition: background .4s, padding .4s, backdrop-filter .4s; }
+  .nav.bg { background: rgb(180 8 28 / .55); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); padding-top: 12px; padding-bottom: 12px; }
+  .nav__logo { width: 64px; aspect-ratio: 939/602; background: #fff; -webkit-mask: url("assets/logo.svg") no-repeat center/contain; mask: url("assets/logo.svg") no-repeat center/contain; }
+  .nav ul { display: flex; align-items: center; gap: 26px; font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+  .nav ul a { opacity: .85; } .nav ul a:hover { opacity: 1; }
+  .nav .pill { padding: 10px 18px; border: 1.5px solid #fff; border-radius: 999px; background: #fff; color: var(--rojo-logo); opacity: 1; transition: background .3s, color .3s, border-color .3s; }
+  .nav .pill:hover { background: var(--rojo-logo); color: #fff; border-color: var(--rojo-logo); }
+  .nav__burger { display: none; }
+
+  /* ---------- inicio: la e. en tinta 2D (se escribe, cae el punto y salpica, se borra) ----------
+     Tamaño de la e: --e-w es el ancho de la caja del SVG (la e con su punto ocupa ~2/3 de esa caja). */
+  .top { position: relative; min-height: 100svh; display: grid; grid-template-rows: 1fr auto; padding: 100px var(--g) 40px; overflow: hidden; --e-w: min(34vw, 380px); }
+  .top__ink { position: absolute; left: 50%; top: 45%; width: var(--e-w); aspect-ratio: 240/190; transform: translate(-50%, -50%); pointer-events: none; }
+  .top__ink svg { display: block; width: 100%; height: 100%; overflow: visible; }
+  @media (max-width: 700px) { .top { --e-w: min(64vw, 300px); } }
+  .top__tag { position: relative; align-self: end; justify-self: center; text-align: center; margin-bottom: clamp(24px, 5vh, 60px); font-size: clamp(1.1rem, 2.2vw, 1.7rem); font-weight: 400; font-style: italic; text-transform: lowercase; letter-spacing: -.01em; }
+  .top__foot { position: relative; display: flex; justify-content: center; align-items: end; font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; opacity: .75; }
+
+  /* ---------- ideas: título centrado + carrusel 3D de trabajos ---------- */
+  .ideas { padding: clamp(80px, 12vw, 160px) 0 clamp(60px, 8vw, 120px); text-align: center; border-top: 1px solid var(--linea); overflow: hidden; }
+  .ideas__head { width: fit-content; max-width: 100%; margin: 0 auto; padding: 0 var(--g); } /* mide lo que mide el título: la bajada toma su ancho de acá */
+  .ideas h1 { font-size: clamp(2.4rem, 7vw, 7.4rem); font-weight: 200; line-height: .96; letter-spacing: -.045em; }
+  .ideas h1 b { font-weight: 800; }
+  .ideas h1 em { font-style: italic; font-weight: 300; }
+  .ideas__p { margin: clamp(40px, 6vw, 72px) auto 0; width: 70%; contain: inline-size; /* 70% del ancho del título, sin estirarlo */ font-size: clamp(1rem, 1.4vw, 1.2rem); }
+  .ideas__p b { font-weight: 700; display: block; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 999px; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; border: 1.5px solid var(--borde); background: transparent; transition: background .3s, color .3s, border-color .3s; }
+  .btn:hover { background: #fff; color: var(--rojo-logo); border-color: #fff; }
+  .btn--solid { background: #fff; border-color: #fff; color: var(--rojo-logo); } .btn--solid:hover { background: var(--rojo-logo); border-color: var(--rojo-logo); color: #fff; }
+  .ideas .btn { margin-top: 28px; }
+  .carr { position: relative; height: clamp(300px, 42vw, 520px); margin-top: clamp(40px, 6vw, 80px); perspective: 1400px; cursor: grab; touch-action: pan-y; user-select: none; }
+  .carr.drag { cursor: grabbing; }
+  .carr__stage { position: absolute; inset: 0; transform-style: preserve-3d; }
+  .card { position: absolute; left: 50%; top: 50%; width: clamp(170px, 22vw, 300px); aspect-ratio: 4/5; margin: calc(clamp(170px, 22vw, 300px) * -.625) 0 0 calc(clamp(170px, 22vw, 300px) * -.5); border-radius: 10px; overflow: hidden; background: #eadfcf; box-shadow: 0 30px 60px -30px rgb(0 0 0 / .45); will-change: transform; }
+  .card img, .card video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+  /* ---------- quiénes somos: el manifiesto se enciende al scrollear ---------- */
+  .mani { padding: clamp(80px, 12vw, 180px) var(--g); display: grid; grid-template-columns: 1fr 2fr; gap: 28px clamp(32px, 5vw, 80px); border-top: 1px solid var(--linea); align-items: start; }
+  .mani > .k { grid-column: 1 / -1; }
+  .mani__ph { border-radius: 14px; overflow: hidden; aspect-ratio: 4/5; background: #eadfcf; box-shadow: 0 30px 60px -30px rgb(0 0 0 / .45); }
+  .mani__ph img { width: 100%; height: 100%; object-fit: cover; }
+  .mani p { font-size: clamp(1.35rem, 2.5vw, 2.5rem); font-weight: 300; line-height: 1.18; letter-spacing: -.025em; margin-top: -.2em; /* la primera línea queda al ras del borde de arriba de la foto */ }
+  .mani .w { opacity: .22; transition: opacity .5s; } .mani .w.on { opacity: 1; }
+  .mani .w.em { font-style: italic; font-weight: 500; }
+
+  /* ---------- servicios: tarjetas iguales y quietas, cada una con su contenido pasando ---------- */
+  .servicios { padding: clamp(80px, 12vw, 160px) var(--g); border-top: 1px solid var(--linea); }
+  .servicios h2 { font-size: clamp(2rem, 5vw, 5rem); font-weight: 800; line-height: .9; letter-spacing: -.045em; }
+  .scards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; margin-top: clamp(28px, 4vw, 48px); }
+  .scard { width: 100%; height: 100%; text-align: left; border: 0; border-radius: 16px; background: var(--nude); color: var(--tinta); padding: 18px; display: grid; grid-template-rows: auto 1fr; gap: 14px; transition: background .3s, box-shadow .4s; }
+  .scard:hover { background: var(--nude); box-shadow: 0 24px 50px -30px rgb(0 0 0 / .35); }
+  .scard__t { font-size: 1.15rem; font-weight: 400; letter-spacing: -.02em; line-height: 1.1; min-height: 2.2em; color: var(--rojo-logo); }
+  .scard__strip { display: block; overflow: hidden; height: 132px; border-radius: 10px; -webkit-mask: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+  .scard__in { display: flex; gap: 8px; width: max-content; animation: run var(--sp, 22s) linear infinite; }
+  .scard:hover .scard__in { animation-duration: calc(var(--sp, 22s) / 2.5); }
+  .scard__in img { height: 132px; width: 104px; object-fit: cover; object-position: top; border-radius: 8px; }
+  @keyframes run { to { transform: translateX(-50%); } }
+
+  /* ---------- presentación de cada servicio: marco con el fondo animado, adentro panel liso ----------
+     La barra de arriba ("← Servicios") es fija y llega hasta el borde superior; el contenido pasa por debajo. */
+  .pres { position: fixed; inset: 0; z-index: 75; overflow-y: auto; overscroll-behavior: contain; padding: 0 clamp(12px, 2.2vw, 28px) clamp(12px, 2.2vw, 28px); transform: translateY(100%); visibility: hidden; transition: transform .8s var(--ease), visibility 0s .8s; }
+  .pres.on { transform: none; visibility: visible; transition: transform .8s var(--ease), visibility 0s; }
+  .pres__panel { background: var(--nude); color: var(--topo); border-radius: 0 0 18px 18px; min-height: 100%; }
+  .pres__bar { position: sticky; top: 0; z-index: 2; display: flex; justify-content: space-between; align-items: center; padding: 18px var(--g); background: var(--nude); }
+  .pres__back { display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px 10px 12px; border: 1.5px solid var(--topo); border-radius: 999px; background: transparent; color: var(--topo); font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; transition: background .3s, color .3s; }
+  .pres__back:hover { background: var(--topo); color: var(--nude); }
+  .pres__back svg { width: 14px; height: 14px; }
+  .pres__item { padding: 20px var(--g) 40px; container-type: inline-size; }
+  .pres__item[hidden] { display: none; }
+  .pres__t { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 48px; align-items: start; margin-bottom: clamp(28px, 4vw, 48px); }
+  .pres__t h3 { font-size: clamp(2.6rem, 7vw, 7rem); font-weight: 800; line-height: .9; letter-spacing: -.05em; color: var(--rojo-logo); }
+  .pres__t p { font-size: clamp(1rem, 1.3vw, 1.15rem); max-width: 48ch; color: var(--topo); padding-top: .3em; }
+  /* Grilla irregular: la arma el JS (función mosaico) a partir de servicios.json. 4 columnas (5 si casi todo son videos verticales),
+     filas de 1/4 de columna; cada pieza ocupa según su formato y algunas van al doble para que la grilla varíe en cada servicio. */
+  .pres__grid { --gap: clamp(8px, 1.2vw, 16px); display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: calc((100cqw - 3 * var(--gap)) / 16); grid-auto-flow: dense; gap: var(--gap); }
+  .pres__grid--5 { grid-template-columns: repeat(5, 1fr); grid-auto-rows: calc((100cqw - 4 * var(--gap)) / 20); }
+  .pres__grid figure { position: relative; overflow: hidden; border-radius: 6px; background: #eadfcf; cursor: pointer; }
+  .pres__grid figure::after { content: ""; position: absolute; inset: 0; background: rgb(255 255 255 / 0); transition: background .3s; }
+  .pres__grid figure:hover::after { background: rgb(255 255 255 / .12); }
+  .pres__grid img, .pres__grid video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .pres__grid .arriba img, .pres__grid .arriba video { object-position: top; }
+  @supports not (width: 1cqw) { .pres__grid, .pres__grid--5 { grid-auto-rows: 4.5vw; } }
+  .pres__nav { display: flex; justify-content: space-between; gap: 12px; padding: clamp(12px, 2vw, 24px) var(--g) clamp(40px, 6vw, 80px); }
+  .pres__nav button { display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; padding: 0; border: 1.5px solid var(--topo); border-radius: 50%; background: transparent; color: var(--topo); transition: background .3s, color .3s; }
+  .pres__nav button svg { width: 18px; height: 18px; }
+  .pres__nav button:hover { background: var(--topo); color: var(--nude); }
+
+  /* ---------- lightbox: una foto o video en grande (se abre tocando el contenido de un servicio) ---------- */
+  .lb { position: fixed; inset: 0; z-index: 90; display: flex; align-items: center; justify-content: center; padding: clamp(16px, 4vw, 48px) clamp(56px, 8vw, 96px); background: rgb(30 20 18 / .9); opacity: 0; visibility: hidden; transition: opacity .35s, visibility 0s .35s; }
+  .lb.on { opacity: 1; visibility: visible; transition: opacity .35s, visibility 0s; }
+  .lb__m { max-width: 100%; max-height: 100%; display: flex; align-items: center; justify-content: center; }
+  .lb__m img, .lb__m video { display: block; max-width: 100%; max-height: calc(100vh - 2 * clamp(16px, 4vw, 48px)); width: auto; height: auto; object-fit: contain; border-radius: 8px; box-shadow: 0 40px 80px -30px rgb(0 0 0 / .7); }
+  .lb button { position: absolute; display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; padding: 0; border: 1.5px solid rgb(255 255 255 / .6); border-radius: 50%; background: transparent; color: #fff; transition: background .3s, color .3s; }
+  .lb button:hover { background: #fff; color: var(--rojo-logo); }
+  .lb button svg { width: 18px; height: 18px; }
+  .lb__x { top: 20px; right: 20px; } .lb__prev { left: 16px; top: 50%; margin-top: -24px; } .lb__next { right: 16px; top: 50%; margin-top: -24px; }
+  .lb.solo .lb__prev, .lb.solo .lb__next { display: none; }
+
+  /* ---------- proceso ---------- */
+  .proc { padding: clamp(80px, 12vw, 160px) var(--g); border-top: 1px solid var(--linea); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: clamp(24px, 4vw, 64px); }
+  .proc__h { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: end; margin-bottom: 20px; gap: 24px; }
+  .proc__h h2 { font-size: clamp(2rem, 5vw, 5rem); font-weight: 800; line-height: .9; letter-spacing: -.045em; }
+  .step .n { font-size: clamp(3rem, 6vw, 6rem); font-weight: 200; line-height: 1; letter-spacing: -.05em; }
+  .step h3 { margin-top: 12px; font-size: clamp(1.2rem, 1.8vw, 1.6rem); font-weight: 800; letter-spacing: -.02em; }
+  .step p { margin-top: 10px; font-size: .95rem; opacity: .85; max-width: 34ch; }
+
+  /* ---------- contacto ---------- */
+  .cta { border-top: 1px solid var(--linea); padding: clamp(80px, 12vw, 160px) var(--g) clamp(48px, 6vw, 80px); }
+  .cta__top { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 40px; }
+  .cta h2 { font-size: clamp(2.8rem, 9.5vw, 10rem); font-weight: 900; line-height: .86; letter-spacing: -.055em; }
+  .cta__go { display: flex; align-items: center; gap: 14px 28px; flex-wrap: wrap; margin-top: 32px; }
+  .cta .btn--solid { padding: 18px 28px; font-size: .84rem; }
+  .cta__links { display: grid; gap: 10px; text-align: right; font-size: .82rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  .cta__links a[href^="mailto"] { text-transform: none; letter-spacing: 0; }
+  .cta__links a { display: inline-flex; align-items: center; gap: 10px; justify-content: flex-end; }
+  .foot { margin-top: clamp(48px, 8vw, 100px); padding-top: 20px; border-top: 1px solid var(--linea); display: flex; justify-content: space-between; gap: 16px; font-size: .75rem; opacity: .65; flex-wrap: wrap; }
+
+  /* ---------- textos animados ---------- */
+  .rv { opacity: 0; transform: translateY(26px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+  .rv.in { opacity: 1; transform: none; }
+  /* títulos: cada letra aparece como un trazo, y el punto final es el punto del logo */
+  .esc .wd { display: inline-block; white-space: nowrap; }
+  .esc .ch { display: inline-block; opacity: 0; transform: translateY(.18em) rotate(3deg); clip-path: inset(-.25em 100% -.25em -.1em); transition: opacity .05s linear, transform .55s var(--ease), clip-path .5s var(--ease); transition-delay: calc(var(--i) * 36ms); }
+  .esc.in .ch { opacity: 1; transform: none; clip-path: inset(-.25em -.35em -.25em -.1em); }
+  .esc .ch--dot { width: .3em; height: .34em; margin-left: .06em; vertical-align: baseline; background: #fff; -webkit-mask: url("assets/logo-dot.svg") no-repeat center/contain; mask: url("assets/logo-dot.svg") no-repeat center/contain; clip-path: none; transform: scale(0); transform-origin: 50% 60%; transition: transform .7s cubic-bezier(.34, 1.56, .64, 1); transition-delay: calc(var(--i) * 36ms + 120ms); }
+  .esc.in .ch--dot { transform: scale(1); }
+  /* párrafos: cada palabra da un saltito al entrar */
+  .wds .w { opacity: .22; transition: opacity .5s; } .wds .w.on { opacity: 1; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 900px) {
+    .nav ul { display: none; }
+    .nav__burger { display: grid; gap: 5px; width: 44px; height: 44px; padding: 0 9px; border: 0; background: transparent; color: inherit; align-content: center; }
+    .nav__burger i { display: block; height: 2px; background: currentColor; border-radius: 2px; transition: transform .4s var(--ease), opacity .3s; }
+    .nav.open .nav__burger i:nth-child(1) { transform: translateY(7px) rotate(45deg); } .nav.open .nav__burger i:nth-child(2) { opacity: 0; } .nav.open .nav__burger i:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    /* abierto: sin fondo ni blur en la barra (el backdrop-filter encierra al menú fijo dentro de la barra y lo corta) */
+    .nav.open { background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+    .nav.open .nav__logo { background: var(--rojo-logo); } .nav.open .nav__burger { color: var(--tinta); }
+    .nav.open ul { display: flex; position: fixed; inset: 0; height: 100vh; height: 100dvh; overflow-y: auto; z-index: -1; background: var(--nude); color: var(--tinta); flex-direction: column; justify-content: center; align-items: flex-start; padding: 96px var(--g) 48px; gap: 22px; font-size: 1.6rem; letter-spacing: -.01em; text-transform: none; }
+    .nav.open ul a { opacity: 1; }
+    .nav.open .pill { margin-top: 8px; font-size: 1rem; background: var(--rojo-logo); border-color: var(--rojo-logo); color: #fff; }
+    body.menu-on { overflow: hidden; }
+    .mani { grid-template-columns: 1fr; gap: 18px; } .mani p { margin-top: 8px; }
+    .ideas__p { width: auto; }
+    .pres__t { grid-template-columns: 1fr; }
+    .pres__grid, .pres__grid--5 { grid-template-columns: repeat(2, 1fr); grid-auto-rows: calc((100cqw - var(--gap)) / 8); }
+    .lb { padding: 64px 12px; } .lb__prev { left: auto; right: 72px; top: auto; bottom: 8px; margin: 0; } .lb__next { top: auto; bottom: 8px; right: 12px; margin: 0; }
+    .proc { grid-template-columns: 1fr; }
+    .proc__h { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .cta__top { grid-template-columns: 1fr; } .cta__links { text-align: left; } .cta__links a { justify-content: flex-start; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scard__in { animation: none !important; }
+    .rv { opacity: 1; transform: none; transition: none; } .wds .w, .mani .w { opacity: 1; transition: none; } .esc .ch { opacity: 1; transform: none; clip-path: none; transition: none; } .pres, .lb { transition: none; }
+  }
+</style>
 </head>
-<body>
+<body data-bg="rojo">
+<div class="hero" aria-hidden="true"><canvas class="hero__gl"></canvas></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="cur" aria-hidden="true"><span class="cur__dot"></span></div>
 
-<!-- ============================================================
-     CÓMO EDITAR ESTA PÁGINA (para quien no programa)
-     · Los textos están acá abajo, sección por sección. Cambiá lo que
-       está entre las etiquetas (<h1>...</h1>, <p>...</p>) y nada más.
-     · Las fotos están en la carpeta assets/. Para cambiar una, poné el
-       archivo nuevo ahí y cambiá el nombre en src="assets/...".
-     · Los colores están al principio de styles.css.
-     ============================================================ -->
-
-<a class="skip" href="#inicio">Ir al contenido</a>
-
-<!-- ===================== NAV ===================== -->
-<header class="nav" id="top">
-  <a class="nav__brand" href="#inicio" aria-label="e. agencia, inicio">
-    <span class="logo logo--red" role="img" aria-hidden="true"></span>
-  </a>
-  <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menú">
-    <span></span><span></span>
-  </button>
-  <nav class="nav__links" id="menu" aria-label="Secciones">
-    <a href="#inicio" class="pill is-active">Inicio</a>
-    <a href="#servicios" class="pill">Servicios</a>
-    <a href="#quienes-somos" class="pill">Quiénes somos</a>
-    <a href="#contacto" class="pill">Contacto</a>
-  </nav>
+<header class="nav">
+  <a class="nav__logo" href="#inicio" aria-label="e. agencia"></a>
+  <button class="nav__burger" type="button" aria-label="Menú"><i></i><i></i><i></i></button>
+  <ul>
+    <li><a href="#inicio" data-cur="link">Inicio</a></li>
+    <li><a href="#servicios" data-cur="link">Servicios</a></li>
+    <li><a href="#quienes-somos" data-cur="link">Quiénes somos</a></li>
+    <li><a class="pill" href="#contacto" data-cur="link">Contacto</a></li>
+  </ul>
 </header>
 
 <main>
+<!-- ===== INICIO: la e. en tinta 2D ===== -->
+<section class="top" id="inicio">
+  <!-- La forma es la del logo oficial (assets/logo-e.svg y logo-dot.svg). El trazo que "escribe" es una máscara: un camino
+       ancho que recorre el centro de la e y va destapando la forma real, así la e nunca se deforma.
+       Va en el orden en que se escribe una e a mano: arranca en la intersección de adentro (donde la barra toca el palo),
+       sigue la barra hacia arriba a la derecha, da la vuelta por arriba, baja por la izquierda y sale por la cola. -->
+  <div class="top__ink" aria-hidden="true"><svg viewBox="40 90 240 190"><defs>
+    <clipPath id="ink-e"><path d="M143.27494,111.77513c16.02805.6681,24.04315,9.57329,24.04315,26.71342,0,18.48061-23.71016,43.85996-71.12622,76.13592.21772,4.45473,2.05554,8.51457,5.50918,12.18807,3.44937,3.6735,9.51566,5.50918,18.19885,5.50918,16.02805,0,37.28566-14.13474,63.77923-42.40849,7.79097.6681,11.90844,5.6778,12.35669,15.02697,0,5.12496-2.89653,10.46765-8.6832,16.02805-10.68537,9.57542-22.48709,17.81464-35.39662,24.71125-12.9138,6.89874-25.82547,10.35238-38.735,10.35238-16.4763-1.3362-27.71664-7.29363-33.72743-17.86587-6.01079-10.57011-9.01618-23.54154-9.01618-38.90149,0-17.14013,3.44937-32.94406,10.35238-47.41819,14.69398-26.71556,35.50548-40.0712,62.44516-40.0712ZM108.21131,151.01174c-8.01296,11.24248-12.35456,23.54154-13.02266,36.89932l10.01727-6.67889c25.82333-21.59059,38.95485-35.39662,39.40523-41.40741,0-4.45046-1.78445-6.67889-5.34268-6.67889-12.68968.6681-23.04206,6.62553-31.05715,17.86587Z"/></clipPath>
+  </defs>
+    <g clip-path="url(#ink-e)"><path class="ink__tr" d="M 97 200 C 120 178, 145 156, 157 140 C 164 128, 151 116, 136 121 C 118 127, 99 145, 89 170 C 81 190, 83 227, 108 245 C 130 254, 165 236, 184 214 C 190 207, 194 200, 197 194" fill="none" stroke="#fff" stroke-width="42" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g class="ink__ds" fill="#fff"></g>
+    <g class="ink__pt" transform="translate(239.85 229.5) scale(0)"><path fill="#fff" transform="translate(-239.85 -229.5)" d="M240.51479,212.95529c8.90092.6681,13.69076,6.45903,14.35886,17.36426-1.3362,10.24139-7.57112,15.46881-18.70046,15.69507-6.67889-1.11848-10.46765-5.89766-11.35347-14.35886.21985-10.0194,5.45154-16.24791,15.69507-18.70046Z"/></g>
+  </svg></div>
+  <p class="top__tag rv">elevemos tu marca</p>
+  <div class="top__foot"><span>identidad, contenido &amp; experiencias</span></div>
+</section>
 
-<!-- ===================== HERO ===================== -->
-<section class="hero" id="inicio">
-  <canvas class="hero__gl" aria-hidden="true"></canvas>
-  <!-- respaldo si el navegador no tiene WebGL -->
-  <div class="hero__layer hero__layer--base" aria-hidden="true"></div>
-  <div class="hero__layer hero__layer--front" aria-hidden="true"></div>
-  <div class="grain" aria-hidden="true"></div>
-
-  <div class="hero__inner">
-    <h1 class="hero__logo">
-      <span class="logo logo--white" role="img" aria-label="e. agencia"></span>
-    </h1>
-    <p class="hero__tag">
-      Agencia de<br>Comunicación Visual<br>y RR.SS
-    </p>
+<!-- ===== IDEAS: la bajada de la marca, centrada, con trabajos pasando abajo =====
+     Las tarjetas del carrusel se arman solas con contenido de todos los servicios (assets/servicios/servicios.json). -->
+<section class="ideas" id="ideas">
+  <div class="ideas__head">
+  <h1 class="esc">Ideas con <b>dirección.</b><br>Marcas con <em>identidad.</em></h1>
+  <p class="ideas__p wds"><b>Pensamos. Creamos. Hacemos.</b> Desarrollamos ideas y estrategias de comunicación de manera integral, acompañando cada proyecto desde el concepto hasta hacerlo realidad.</p>
   </div>
-
-  <a class="hero__scroll" href="#manifiesto" aria-label="Bajar">
-    <span></span>
-  </a>
+  <a class="btn btn--solid rv" href="https://wa.me/5491151254075" target="_blank" rel="noopener" data-cur="link">Elevemos tu marca</a>
+  <div class="carr" aria-hidden="true"><div class="carr__stage"></div></div>
 </section>
 
-<!-- ===================== MANIFIESTO (rosa) ===================== -->
-<section class="manifiesto" id="manifiesto">
-  <p class="claim reveal" aria-label="Elevamos tu marca">
-    <span class="logo logo--mark" aria-hidden="true"></span><span class="claim__text" aria-hidden="true">levamos<br>tu marca</span>
-  </p>
-
-  <h2 class="manifiesto__title reveal">
-    Ideas con dirección.<br>
-    Marcas con identidad.
-  </h2>
-
-  <p class="manifiesto__body reveal">
-    Creamos universos visuales<br>
-    que le dan <em>coherencia</em><br>
-    y personalidad<br>
-    a las marcas con<br>
-    <em>pensamiento estratégico.</em>
-  </p>
+<!-- ===== QUIÉNES SOMOS (manifiesto) ===== -->
+<section class="mani" id="quienes-somos">
+  <span class="k">Quiénes somos</span>
+  <!-- La foto sale de la carpeta "quienes somos" de Drive (la primera; se elige en tools/sync_servicios.py, FIJAR). -->
+  <figure class="mani__ph rv"><img alt="El equipo de e. agencia" loading="lazy"></figure>
+  <p id="manip">Somos un equipo creativo que combina distintas miradas, experiencias y disciplinas con una misma forma de entender la comunicación. Creemos en trabajar <i>cerca de cada marca,</i> entender su esencia y transformarla en un universo <i>único, coherente y con personalidad.</i> Combinamos creatividad y <i>pensamiento estratégico</i> para construir marcas que conectan con personas, se diferencian y generan valor en el tiempo.</p>
 </section>
 
-<!-- ===================== CÓMO TRABAJAMOS (crema + foto) ===================== -->
-<section class="como" id="quienes-somos">
-  <div class="como__text">
-    <h2 class="como__title reveal">Cómo<br>trabajamos</h2>
-    <div class="como__body reveal">
-      <p>Somos una agencia de comunicación visual y digital que acompaña a marcas a encontrar su identidad, potenciarla y comunicarla con intención.</p>
-      <p>Combinamos estrategia, creatividad y una mirada integral para transformar ideas en universos visuales coherentes, relevantes y reconocibles.</p>
-      <p>Creamos marcas que conectan con las personas, se diferencian y construyen valor en el tiempo.</p>
-    </div>
-  </div>
-  <figure class="como__photo reveal">
-    <!-- PLACEHOLDER: reemplazar por foto del equipo (assets/equipo.jpg) -->
-    <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=1400&q=80"
-         alt="El equipo de e. agencia trabajando en una mesa, entre risas y una tablet" loading="lazy">
-  </figure>
-</section>
-
-<!-- ===================== SERVICIOS (lima) ===================== -->
+<!-- ===== SERVICIOS =====
+     Cada tarjeta abre la presentación del servicio (más abajo, en <div class="pres">).
+     El data-pres tiene que coincidir con el id del <article>. Las miniaturas de la tira se arman solas desde servicios.json.
+     --sp: velocidad de la tira. -->
 <section class="servicios" id="servicios">
-  <h2 class="servicios__title reveal">Servicios</h2>
-  <ul class="chips reveal" aria-label="Lista de servicios">
-    <li>Creación de contenido</li>
-    <li>Foto producto</li>
-    <li>Community management</li>
-    <li>Branding</li>
-    <li>Producción</li>
-    <li>Cobertura de eventos</li>
+  <h2 class="esc">Servicios.</h2>
+  <ul class="scards">
+    <li><button class="scard" type="button" data-pres="p-contenido" data-cur="link" style="--sp:20s"><span class="scard__t">Creación de contenido</span><span class="scard__strip"><span class="scard__in" data-srv="contenido"></span></span></button></li>
+    <li><button class="scard" type="button" data-pres="p-fotografia" data-cur="link" style="--sp:26s"><span class="scard__t">Fotografía</span><span class="scard__strip"><span class="scard__in" data-srv="fotografia"></span></span></button></li>
+    <li><button class="scard" type="button" data-pres="p-branding" data-cur="link" style="--sp:30s"><span class="scard__t">Branding</span><span class="scard__strip"><span class="scard__in" data-srv="branding"></span></span></button></li>
+    <li><button class="scard" type="button" data-pres="p-ugc" data-cur="link" style="--sp:18s"><span class="scard__t">UGC</span><span class="scard__strip"><span class="scard__in" data-srv="ugc"></span></span></button></li>
+    <li><button class="scard" type="button" data-pres="p-community" data-cur="link" style="--sp:24s"><span class="scard__t">Community management</span><span class="scard__strip"><span class="scard__in" data-srv="community"></span></span></button></li>
+    <li><button class="scard" type="button" data-pres="p-produccion" data-cur="link" style="--sp:28s"><span class="scard__t">Dirección creativa &amp; producción</span><span class="scard__strip"><span class="scard__in" data-srv="produccion"></span></span></button></li>
+    <li><button class="scard" type="button" data-pres="p-eventos" data-cur="link" style="--sp:16s"><span class="scard__t">Cobertura de eventos</span><span class="scard__strip"><span class="scard__in" data-srv="eventos"></span></span></button></li>
+    <li><button class="scard" type="button" data-pres="p-ia" data-cur="link" style="--sp:25s"><span class="scard__t">Contenido con IA</span><span class="scard__strip"><span class="scard__in" data-srv="ia"></span></span></button></li>
+    <li><button class="scard" type="button" data-pres="p-merch" data-cur="link" style="--sp:22s"><span class="scard__t">Merchandising</span><span class="scard__strip"><span class="scard__in" data-srv="merch"></span></span></button></li>
   </ul>
 </section>
 
-<!-- ===================== GALERÍA (crema) ===================== -->
-<section class="galeria" aria-label="Trabajos">
-  <!-- PLACEHOLDERS: reemplazar por fotos de trabajos reales en assets/ -->
-  <figure class="galeria__item galeria__item--a reveal">
-    <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=80" alt="Foto producto: anteojos carey sobre fondo blanco" loading="lazy">
-    <figcaption>Foto producto</figcaption>
-  </figure>
-  <figure class="galeria__item galeria__item--b reveal">
-    <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1000&q=80" alt="Creación de contenido: campaña de moda con sweater rojo sobre fondo turquesa" loading="lazy">
-    <figcaption>Contenido</figcaption>
-  </figure>
-  <figure class="galeria__item galeria__item--c reveal">
-    <img src="https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?auto=format&fit=crop&w=1000&q=80" alt="Foto producto: zapatilla naranja y blanca" loading="lazy">
-    <figcaption>Foto producto</figcaption>
-  </figure>
-  <figure class="galeria__item galeria__item--d reveal">
-    <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=1000&q=80" alt="Producción: cámara instantánea sobre fondo neutro" loading="lazy">
-    <figcaption>Producción</figcaption>
-  </figure>
+<!-- ===== CÓMO TRABAJAMOS ===== -->
+<section class="proc" id="proc">
+  <div class="proc__h"><h2 class="esc">Cómo<br>trabajamos.</h2><span class="k rv">Tres pasos, una misma dirección</span></div>
+  <div class="step"><span class="n rv">01</span><h3 class="wds">Análisis y relevamiento</h3><p class="wds">Conocemos el proyecto, su identidad, objetivos, contexto y necesidades. Analizamos su comunicación actual para detectar oportunidades y definir el punto de partida.</p></div>
+  <div class="step"><span class="n rv">02</span><h3 class="wds">Estrategia y dirección</h3><p class="wds">Definimos el camino a seguir: objetivos, posicionamiento, comunicación y contenidos, alineados bajo una misma dirección.</p></div>
+  <div class="step"><span class="n rv">03</span><h3 class="wds">Desarrollo e implementación</h3><p class="wds">Llevamos la estrategia a la acción a través de diseño, contenido, redes, campañas, producciones, eventos y experiencias.</p></div>
 </section>
 
-<!-- ===================== CONTACTO (fucsia + foto) ===================== -->
-<section class="contacto" id="contacto">
-  <div class="contacto__text">
-    <h2 class="contacto__title reveal">Hablemos</h2>
-
-    <ul class="contacto__links reveal" aria-label="Contacto">
-      <!-- Poner los links reales en href="" -->
-      <li>
-        <a href="#" aria-label="Instagram">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
-          <span>Instagram</span>
-        </a>
-      </li>
-      <li>
-        <a href="#" aria-label="WhatsApp">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-3.8A8 8 0 1 1 8.2 19z"/><path d="M9.5 9.5c0 3 2 5 5 5l1-1.5-2-1-1 .7c-.8-.4-1.4-1-1.8-1.8l.7-1-1-2z" fill="currentColor" stroke="none"/></svg>
-          <span>WhatsApp</span>
-        </a>
-      </li>
-      <li>
-        <a href="#" aria-label="Correo">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3.5 7l8.5 6 8.5-6"/></svg>
-          <span>Correo</span>
-        </a>
-      </li>
-    </ul>
+<!-- ===== CONTACTO ===== -->
+<section class="cta" id="contacto">
+  <div class="cta__top">
+    <div>
+      <h2 class="esc">Elevemos<br>tu marca.</h2>
+      <div class="cta__go rv">
+        <a class="btn btn--solid" href="https://wa.me/5491151254075" target="_blank" rel="noopener" data-cur="link">Escribinos por WhatsApp</a>
+      </div>
+    </div>
+    <ul class="cta__links rv"><li><a href="https://www.instagram.com/agenciae_/" target="_blank" rel="noopener" data-cur="link">Instagram</a></li><li><a href="https://www.tiktok.com/@e.agencia" target="_blank" rel="noopener" data-cur="link">TikTok</a></li><li><a href="#" data-cur="link">LinkedIn</a></li><li><a href="https://wa.me/5491151254075" target="_blank" rel="noopener" data-cur="link">WhatsApp</a></li><li><a href="mailto:eleagenciaa@gmail.com" data-cur="link">eleagenciaa@gmail.com</a></li></ul>
   </div>
-
-  <figure class="contacto__photo reveal">
-    <span class="splash" aria-hidden="true">
-      <svg viewBox="0 0 200 200"><path d="M96 20c10-2 18 6 24 14 8-6 22-8 28 2 6 9-2 18 4 26 9 3 22 4 24 16 2 11-9 15-14 24 6 8 16 18 8 28-7 9-19 3-28 8-1 12 0 28-12 30-11 2-16-9-26-12-8 8-18 20-30 12-10-7-4-18-8-28C54 138 38 140 32 128c-5-11 6-16 8-26-9-6-24-12-20-24 3-11 15-10 24-16-1-10-5-24 6-30 10-5 16 5 26 6 4-7 10-16 20-18z"/></svg>
-    </span>
-    <!-- PLACEHOLDER: reemplazar por foto (assets/contacto.jpg) -->
-    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1200&q=80"
-         alt="Retrato sonriendo con buzo con capucha frente a una pared azul" loading="lazy">
-  </figure>
+  <footer class="foot"><span>© 2026 e. agencia</span><span>identidad, contenido &amp; experiencias</span></footer>
 </section>
-
 </main>
 
-<footer class="footer">
-  <span class="logo logo--mark logo--footer" role="img" aria-label="e. agencia"></span>
-  <p>© <span id="year"></span> e. agencia · Comunicación visual y RR.SS</p>
-</footer>
+<!-- ===== PRESENTACIONES DE SERVICIOS (se abren desde las tarjetas de Servicios) =====
+     Las fotos y videos NO se cargan acá: salen de la carpeta de Drive "Agencia E - web" (una subcarpeta por servicio).
+     Un robot (GitHub Actions, .github/workflows/sync-drive.yml) corre todos los días, baja lo nuevo, lo achica y escribe
+     assets/servicios/servicios.json. La página lee ese archivo y arma sola cada grilla: el tamaño de cada pieza sale de su
+     formato (vertical, foto, apaisada…) y algunas van en grande para que la grilla sea irregular y distinta en cada servicio.
+     Acá solo se editan los títulos y los textos. Tocando una foto o video se abre en grande. -->
+<div class="pres" role="dialog" aria-modal="true" aria-label="Servicio">
+  <div class="pres__panel">
+  <div class="pres__bar"><button class="pres__back" type="button" data-cur="link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Servicios</button></div>
 
-<script src="script.js"></script>
-<script src="hero-bg.js"></script>
+  <article class="pres__item" id="p-contenido" hidden>
+    <div class="pres__t"><h3>Creación de contenido</h3><p>Desarrollamos piezas a partir de una estrategia, una dirección creativa y una identidad sólida. Pensamos cada contenido desde su concepto y objetivo, cuidando que lo visual y lo comunicacional respondan a un mismo universo de marca, adaptándose a los distintos formatos y canales manteniendo la coherencia.</p></div>
+    <div class="pres__grid" data-srv="contenido"></div>
+  </article>
+
+  <article class="pres__item" id="p-fotografia" hidden>
+    <div class="pres__t"><h3>Fotografía</h3><p>Diseñamos producciones fotográficas definiendo concepto, estética, composición, iluminación y puesta en escena según las necesidades de cada proyecto u ocasión. Trabajamos fotografía de producto, gastronomía, lifestyle, campañas, ecommerce y contenido digital.</p></div>
+    <div class="pres__grid" data-srv="fotografia"></div>
+  </article>
+
+  <article class="pres__item" id="p-branding" hidden>
+    <div class="pres__t"><h3>Branding</h3><p>Construimos sistemas de identidad capaces de darle criterio, consistencia y reconocimiento a las marcas. Desde el concepto y posicionamiento hasta el lenguaje visual. Desarrollamos los recursos necesarios para que pueda adaptarlos a todos los puntos de contacto.</p></div>
+    <div class="pres__grid" data-srv="branding"></div>
+  </article>
+
+  <article class="pres__item" id="p-ugc" hidden>
+    <div class="pres__t"><h3>UGC</h3><p>Seleccionamos y gestionamos creadores afines a cada marca, desde el research y propuesta de perfiles hasta la coordinación, seguimiento y entrega del contenido. Desarrollamos briefs y lineamientos para lograr piezas naturales, relevantes y alineadas con la identidad de marca y los códigos de cada plataforma.</p></div>
+    <div class="pres__grid" data-srv="ugc"></div>
+  </article>
+
+  <article class="pres__item" id="p-community" hidden>
+    <div class="pres__t"><h3>Community Management</h3><p>Planificamos y gestionamos la comunicación diaria de las marcas en redes sociales. Definimos pilares de comunicación, calendarios editoriales, formatos, frecuencia y tono, articulando contenido y gestión de comunidad para sostener una presencia digital consistente.</p></div>
+    <div class="pres__grid" data-srv="community"></div>
+  </article>
+
+  <article class="pres__item" id="p-produccion" hidden>
+    <div class="pres__t"><h3>Dirección creativa &amp; producción</h3><p>Desarrollamos el concepto y la dirección visual de cada proyecto y coordinamos su ejecución de principio a fin. Definimos narrativa, estética y lineamientos creativos, y gestionamos la preproducción, equipos, recursos y realización de shootings, campañas, eventos y experiencias.</p></div>
+    <div class="pres__grid" data-srv="produccion"></div>
+  </article>
+
+  <article class="pres__item" id="p-eventos" hidden>
+    <div class="pres__t"><h3>Cobertura de eventos</h3><p>Registramos cada evento con una mirada visual y narrativa alineada a la marca. Producimos contenido fotográfico y audiovisual en tiempo real, definiendo previamente los momentos clave, formatos y necesidades de comunicación. Generamos material que documente la experiencia y, al mismo tiempo, funcione estratégicamente como contenido para la marca y sus diferentes canales.</p></div>
+    <div class="pres__grid" data-srv="eventos"></div>
+  </article>
+
+  <article class="pres__item" id="p-ia" hidden>
+    <div class="pres__t"><h3>Contenido con IA</h3><p>Exploramos nuevas posibilidades visuales a través de la inteligencia artificial aplicada a la producción de contenido. Conceptualizamos, generamos y refinamos piezas bajo una dirección creativa definida, cuidando que la tecnología esté siempre al servicio de la idea y de la identidad de marca.</p></div>
+    <div class="pres__grid" data-srv="ia"></div>
+  </article>
+
+  <article class="pres__item" id="p-merch" hidden>
+    <div class="pres__t"><h3>Merchandising</h3><p>Diseñamos y desarrollamos piezas que trasladan el sistema visual de una marca al plano físico. Pensamos objetos, aplicaciones, materiales y terminaciones para que el merchandising funcione como una extensión de su identidad.</p></div>
+    <div class="pres__grid" data-srv="merch"></div>
+  </article>
+
+  <div class="pres__nav"><button class="pres__prev" type="button" aria-label="Servicio anterior" data-cur="link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button><button class="pres__next" type="button" aria-label="Servicio siguiente" data-cur="link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+  </div>
+</div>
+
+<!-- ===== LIGHTBOX (foto o video en grande) ===== -->
+<div class="lb" role="dialog" aria-modal="true" aria-label="Contenido en grande">
+  <div class="lb__m"></div>
+  <button class="lb__x" type="button" aria-label="Cerrar" data-cur="link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <button class="lb__prev" type="button" aria-label="Anterior" data-cur="link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button>
+  <button class="lb__next" type="button" aria-label="Siguiente" data-cur="link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+</div>
+
+<script src="pruebas/e-bg.js"></script>
+<script>
+(async () => {
+  const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches, fine = matchMedia('(pointer: fine)').matches;
+  const nav = $('.nav');
+
+  /* ---------- contenido desde Drive: assets/servicios/servicios.json (lo escribe tools/sync_servicios.py) ---------- */
+  const BASE = '';
+  const M = await fetch(BASE + 'assets/servicios/servicios.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : null).catch(() => null);
+  const S = M?.servicios || {};
+  const media = (it, extra = '') => it.tipo === 'video'
+    ? `<video src="${BASE}${it.src}" poster="${BASE}${it.poster}" muted loop playsinline preload="none"${extra}></video>`
+    : `<img src="${BASE}${it.src}" alt="" loading="lazy"${extra}>`;
+  const hash = (t) => [...t].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
+  // tamaño en la grilla según el formato: c = columnas, r = alto en unidades (una columna = 4 unidades)
+  const tam = (ar) => ar < .4 ? ['c1', 'r14', 1] : ar < .5 ? ['c1', 'r8', 1] : ar < .62 ? ['c1', 'r7'] : ar < .9 ? ['c1', 'r5'] : ar < 1.15 ? ['c1', 'r4'] : ar < 1.6 ? ['c2', 'r6'] : ar < 2.2 ? ['c2', 'r5'] : ['c4', 'r6'];
+  const grande = { r7: 'r14', r5: 'r10', r4: 'r8', r8: 'r16' };
+  // Mosaico: cada pieza va a la columna más baja; si le queda un hueco arriba, se estira la pieza de arriba (se recorta un poco, nunca se deforma).
+  // Se prueban varias combinaciones de qué piezas van al doble de tamaño y se usa la que deja menos huecos.
+  const simular = (dims, C) => {
+    const alto = Array(C).fill(0), ult = Array(C).fill(null), P = dims.map(() => ({}));
+    const estirar = (col, hasta) => { const i = ult[col]; if (i === null || alto[col] >= hasta) return; const q = P[i];
+      if (!q.cols.every(k => ult[k] === i && alto[k] === alto[col]) || hasta - q.y > q.h0 * 1.6) return;
+      q.h = hasta - q.y; q.cols.forEach(k => alto[k] = hasta); };
+    dims.forEach(([c0, r], i) => {
+      const c = Math.min(C, c0); let s = 0, y = Infinity;
+      for (let j = 0; j + c <= C; j++) { const m = Math.max(...alto.slice(j, j + c)); if (m < y) { y = m; s = j; } }
+      const cols = [...Array(c)].map((_, k) => s + k); cols.forEach(k => estirar(k, y));
+      Object.assign(P[i], { y, h: r, h0: r, cols }); cols.forEach(k => { alto[k] = y + r; ult[k] = i; });
+    });
+    const fin = Math.max(...alto); for (let k = 0; k < C; k++) estirar(k, fin);
+    const usado = P.reduce((t, q) => t + q.h * q.cols.length, 0);
+    return { P, vacio: Math.max(...alto) * C - usado };
+  };
+  const mosaico = (g) => {
+    const C = getComputedStyle(g).gridTemplateColumns.split(' ').length, figs = [...g.children], n = figs.length, h = hash(g.dataset.srv);
+    const base = figs.map(f => [+f.dataset.c, +f.dataset.r]), big = figs.map(f => f.dataset.g ? [2, +f.dataset.g] : null);
+    const eleg = big.map((b, i) => b ? i : -1).filter(i => i >= 0);
+    const cands = [[]]; if (n <= 2) cands.push(eleg);
+    for (const paso of [2, 3, 4, 5, 6]) for (let o = 0; o < paso; o++) { const set = eleg.filter((_, k) => k % paso === o); for (let k = 1; k <= set.length; k++) cands.push(set.slice(0, k)); }
+    let mejor = null;
+    cands.forEach((set, ci) => {
+      const dims = base.map((d, i) => set.includes(i) ? big[i] : d), r = simular(dims, C);
+      const pena = r.vacio * 10 + (set.length ? 0 : (eleg.length && n > 3 ? 40 : 0)) + ((ci + h) % 7); // sin ninguna grande queda muy parejo
+      if (!mejor || pena < mejor.pena) mejor = { pena, r };
+    });
+    mejor.r.P.forEach((q, i) => { figs[i].style.gridColumn = `${q.cols[0] + 1} / span ${q.cols.length}`; figs[i].style.gridRow = `${q.y + 1} / span ${q.h}`; });
+  };
+  $$('.pres__grid[data-srv]').forEach(g => {
+    const its = S[g.dataset.srv] || [];
+    const verticales = its.filter(it => it.tipo === 'video' && it.w / it.h < .62).length;
+    if (its.length >= 8 && verticales / its.length >= .75) g.classList.add('pres__grid--5');
+    g.innerHTML = its.map(it => {
+      const [c, r, arriba] = tam(it.w / it.h), gr = c === 'c1' && grande[r];
+      return `<figure data-c="${c.slice(1)}" data-r="${r.slice(1)}"${gr ? ` data-g="${gr.slice(1)}"` : ''}${arriba ? ' class="arriba"' : ''}>${media(it)}</figure>`;
+    }).join('');
+  });
+  const remosaico = () => $$('.pres__grid[data-srv]').forEach(g => { if (g.offsetParent) mosaico(g); });
+  matchMedia('(max-width: 900px)').addEventListener('change', remosaico);
+  $$('.scard__in[data-srv]').forEach(t => {
+    let its = (S[t.dataset.srv] || []).slice(0, 4); if (!its.length) return;
+    while (its.length < 4) its = its.concat(its); its = its.slice(0, 4);
+    t.innerHTML = its.concat(its).map(it => `<img src="${BASE}${it.poster || it.src}" alt="" loading="lazy">`).join('');
+  });
+  { // carrusel: de a una pieza por servicio, dando vueltas, hasta 12
+    const listas = ['fotografia', 'contenido', 'branding', 'ugc', 'ia', 'community', 'eventos', 'produccion', 'merch'].map(k => (S[k] || []).filter(it => it.w / it.h >= .5 || it.tipo === 'video'));
+    const out = []; for (let i = 0; out.length < 12 && i < 12; i++) for (const l of listas) if (l[i] && out.length < 12) out.push(l[i]);
+    $('.carr__stage').innerHTML = out.map(it => `<figure class="card">${media(it)}</figure>`).join('');
+  }
+  { const eq = (S.equipo || [])[0], ph = $('.mani__ph'); if (eq) ph.querySelector('img').src = BASE + eq.src; else ph.remove(); }
+
+  /* ---------- cursor ---------- */
+  const cur = $('.cur');
+  if (fine) {
+    const dot = $('.cur__dot');
+    addEventListener('pointermove', e => { dot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`; }, { passive: true });
+    addEventListener('pointerover', e => { cur.classList.toggle('is-link', !!e.target.closest('[data-cur]')); });
+  }
+
+  /* ---------- nav: queda fija arriba, siempre visible; al scrollear toma fondo ---------- */
+  const navBg = () => nav.classList.toggle('bg', scrollY > 40); addEventListener('scroll', navBg, { passive: true }); navBg();
+  const menu = on => { nav.classList.toggle('open', on); document.body.classList.toggle('menu-on', on); $('.nav__burger').setAttribute('aria-expanded', on); };
+  $('.nav__burger').addEventListener('click', () => menu(!nav.classList.contains('open')));
+  $$('.nav ul a').forEach(a => a.addEventListener('click', () => menu(false)));
+  addEventListener('keydown', e => { if (e.key === 'Escape') menu(false); });
+
+  /* ---------- textos animados ---------- */
+  const escribir = (el) => { // títulos: cada palabra en un <span class="wd">, cada letra en un <span class="ch">; el "." final pasa a ser el punto del logo
+    el.setAttribute('aria-label', el.textContent.replace(/\s+/g, ' ').trim());
+    const walk = (node) => {
+      if (node.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        for (const tok of node.textContent.split(/(\s+)/)) {
+          if (!tok) continue;
+          if (!tok.trim()) { frag.append(tok); continue; }
+          const wd = document.createElement('span'); wd.className = 'wd'; wd.setAttribute('aria-hidden', 'true');
+          for (const ch of tok) { const s = document.createElement('span'); s.className = ch === '.' ? 'ch ch--dot' : 'ch'; if (ch !== '.') s.textContent = ch; wd.append(s); }
+          frag.append(wd);
+        }
+        node.replaceWith(frag);
+      } else if (node.nodeType === 1 && node.tagName !== 'BR') [...node.childNodes].forEach(walk);
+    };
+    [...el.childNodes].forEach(walk);
+    $$('.ch', el).forEach((s, i) => s.style.setProperty('--i', i));
+  };
+  const palabras = (el) => { // párrafos: cada palabra en un <span class="w">
+    el.setAttribute('aria-label', el.textContent.replace(/\s+/g, ' ').trim());
+    const walk = (node) => {
+      if (node.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        for (const tok of node.textContent.split(/(\s+)/)) { if (!tok) continue; if (!tok.trim()) { frag.append(tok); continue; } const w = document.createElement('span'); w.className = 'w'; w.setAttribute('aria-hidden', 'true'); w.textContent = tok; frag.append(w); }
+        node.replaceWith(frag);
+      } else if (node.nodeType === 1 && node.tagName !== 'BR') [...node.childNodes].forEach(walk);
+    };
+    [...el.childNodes].forEach(walk);
+    $$('.w', el).forEach((s, i) => s.style.setProperty('--i', i));
+  };
+  $$('.esc').forEach(escribir); $$('.wds').forEach(palabras);
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
+  $$('.rv, .esc').forEach(el => io.observe(el));
+
+  /* ---------- quiénes somos: palabra por palabra al scrollear ---------- */
+  const mp = $('#manip');
+  { let em = false, out = [];
+    for (const tok of mp.innerHTML.replace(/<i>/g, ' [[i]] ').replace(/<\/i>/g, ' [[/i]] ').split(/\s+/).filter(Boolean)) {
+      if (tok === '[[i]]') em = true; else if (tok === '[[/i]]') em = false; else out.push(`<span class="w${em ? ' em' : ''}">${tok}</span>`);
+    }
+    mp.innerHTML = out.join(' '); }
+  // el mismo efecto va en los párrafos .wds (bajada de ideas y pasos de cómo trabajamos)
+  const bloques = [mp, ...$$('.wds')].map(el => ({ el, words: $$('.w', el) }));
+  const maniScroll = () => { const h = innerHeight; for (const { el, words } of bloques) { const r = el.getBoundingClientRect(); const p = Math.min(1, Math.max(0, (h * .8 - r.top) / (r.height + h * .2))); words.forEach((w, i) => w.classList.toggle('on', i / words.length < p)); } };
+  addEventListener('scroll', maniScroll, { passive: true }); addEventListener('resize', maniScroll); maniScroll();
+
+  // el texto de quiénes somos ocupa el alto de la foto: se busca el tamaño de letra que hace coincidir los dos bordes de abajo
+  const maniFit = () => {
+    const ph = $('.mani__ph'); mp.style.fontSize = mp.style.lineHeight = '';
+    if (!ph || getComputedStyle($('.mani')).gridTemplateColumns.split(' ').length < 2) return; // en celu van apilados
+    const abajo = el => el.offsetTop + el.offsetHeight; // sin transform: la foto entra animada (.rv)
+    const alto = abajo(ph);
+    let lo = 10, hi = 120;
+    for (let i = 0; i < 18; i++) { const m = (lo + hi) / 2; mp.style.fontSize = m + 'px'; if (abajo(mp) > alto) hi = m; else lo = m; }
+    mp.style.fontSize = lo + 'px';
+    // lo que sobra (menos de una línea) se reparte en el interlineado para que los bordes coincidan justo
+    const lh = parseFloat(getComputedStyle(mp).lineHeight), n = Math.round(mp.offsetHeight / lh);
+    mp.style.lineHeight = lh + (alto - abajo(mp)) / n + 'px';
+  };
+  addEventListener('resize', maniFit); document.fonts?.ready.then(maniFit); maniFit();
+
+  /* ---------- carrusel 3D de trabajos: pasa constantemente, las tarjetas giran según dónde están ---------- */
+  carrusel: {
+    const carr = $('.carr'), cards = $$('.card', carr); if (!cards.length) { carr.remove(); break carrusel; } let vis = false, raf = null, t0 = performance.now();
+    const SPEED = reduced ? 0 : 42; // px por segundo
+    // scroll lateral: arrastrando con el mouse/dedo o con la rueda en horizontal (trackpad). Suma un desplazamiento al paso automático.
+    let extra = 0, vel = 0, dragging = false, lastX = 0, lastT = 0;
+    carr.addEventListener('pointerdown', e => { dragging = true; lastX = e.clientX; lastT = performance.now(); vel = 0; carr.classList.add('drag'); carr.setPointerCapture(e.pointerId); });
+    carr.addEventListener('pointermove', e => { if (!dragging) return; const now = performance.now(), dx = e.clientX - lastX; extra -= dx; vel = -dx / Math.max(1, now - lastT) * 1000; lastX = e.clientX; lastT = now; });
+    const suelta = () => { dragging = false; carr.classList.remove('drag'); };
+    carr.addEventListener('pointerup', suelta); carr.addEventListener('pointercancel', suelta);
+    carr.addEventListener('wheel', e => { if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) { e.preventDefault(); extra += e.deltaX; } }, { passive: false });
+    let prev = performance.now();
+    const frame = (now) => {
+      raf = null; if (!vis) return;
+      const dt = Math.min(.05, (now - prev) / 1000); prev = now;
+      if (!dragging) { extra += vel * dt; vel *= Math.pow(.02, dt); } // inercia al soltar
+      const w = cards[0].offsetWidth, S = w * 1.18, total = S * cards.length, off = ((now - t0) / 1000 * SPEED + extra) % total;
+      cards.forEach((c, i) => {
+        const x = (((i * S - off) % total) + total) % total - total / 2, k = x / (total / 2);
+        c.style.transform = `translate3d(${x}px, 0, ${-Math.abs(k) * 520}px) rotateY(${-k * 58}deg)`;
+        c.style.opacity = 1 - Math.pow(Math.abs(k), 4) * .9;
+      });
+      raf = requestAnimationFrame(frame);
+    };
+    new IntersectionObserver(en => { vis = en[0].isIntersecting; $$('video', carr).forEach(v => vis ? v.play().catch(() => {}) : v.pause()); if (vis && !raf) raf = requestAnimationFrame(frame); }).observe(carr);
+    frame(performance.now());
+  }
+
+  /* ---------- servicios: cada tarjeta abre su presentación ---------- */
+  const pres = $('.pres'), items = $$('.pres__item'), openers = $$('[data-pres]');
+  let cur_i = -1, opener = null, soloT = null;
+  const vio = new IntersectionObserver(es => es.forEach(e => { const v = e.target; if (e.isIntersecting) v.play().catch(() => {}); else v.pause(); }), { root: pres, threshold: .2 });
+  $$('.pres video').forEach(v => vio.observe(v));
+  const show = (i) => { cur_i = (i + items.length) % items.length; items.forEach((it, j) => it.hidden = j !== cur_i); pres.scrollTop = 0; const g = $('.pres__grid', items[cur_i]); if (g) mosaico(g); };
+  const open = (id, from) => { const i = items.findIndex(it => it.id === id); if (i < 0) return; opener = from; show(i); pres.classList.add('on'); document.body.classList.add('pres-on');
+    clearTimeout(soloT); soloT = setTimeout(() => document.body.classList.add('pres-solo'), 820); setTimeout(() => $('.pres__back').focus(), 400); };
+  const close = () => { clearTimeout(soloT); document.body.classList.remove('pres-solo'); pres.classList.remove('on'); document.body.classList.remove('pres-on'); $$('.pres video').forEach(v => v.pause()); opener?.focus(); };
+  openers.forEach(c => c.addEventListener('click', () => open(c.dataset.pres, c)));
+  $('.pres__back').addEventListener('click', close);
+  $('.pres__prev').addEventListener('click', () => show(cur_i - 1));
+  $('.pres__next').addEventListener('click', () => show(cur_i + 1));
+  /* ---------- lightbox: tocar una foto o video de la presentación lo abre en grande ---------- */
+  const lb = $('.lb'), lbm = $('.lb__m'); let lbList = [], lbI = 0;
+  const lbShow = (i) => { lbI = (i + lbList.length) % lbList.length; const src = lbList[lbI]; lbm.innerHTML = '';
+    if (src.tagName === 'VIDEO') { const v = document.createElement('video'); v.src = src.getAttribute('src'); v.poster = src.getAttribute('poster'); v.controls = true; v.loop = true; v.playsInline = true; lbm.append(v); v.play().catch(() => { v.muted = true; v.play().catch(() => {}); }); }
+    else { const im = new Image(); im.src = src.getAttribute('src'); im.alt = src.alt || ''; lbm.append(im); } };
+  const lbOpen = (fig) => { const item = fig.closest('.pres__item'); lbList = $$('.pres__grid img, .pres__grid video', item); lb.classList.toggle('solo', lbList.length < 2); lbShow(lbList.indexOf($('img, video', fig))); lb.classList.add('on'); setTimeout(() => $('.lb__x').focus(), 50); };
+  const lbClose = () => { lb.classList.remove('on'); lbm.innerHTML = ''; $('.pres__back').focus(); };
+  $$('.pres__grid figure').forEach(f => { f.tabIndex = 0; f.setAttribute('role', 'button'); f.setAttribute('aria-label', 'Ver en grande'); f.addEventListener('click', () => lbOpen(f)); f.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); lbOpen(f); } }); });
+  $('.lb__x').addEventListener('click', lbClose); $('.lb__prev').addEventListener('click', () => lbShow(lbI - 1)); $('.lb__next').addEventListener('click', () => lbShow(lbI + 1));
+  lb.addEventListener('click', e => { if (e.target === lb || e.target === lbm) lbClose(); });
+
+  addEventListener('keydown', e => {
+    if (lb.classList.contains('on')) { if (e.key === 'Escape') lbClose(); if (e.key === 'ArrowRight') lbShow(lbI + 1); if (e.key === 'ArrowLeft') lbShow(lbI - 1); return; }
+    if (!pres.classList.contains('on')) return; if (e.key === 'Escape') close(); if (e.key === 'ArrowRight') show(cur_i + 1); if (e.key === 'ArrowLeft') show(cur_i - 1); });
+})();
+</script>
+
+<!-- ===== la e. en tinta 2D =====
+     Ciclo de 6.5 s: 0–2.2 s se escribe el trazo · a los 2.2 s cae el punto y salpica · a los 5.6 s se borra y arranca de nuevo.
+     Con "reducir movimiento" queda la e quieta, entera. -->
+<script>
+(() => {
+  const host = document.querySelector('.top__ink'), top = document.querySelector('.top'); if (!host) return;
+  const svg = host.querySelector('svg'), tr = host.querySelector('.ink__tr'), pt = host.querySelector('.ink__pt'), ds = host.querySelector('.ink__ds');
+  const L = tr.getTotalLength(); tr.style.strokeDasharray = L;
+  const PX = 239.85, PY = 229.5; // centro del punto en el logo oficial
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { pt.setAttribute('transform', `translate(${PX} ${PY})`); return; }
+  const T = 6.5; let drops = [], lastSplash = -1, vis = true, raf = null;
+  new IntersectionObserver(en => { vis = en[0].isIntersecting; if (vis && !raf) tick(); }).observe(top);
+  const t0 = performance.now();
+  const tick = () => {
+    raf = null; if (!vis || document.hidden) return;
+    const t = (performance.now() - t0) / 1000, c = t % T; let p;
+    if (c < 2.2) p = 1 - Math.pow(1 - c / 2.2, 2.4); else if (c < 5.6) p = 1; else p = 1 - Math.pow((c - 5.6) / .9, 2);
+    tr.style.strokeDashoffset = L * (1 - p); tr.style.opacity = c >= 5.6 ? Math.max(0, 1 - (c - 5.6) / .9) : 1;
+    const d = Math.min(1, Math.max(0, (c - 2.2) / .5)), b = 1 - Math.pow(1 - d, 3);
+    pt.setAttribute('transform', `translate(${PX} ${PY - (1 - b) * 110}) scale(${c >= 2.2 && c < 5.6 ? b : (c >= 5.6 ? Math.max(0, 1 - (c - 5.6) / .9) : 0)})`);
+    const cycle = Math.floor(t / T);
+    if (d >= 1 && lastSplash !== cycle) { lastSplash = cycle; drops = []; for (let i = 0; i < 14; i++) { const a = Math.random() * Math.PI * 2, s = .9 + Math.random() * 2; drops.push({ x: PX, y: PY, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 1.3, r: .9 + Math.random() * 2.2, life: 1 }); } }
+    for (const q of drops) { q.x += q.vx; q.y += q.vy; q.vy += .11; q.life -= .022; } drops = drops.filter(q => q.life > 0);
+    ds.innerHTML = drops.map(q => `<circle cx="${q.x}" cy="${q.y}" r="${q.r * q.life}" opacity="${q.life}"/>`).join('');
+    svg.style.transform = `rotate(${Math.sin(t * .8) * 1.5}deg) translateY(${Math.sin(t * 1.1) * 6}px)`;
+    raf = requestAnimationFrame(tick);
+  };
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && !raf) tick(); });
+  tick();
+})();
+</script>
 </body>
 </html>

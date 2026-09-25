@@ -7,10 +7,10 @@ Es HTML, CSS y JavaScript comunes: no hay que instalar nada para verla ni para e
 
 | Archivo | Qué tiene |
 |---|---|
-| `index.html` | Todos los textos de la página, sección por sección. |
-| `styles.css` | Colores (arriba de todo), tipografía, tamaños, responsive. |
-| `script.js` | Menú del celular, animaciones al scrollear, sección activa. |
-| `assets/` | Logo y fotos. |
+| `index.html` | La página publicada (versión E): textos, estilos y animaciones, todo en un archivo. |
+| `pruebas/e-bg.js` | El fondo líquido en movimiento que usa `index.html`. |
+| `assets/` | Logo, fotos y el contenido de los servicios que baja de Drive. |
+| `vieja.html` | La landing anterior, guardada por si hace falta (usa `styles.css`, `script.js` y `hero-bg.js`). |
 
 ## Cómo cambiar algo sin saber programar
 
@@ -44,7 +44,7 @@ y de hasta 20 s), actualiza `assets/servicios/` y Vercel publica solo. Para no e
 - Para elegir el orden, poné un número y un guion al principio del nombre en Drive: `01-lanzamiento.mov`, `02-foto.jpg`.
 - La grilla se arma sola según el formato de cada pieza (vertical, foto, apaisada) y cambia en cada servicio.
 - Los PDF y otros archivos que no son fotos ni videos se ignoran.
-- Los textos de cada servicio siguen en `pruebas/e.html`.
+- Los textos de cada servicio siguen en `index.html`.
 
 Para correrlo a mano desde una copia local de las carpetas: `python tools/sync_servicios.py --local CARPETA`.
 
@@ -54,8 +54,6 @@ la carpeta, y su clave JSON cargada en GitHub como secreto `GDRIVE_SA_KEY`
 
 ## Pendientes
 
-- [ ] Link real de LinkedIn en `pruebas/e.html` (Instagram y TikTok ya están)
+- [ ] Link real de LinkedIn en `index.html` (Instagram y TikTok ya están)
 - [ ] Cuenta de servicio de Google y secreto `GDRIVE_SA_KEY` para que la sincronización con Drive corra sola
-- [ ] Fotos reales en `index.html` (hoy hay fotos de muestra de Unsplash marcadas con `PLACEHOLDER`)
-- [ ] Links reales de Instagram, WhatsApp y correo (buscá `href="#"` en `index.html`)
 - [ ] Dominio propio en Vercel
