@@ -1,5 +1,5 @@
 {
- "generado": "2026-09-23T14:49:14+00:00",
+ "generado": "2026-09-25T14:22:45+00:00",
  "servicios": {
   "branding": [
    {
@@ -117,6 +117,27 @@
   "contenido": [
    {
     "tipo": "video",
+    "src": "assets/servicios/contenido/prico-local.mp4",
+    "poster": "assets/servicios/contenido/prico-local.jpg",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "tipo": "video",
+    "src": "assets/servicios/contenido/copy-4a04dd3d-d209-4a20-8078-93720aa1e78.mp4",
+    "poster": "assets/servicios/contenido/copy-4a04dd3d-d209-4a20-8078-93720aa1e78.jpg",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "tipo": "video",
+    "src": "assets/servicios/contenido/copy-26d395a0-04d1-430f-9b88-d4042523a2d.mp4",
+    "poster": "assets/servicios/contenido/copy-26d395a0-04d1-430f-9b88-d4042523a2d.jpg",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "tipo": "video",
     "src": "assets/servicios/contenido/copy-5962b46f-86c3-41d6-8160-6349712d8ca.mp4",
     "poster": "assets/servicios/contenido/copy-5962b46f-86c3-41d6-8160-6349712d8ca.jpg",
     "w": 720,
@@ -177,36 +198,9 @@
     "poster": "assets/servicios/contenido/video-cartel.jpg",
     "w": 720,
     "h": 1280
-   },
-   {
-    "tipo": "video",
-    "src": "assets/servicios/contenido/4.mp4",
-    "poster": "assets/servicios/contenido/4.jpg",
-    "w": 720,
-    "h": 1280
-   },
-   {
-    "tipo": "video",
-    "src": "assets/servicios/contenido/captions-50159d.mp4",
-    "poster": "assets/servicios/contenido/captions-50159d.jpg",
-    "w": 720,
-    "h": 1280
-   },
-   {
-    "tipo": "video",
-    "src": "assets/servicios/contenido/2-2.mp4",
-    "poster": "assets/servicios/contenido/2-2.jpg",
-    "w": 720,
-    "h": 1280
    }
   ],
   "equipo": [
-   {
-    "tipo": "img",
-    "src": "assets/servicios/equipo/316cc8d9-ec70-4c71-b2cb-0af473cda1a6.jpg",
-    "w": 788,
-    "h": 1400
-   },
    {
     "tipo": "img",
     "src": "assets/servicios/equipo/96f787fa-5b7d-49c1-a157-c3135d9af0fe.jpg",
@@ -596,6 +590,27 @@
    "w": 646,
    "h": 1400
   },
+  "30396694|video": {
+   "tipo": "video",
+   "src": "assets/servicios/contenido/prico-local.mp4",
+   "poster": "assets/servicios/contenido/prico-local.jpg",
+   "w": 720,
+   "h": 1280
+  },
+  "56988266|video": {
+   "tipo": "video",
+   "src": "assets/servicios/contenido/copy-4a04dd3d-d209-4a20-8078-93720aa1e78.mp4",
+   "poster": "assets/servicios/contenido/copy-4a04dd3d-d209-4a20-8078-93720aa1e78.jpg",
+   "w": 720,
+   "h": 1280
+  },
+  "60942766|video": {
+   "tipo": "video",
+   "src": "assets/servicios/contenido/copy-26d395a0-04d1-430f-9b88-d4042523a2d.mp4",
+   "poster": "assets/servicios/contenido/copy-26d395a0-04d1-430f-9b88-d4042523a2d.jpg",
+   "w": 720,
+   "h": 1280
+  },
   "30301114|video": {
    "tipo": "video",
    "src": "assets/servicios/contenido/copy-5962b46f-86c3-41d6-8160-6349712d8ca.mp4",
@@ -658,33 +673,6 @@
    "poster": "assets/servicios/contenido/video-cartel.jpg",
    "w": 720,
    "h": 1280
-  },
-  "10943011|video": {
-   "tipo": "video",
-   "src": "assets/servicios/contenido/4.mp4",
-   "poster": "assets/servicios/contenido/4.jpg",
-   "w": 720,
-   "h": 1280
-  },
-  "50219245|video": {
-   "tipo": "video",
-   "src": "assets/servicios/contenido/captions-50159d.mp4",
-   "poster": "assets/servicios/contenido/captions-50159d.jpg",
-   "w": 720,
-   "h": 1280
-  },
-  "1106572|video": {
-   "tipo": "video",
-   "src": "assets/servicios/contenido/2-2.mp4",
-   "poster": "assets/servicios/contenido/2-2.jpg",
-   "w": 720,
-   "h": 1280
-  },
-  "2733742|img": {
-   "tipo": "img",
-   "src": "assets/servicios/equipo/316cc8d9-ec70-4c71-b2cb-0af473cda1a6.jpg",
-   "w": 788,
-   "h": 1400
   },
   "254132|img": {
    "tipo": "img",
