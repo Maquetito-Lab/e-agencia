@@ -1,5 +1,5 @@
 {
- "generado": "2026-09-25T14:22:45+00:00",
+ "generado": "2026-10-05T17:41:25+00:00",
  "servicios": {
   "branding": [
    {
@@ -99,18 +99,6 @@
     "tipo": "img",
     "src": "assets/servicios/community/img-5423.jpg",
     "w": 683,
-    "h": 1400
-   },
-   {
-    "tipo": "img",
-    "src": "assets/servicios/community/mba-despues.jpg",
-    "w": 646,
-    "h": 1400
-   },
-   {
-    "tipo": "img",
-    "src": "assets/servicios/community/mba-antes.jpg",
-    "w": 646,
     "h": 1400
    }
   ],
@@ -576,18 +564,6 @@
    "tipo": "img",
    "src": "assets/servicios/community/img-5423.jpg",
    "w": 683,
-   "h": 1400
-  },
-  "6927575|img": {
-   "tipo": "img",
-   "src": "assets/servicios/community/mba-despues.jpg",
-   "w": 646,
-   "h": 1400
-  },
-  "3706088|img": {
-   "tipo": "img",
-   "src": "assets/servicios/community/mba-antes.jpg",
-   "w": 646,
    "h": 1400
   },
   "30396694|video": {
