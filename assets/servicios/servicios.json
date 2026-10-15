@@ -1,5 +1,5 @@
 {
- "generado": "2026-10-05T17:41:25+00:00",
+ "generado": "2026-10-15T13:51:11+00:00",
  "servicios": {
   "branding": [
    {
@@ -395,12 +395,6 @@
     "tipo": "img",
     "src": "assets/servicios/produccion/whatsapp-image-2026-09-15-at-18-59-41-1.jpg",
     "w": 819,
-    "h": 1400
-   },
-   {
-    "tipo": "img",
-    "src": "assets/servicios/produccion/whatsapp-image-2026-09-15-at-18-59-41.jpg",
-    "w": 821,
     "h": 1400
    },
    {
@@ -846,12 +840,6 @@
    "tipo": "img",
    "src": "assets/servicios/produccion/whatsapp-image-2026-09-15-at-18-59-41-1.jpg",
    "w": 819,
-   "h": 1400
-  },
-  "218945|img": {
-   "tipo": "img",
-   "src": "assets/servicios/produccion/whatsapp-image-2026-09-15-at-18-59-41.jpg",
-   "w": 821,
    "h": 1400
   },
   "131686|img": {
